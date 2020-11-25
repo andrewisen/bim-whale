@@ -24,17 +24,4 @@ class IfcFile extends StepFile {
     public parseIfcFile: any = _parseIfcFile;
 }
 
-/**
- * ### Parse IFC File
- * Helper function that:
- * 1. Creates a new {@link IfcFile} object
- * 2. Parse said object
- *
- * @param lines  Contents of the file as a text string.
- * @return void
- */
-function dev2(lines: any, config: any) {
-    let ifcFile = new IfcFile(lines, config);
-    ifcFile.parseIfcFile();
-}
 export { IfcFile };

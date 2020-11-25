@@ -81,9 +81,4 @@ class StepFile {
     public parseStepInstanceAttributes: any = _parseStepInstanceAttributes;
 }
 
-function dev(lines: any, config: any) {
-    let ifcFile = new StepFile(lines, config);
-    ifcFile.parseStepFile();
-}
-
-export { StepFile, dev };
+export { StepFile };
