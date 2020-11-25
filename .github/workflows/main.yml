@@ -18,4 +18,4 @@ jobs:
                   server: ftpcluster.loopia.se
                   username: bim-whale-github-actions-ftp
                   password: ${{ secrets.password }}
-                  server-dir: public_html
+                  server-dir: public_html/
