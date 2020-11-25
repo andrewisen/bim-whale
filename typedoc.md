@@ -12,7 +12,7 @@
     <a href="https://github.com/andrewisen/bim-whale/"><strong>GitHub repository »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/andrewisen/bim-whale">View Demo (coming soon)</a>
+    <a href="https://github.bimvalen.se/public/">View Demo</a>
     ·
     <a href="https://github.com/andrewisen/bim-whale/issues">Report Bug</a>
     ·
