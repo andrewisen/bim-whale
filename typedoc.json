@@ -1,0 +1,8 @@
+{
+    "inputFiles": ["./src/"],
+    "mode": "file",
+    "out": "./docs",
+    "name": "BIM Whale Documentation",
+    "ignoreCompilerErrors": true,
+    "hideGenerator": true
+}

@@ -2,7 +2,6 @@
 */*/config.ts
 /dist
 /docs
-typedoc.json
 index.ts
 *.ifc
 
