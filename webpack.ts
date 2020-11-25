@@ -1,4 +1,4 @@
-import { config } from "./src/config/config.ts";
+import { config } from "./src/config/example.config.ts";
 import { IfcFile } from "./src/ifc-parser/ifc-parser.ts";
 
 function printPropertySet(ifcFile: IfcFile, propertySet: string) {
