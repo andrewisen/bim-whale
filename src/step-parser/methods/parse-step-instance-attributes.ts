@@ -124,7 +124,8 @@ function _parseStepInstanceAttributes(this: StepFile, raw: string) {
                 /([A-Z]+\()'?([0-9a-åA-Ö-_\/({}),.%&@$:;+=?*"#<> ]*)'?\)/g,
                 "'$1$2)'"
             ) // 1. Functions
-            .replace(/(,\$)/g, ",'$$'") // 2. Indefinite attribute
+            .replace(/(,\$)/g, ",'$$'") // 2. Indefinite attribute A
+            .replace(/(\$,)/g, "'$$',") // 2. Indefinite attribute B
             .replace(/(^|,)\((#\d+.*?)\)/g, "$1[$2]") // 3. Nested attributes:
             .replace(/([,\[])(#\d+)+/g, "$1'$2'") // 4. References to other entities
             .replace(/,(\d+[.]\d*)/g, ",'$1'") // / 5. Integers
@@ -134,6 +135,7 @@ function _parseStepInstanceAttributes(this: StepFile, raw: string) {
     try {
         bar = JSON.parse(foo);
     } catch (error) {
+        console.log("JSON Error:");
         console.log(raw);
         console.log(foo);
         console.log(" ");
