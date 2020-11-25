@@ -4,7 +4,7 @@
     <img src="https://bimvalen.se/assets/img/logos/logo-500x500-alt.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">BIM Whale</h3>
+  <h3 align="center">The BIM Whale</h3>
 
   <p align="center">
     A simple client-side IFC parser 
@@ -52,7 +52,7 @@
 
 ## About
 
-The BIM Whale (Swedish: _BIM-valen_) is simple client-side IFC parser built using TypeScript.
+**The BIM Whale** (Swedish: _BIM-valen_) is simple client-side IFC parser built using TypeScript.
 The aim of this project is to:
 
 > Teach people how to work with IFC
@@ -70,10 +70,10 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 
 ## Getting Started
 
-This repository contains only the TypeScript source.
+This repository only contains the TypeScript source.
 A compiled _JS bundle file_ is available here:
 `https://github.bimvalen.se/dist/bundle.min.js`
-Please note that the file **only works for the demo**!
+Please note that the file **only works for the demo** at this moment.
 
 The following steps will guide you to set up your own development platform.
 
@@ -81,7 +81,10 @@ The following steps will guide you to set up your own development platform.
 
 This repository uses Deno as the runtime for TypeScript.
 
--   Install Deno. See instruction at [https://deno.land](https://deno.land)
+-   Install Deno.
+    See instruction at [https://deno.land](https://deno.land)
+
+_You can use Webpack instead._
 
 ### Installation
 
@@ -123,7 +126,7 @@ Run the app with:
    deno run --allow-read index.ts
 ```
 
-Or use the demo: [https://github.bimvalen.se/public/](https://github.bimvalen.se/public/)
+Or, use the demo: [https://github.bimvalen.se/public/](https://github.bimvalen.se/public/)
 
 ### SimpleWall Sample File
 
