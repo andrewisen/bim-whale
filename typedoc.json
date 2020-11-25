@@ -4,5 +4,6 @@
     "out": "./docs",
     "name": "BIM Whale Documentation",
     "ignoreCompilerErrors": true,
-    "hideGenerator": true
+    "hideGenerator": true,
+    "readme": "typedoc.md"
 }
