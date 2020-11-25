@@ -98,7 +98,7 @@ The easiest approach is to copy content of the `example.NAME.ts` file.
 Replace `index.ts` with the content inside `example.index.ts`.
 
 4. Make sure you update `src/config.ts` and provide a correct **filePath**.
-   You can download the sample file here: **TODO**
+   You can download the sample file here: [https://github.com/andrewisen/bim-whale-samples](https://github.com/andrewisen/bim-whale-samples)
 5. Check if Deno is working
 
     ```sh
@@ -111,7 +111,7 @@ Any errors until this point are likely due to Deno.
 
 ## Usage
 
-You can download the IFC Samples here: **TODO**
+You can download the IFC Samples here: [https://github.com/andrewisen/bim-whale-samples](https://github.com/andrewisen/bim-whale-samples)
 
 Run the app with:
 
