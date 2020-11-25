@@ -119,13 +119,66 @@ Run the app with:
    deno run --allow-read index.ts
 ```
 
+### SimpleWall Sample File
+
+Download the from [here](https://github.com/andrewisen/bim-whale-samples/tree/main/SimpleWall).
+The sample consist of:
+
+-   A wall
+-   A door
+
+Here's a screenshot:
+![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-samples/main/SimpleWall/Screenshots/Screenshot_2.png)
+
+The IFC file has a **Property Set** called `Custom_Pset`.
+Custom_Pset only contains dummy data.
+
+![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-samples/main/SimpleWall/Screenshots/Screenshot_21.png)
+
+Make sure you to update `src/config.ts` and provide a correct **filePath**.
+When we run the app, we get the following result:
+
+```javascript
+{
+  TypeMark: "IFCLABEL(_TYPE-MARK_)",
+  Keynote: "IFCLABEL(_KEYNOTE_)",
+  StoreyName: "IFCTEXT(Level: Level 1)",
+  TypeDescription: "IFCTEXT(_DESCRIPTION_)",
+  StatusConstruction: "IFCLABEL(New Construction)",
+  NetArea: "IFCAREAMEASURE(14.04739)",
+  Height: "IFCLENGTHMEASURE(4000.)",
+  Width: "IFCLENGTHMEASURE(200.)",
+  Length: "IFCLENGTHMEASURE(4000.)",
+  Hyperlink: "IFCTEXT(_URL_)"
+}
+{
+  TypeMark: "IFCLABEL(20)",
+  Keynote: "IFCLABEL(--KEYNOTE--)",
+  StoreyName: "IFCTEXT(Level: Level 1)",
+  TypeDescription: "IFCTEXT(--DESCRIPTION--)",
+  StatusConstruction: "IFCLABEL(New Construction)",
+  NetArea: "IFCAREAMEASURE(3.18957899999998)",
+  Height: "IFCLENGTHMEASURE(2134.)",
+  Width: "IFCLENGTHMEASURE(915.)",
+  SillHeight: "IFCLENGTHMEASURE(0.)",
+  Hyperlink: "IFCTEXT(--URL--)"
+}
+```
+
+In summary: We have parsed the IFC file looking only for Doors and Walls.
+
+Again, see the config file: `const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];`
+In the end we simply print out the **Property Set** `Custom_Pset`.
+
 **TODO**
 
 <!-- ROADMAP -->
 
 ## Roadmap
 
-This project is still in it's early development. Please be patience!
+This project is still in it's early development. Yes, it still has some bugs.
+Please be patience!
+
 See the [open issues](/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
