@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BIM Whale - Example</title>
+    </head>
+    <body>
+        <p>
+            <!-- Example: https://www.w3schools.com/tags/att_input_type_file.asp -->
+            <label for="ifcFile">Select an IFC file:</label>
+            <input
+                type="file"
+                accept=".ifc"
+                id="ifcFileInput"
+                name="ifcFileInput"
+                onclick="this.value=null;"
+            />
+        </p>
+        <p>Psst... look in the console.</p>
+        <p>
+            Read more at:
+            <a href="https://github.com/andrewisen/bim-whale"
+                >https://github.com/andrewisen/bim-whale</a
+            >
+        </p>
+        <script src="../dist/bundle.min.js"></script>
+    </body>
+</html>
