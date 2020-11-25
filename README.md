@@ -12,7 +12,7 @@
     <a href="http://github.bimvalen.se/docs/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/andrewisen/bim-whale">View Demo (coming soon)</a>
+    <a href="https://github.bimvalen.se/public/">View Demo</a>
     ·
     <a href="https://github.com/andrewisen/bim-whale/issues">Report Bug</a>
     ·
@@ -69,7 +69,9 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 ## Getting Started
 
 This repository contains only the TypeScript source.
-If you're looking for a compiled _JS Bundle_ file, then check here: **TODO**
+A compiled _JS bundle file_ is available here:
+`https://github.bimvalen.se/dist/bundle.min.js`
+Please note that the [input id](https://www.w3schools.com/tags/tag_input.asp) must be `ifcFileInput`.
 
 The following steps will guide you to set up your own development platform.
 
@@ -118,6 +120,8 @@ Run the app with:
 ```sh
    deno run --allow-read index.ts
 ```
+
+Or use the demo: [https://github.bimvalen.se/public/](https://github.bimvalen.se/public/)
 
 ### SimpleWall Sample File
 
