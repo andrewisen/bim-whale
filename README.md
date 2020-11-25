@@ -150,10 +150,9 @@ See `LICENSE` for more information.
 
 ## Contact
 
--   Website: [https://andrewisen.se/](https://andrewisen.se/)
--   LinkedIn: [https://linkedin.com/in/andrewisen/](https://linkedin.com/in/andrewisen/)
 -   Primary email: [kontakt@andrewisen.se](mailto:kontakt@andrewisen.se)
 -   Secondary email: [andre.wisen@gmail.com](mailto:andre.wisen@gmail.com])
+-   LinkedIn: [https://linkedin.com/in/andrewisen/](https://linkedin.com/in/andrewisen/)
 
 <!-- ACKNOWLEDGEMENTS -->
 
