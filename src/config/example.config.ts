@@ -30,7 +30,7 @@ const allEntities: string[] = [...requiredEntities, ...selectedEntities];
  * N.B. Use a [FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader) when implementing onto a website
  *
  */
-const filePath: string = "./SimpleWall_Revit2021_CUSTOM.ifc";
+const filePath: string = "./SimpleWall.ifc";
 
 /**
  * ## Options
