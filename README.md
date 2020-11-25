@@ -71,7 +71,7 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 This repository contains only the TypeScript source.
 A compiled _JS bundle file_ is available here:
 `https://github.bimvalen.se/dist/bundle.min.js`
-Please note that the [input id](https://www.w3schools.com/tags/tag_input.asp) must be `ifcFileInput`.
+Please note that the file **only works for the demo**!
 
 The following steps will guide you to set up your own development platform.
 
