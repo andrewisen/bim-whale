@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/andrewisen/bim-whale">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://bimvalen.se/assets/img/logos/logo-500x500-alt.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">BIM Whale</h3>
@@ -9,10 +9,10 @@
   <p align="center">
     A simple client-side IFC parser 
     <br />
-    <a href="https://github.com/andrewisen/bim-whale"><strong>Explore the docs »</strong></a>
+    <a href="http://github.bimvalen.se/docs/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/andrewisen/bim-whale">View Demo</a>
+    <a href="https://github.com/andrewisen/bim-whale">View Demo (coming soon)</a>
     ·
     <a href="https://github.com/andrewisen/bim-whale/issues">Report Bug</a>
     ·
@@ -50,7 +50,7 @@
 
 ## About
 
-The BIM Whale (Swedish:_BIM-valen_) is client-side IFC parser built using TypeScript.
+The BIM Whale (Swedish: _BIM-valen_) is simple client-side IFC parser built using TypeScript.
 The aim of this project is to:
 
 > Teach people how to work with IFC
@@ -60,14 +60,16 @@ In more specific terms, the goal of this project is to:
 > Provide a simple and fast IFC parser that people can learn from
 
 The BIM Whale is **NOT** supposed to be an all singing, all dancing parser.
-Instead, the BIM Whale is only looking to parse information that we know exists.
+Instead, the BIM Whale is only looking to parse information (Property Sets) that we know exists.
+
+Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 
 <!-- GETTING STARTED -->
 
 ## Getting Started
 
 This repository contains only the TypeScript source.
-If you're looking for a compiled _JS Bundle_ file, then check here: TODO
+If you're looking for a compiled _JS Bundle_ file, then check here: **TODO**
 
 The following steps will guide you to set up your own development platform.
 
@@ -80,33 +82,44 @@ This repository uses Deno as the runtime for TypeScript.
 ### Installation
 
 1. Clone the repo
+
     ```sh
     git clone https://github.com/your_username_/Project-Name.git
     ```
+
 2. Replace the following files with your own content.
 
 -   `index.ts`
 -   `src/config.ts`
 
 The easiest approach is to copy content of the `example.NAME.ts` file.
-In other words: Replace `index.ts` with the content in `example.index.ts`.
 
-3. Check if Deno is working
+**In other words:**
+Replace `index.ts` with the content inside `example.index.ts`.
+
+4. Make sure you update `src/config.ts` and provide a correct **filePath**.
+   You can download the sample file here: **TODO**
+5. Check if Deno is working
+
     ```sh
     deno run --allow-read checkDeno.ts
     ```
 
-Any errors are likely due to Deno and its' installation.
+Any errors until this point are likely due to Deno.
 
 <!-- USAGE EXAMPLES -->
 
 ## Usage
 
-You can download the IFC Samples here:
+You can download the IFC Samples here: **TODO**
+
+Run the app with:
 
 ```sh
    deno run --allow-read index.ts
 ```
+
+**TODO**
 
 <!-- ROADMAP -->
 
