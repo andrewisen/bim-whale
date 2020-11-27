@@ -1,3 +1,9 @@
+/**
+ * This is a mirror of index.ts.
+ *
+ * WIP
+ */
+
 import { config } from "./src/config/example.config.ts";
 import { IfcFile } from "./src/ifc-parser/ifc-parser.ts";
 
