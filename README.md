@@ -28,9 +28,6 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -55,11 +52,13 @@
 **The BIM Whale** (Swedish: _BIM-valen_) is simple client-side IFC parser built using TypeScript.
 The aim of this project is to:
 
-> Teach people how to work with IFC
+> I: Introduce the IFC schema
+> II: Teach people how to parse an IFC file
 
 In more specific terms, the goal of this project is to:
 
-> Provide a simple and fast IFC parser that people can learn from
+> A: Provide a simple and fast IFC parser
+> B: Provide learning resources (documentation, videos, power points)
 
 The BIM Whale is **NOT** supposed to be an all singing, all dancing parser.
 Instead, the BIM Whale is only looking to parse information (Property Sets) that we know exists.
@@ -70,12 +69,12 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 
 ## Getting Started
 
-This repository only contains the TypeScript source.
+This repository contains the TypeScript source code.
+The following steps will guide you to set up your own development platform.
+
 A compiled _JS bundle file_ is available here:
 `https://github.bimvalen.se/dist/bundle.min.js`
 Please note that the file **only works for the demo** at this moment.
-
-The following steps will guide you to set up your own development platform.
 
 ### Prerequisites
 
@@ -84,7 +83,7 @@ This repository uses Deno as the runtime for TypeScript.
 -   Install Deno.
     See instruction at [https://deno.land](https://deno.land)
 
-_You can use Webpack instead._
+_You can use tsc or Webpack instead._
 
 ### Installation
 
@@ -105,7 +104,7 @@ The easiest approach is to copy content of the `example.NAME.ts` file.
 Replace `index.ts` with the content inside `example.index.ts`.
 
 4. Make sure you update `src/config.ts` and provide a correct **filePath**.
-   You can download the sample file here: [https://github.com/andrewisen/bim-whale-samples](https://github.com/andrewisen/bim-whale-samples)
+   You can download some sample files here: [https://github.com/andrewisen/bim-whale-samples](https://github.com/andrewisen/bim-whale-samples)
 5. Check if Deno is working
 
     ```sh
@@ -174,8 +173,7 @@ When we run the app, we get the following result:
 }
 ```
 
-In summary: We have parsed the IFC file looking only for Doors and Walls.
-
+In summary: We have performed a simple parsing using only walls and doors.
 Again, see the config file: `const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];`
 In the end we simply print out the **Property Set** `Custom_Pset`.
 
@@ -185,7 +183,7 @@ In the end we simply print out the **Property Set** `Custom_Pset`.
 
 ## Roadmap
 
-This project is still in it's early development. Yes, it still has some bugs.
+This project is still in it's early development. And yes, it still has some bugs.
 Please be patience!
 
 See the [open issues](/issues) for a list of proposed features (and known issues).
@@ -194,7 +192,8 @@ See the [open issues](/issues) for a list of proposed features (and known issues
 
 ## Contributing
 
-Any contributions you make are **greatly appreciated**.
+This project is still in it's early development.
+But, any contributions you make are **greatly appreciated**.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
