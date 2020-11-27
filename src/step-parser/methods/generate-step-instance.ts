@@ -18,7 +18,7 @@ import type { IEntityInstance, IEnties } from "../interfaces/step-interface.ts";
  *
  * Getting the _Instance Id_ and _Entity Name_ is fairly straight forward.
  * However, getting the attributes is a bit tricky.
- * The method {@link _parseAttributes} will help us with that.
+ * The method {@link _parseStepInstanceAttributes} will help us with that.
  *
  * Finally, each instance is added to the property _entities_.
  */
