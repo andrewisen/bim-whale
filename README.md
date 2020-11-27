@@ -52,18 +52,18 @@
 **The BIM Whale** (Swedish: _BIM-valen_) is simple client-side IFC parser built using TypeScript.
 The aim of this project is to:
 
-> I: Introduce the IFC schema
+> I: Introduce and explain the basics of IFC schema
 
-> II: Teach people how to parse an IFC file
+> II: Teach people how to parse an IFC file and retrieve basic information
 
 In more specific terms, the goal of this project is to:
 
 > A: Provide a simple and fast IFC parser
 
-> B: Provide learning resources (documentation, videos, power points)
+> B: Provide learning resources (documentation, videos, power points) to people within the AEC industry
 
 The BIM Whale is **NOT** supposed to be an all singing, all dancing parser.
-Instead, the BIM Whale is only looking to parse information (Property Sets) that we know exists.
+This project is only looking to parse information that we know exists, so-called `User Defined IFC Property Sets`.
 
 Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 
@@ -141,7 +141,7 @@ Here's a screenshot:
 ![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-samples/main/SimpleWall/Screenshots/Screenshot_2.png)
 
 The IFC file has a **Property Set** called `Custom_Pset`.
-Custom_Pset only contains dummy data.
+The property set only contains dummy data.
 
 ![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-samples/main/SimpleWall/Screenshots/Screenshot_21.png)
 
