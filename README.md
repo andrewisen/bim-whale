@@ -53,11 +53,13 @@
 The aim of this project is to:
 
 > I: Introduce the IFC schema
+
 > II: Teach people how to parse an IFC file
 
 In more specific terms, the goal of this project is to:
 
 > A: Provide a simple and fast IFC parser
+
 > B: Provide learning resources (documentation, videos, power points)
 
 The BIM Whale is **NOT** supposed to be an all singing, all dancing parser.
