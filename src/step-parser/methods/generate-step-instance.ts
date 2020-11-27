@@ -36,7 +36,8 @@ function _generateStepInstance(this: StepFile, line: string) {
     }
     entity.attributes = {
         parsed: this.parseStepInstanceAttributes(
-            line.substring(entity.entityStartIndex + 1, line.length - 2)
+            line.substring(entity.entityStartIndex + 1, line.length - 2),
+            entity.entityName
         ),
     };
 

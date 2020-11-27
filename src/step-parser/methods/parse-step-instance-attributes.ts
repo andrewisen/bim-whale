@@ -111,36 +111,86 @@ import { StepFile } from "../step-parser.ts";
  * The last two parameters are integers; __2134.__, __915.__.
  * Note that the zero is omitted in these cases.
  */
-function _parseStepInstanceAttributes(this: StepFile, raw: string) {
-    const foo =
-        "[" +
-        raw
-            .replace(/\\/g, "") // backward slashes
-            .replace(/\//g, "\\/") // forward slashes
-            .replace(/\"/g, '\\"') // quotation marks
-            .replace(/[^,]\'\'[^\)]/g, "") // Apostrophes
-            .replace(/(\(|\,)(\..+\.)(\)|\,?)/g, "$1'$2'$3") // ".T.", ".F.", ".UNDEFINED.", etc.
-            .replace(
-                /([A-Z]+\()'?([0-9a-åA-Ö-_\/({}),.%&@$:;+=?*"#<> ]*)'?\)/g,
-                "'$1$2)'"
-            ) // 1. Functions
-            .replace(/(,\$)/g, ",'$$'") // 2. Indefinite attribute A
-            .replace(/(\$,)/g, "'$$',") // 2. Indefinite attribute B
-            .replace(/(^|,)\((#\d+.*?)\)/g, "$1[$2]") // 3. Nested attributes:
-            .replace(/([,\[])(#\d+)+/g, "$1'$2'") // 4. References to other entities
-            .replace(/,(\d+[.]\d*)/g, ",'$1'") // / 5. Integers
-            .replace(/'/g, '"') + // Convert apostrophes to quotes
-        "]";
-    let bar = [];
+function _parseStepInstanceAttributes(
+    this: StepFile,
+    attributeString: string,
+    entityName: string
+) {
+    let parsedAttributesString: string = "";
+
+    /**
+     * Specific workaround for IFC GlobalId.
+     * Example: #77331= IFCSLAB('3V$FMCDUfCoPwUaHMPfteW',#48,'Pad:Pad 1:130737',$,'Pad:Pad 1',#77294,#77329,'130737',.FLOOR.);
+     *
+     * Notice that the GlobalId contains a dollar sign.
+     * Let's ignore the GloablId in order to make the parsinging easier.
+     *
+     *
+     * WIP
+     */
+    let before: string = ""; // IFC GlobalId
+    let after: string = ""; // "Not IFC GlobalId"
+    if (entityName !== "IFCPROPERTYSINGLEVALUE") {
+        before = attributeString.substr(0, attributeString.indexOf(","));
+        after = attributeString.substr(attributeString.indexOf(","));
+        parsedAttributesString = after;
+    } else {
+        parsedAttributesString = attributeString;
+    }
+    parsedAttributesString = "," + parsedAttributesString + ","; // This will make the parsing a lot easier
+
+    /**
+     * Check if the attribute string has a "function"
+     */
+    let hasFunction = false;
+    let functionParameter: string | string[] = /(IFC[A-Z]+\()(.*)(\)\,)/g.exec(
+        parsedAttributesString
+    );
+
+    if (functionParameter) {
+        hasFunction = true;
+        functionParameter = functionParameter[2];
+        parsedAttributesString = parsedAttributesString.replace(
+            /(IFC[A-Z]+\()(.*)(\)\,)/g,
+            '"$1{PARAM})",'
+        );
+    }
+
+    // Regular parsing
+    parsedAttributesString = parsedAttributesString
+        .replace(/\\/g, "") // Backward slashes
+        .replace(/\//g, "\\/") // Forward slashes
+        .replace(/\$/g, '"$"') // Indefinite attributes
+        .replace(/(^|,)\((#\d+.*?)\)/g, "$1[$2]") // Nested attributes
+        .replace(/([,\[])(#\d+)+/g, '$1"$2"') // References to other entities (e.g. #123)
+        .replace(/,(\d+[.]\d*)/g, ",'$1'") // Integers (that are not escaped)
+        .replace(/'/g, '"'); // Convert all remaining apostrophes to quotes
+
+    if (hasFunction) {
+        parsedAttributesString = parsedAttributesString.replace(
+            /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
+            "$1" + functionParameter + ')",'
+        );
+    }
+
+    if (entityName !== "IFCPROPERTYSINGLEVALUE") {
+        // Add back the GlobalId
+        parsedAttributesString =
+            '"' + before.slice(1, -1) + '"' + newString.slice(1, -1);
+    } else {
+        parsedAttributesString = newString.slice(1, -1);
+    }
+
+    let parsedAttributes = [];
     try {
-        bar = JSON.parse(foo);
+        parsedAttributes = JSON.parse("[" + parsedAttributesString + "]");
     } catch (error) {
-        console.log("JSON Error:");
-        console.log(raw);
-        console.log(foo);
+        console.log("Parsing error:");
+        console.log("In:", attributeString);
+        console.log("Out:", parsedAttributesString);
         console.log(" ");
     }
-    return bar;
+    return parsedAttributes;
 }
 
 // Underscore is used to distinguish this function as a method that belongs to StepFile
