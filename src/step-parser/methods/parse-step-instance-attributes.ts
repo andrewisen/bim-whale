@@ -143,13 +143,17 @@ function _parseStepInstanceAttributes(
      * Check if the attribute string has a "function"
      */
     let hasFunction = false;
-    let functionParameter: string | string[] = /(IFC[A-Z]+\()(.*)(\)\,)/g.exec(
-        parsedAttributesString
-    );
+    let functionParameter:
+        | string
+        | string[]
+        | null = /(IFC[A-Z]+\()(.*)(\)\,)/g.exec(parsedAttributesString);
 
     if (functionParameter) {
         hasFunction = true;
-        functionParameter = functionParameter[2];
+        functionParameter = functionParameter[2]
+            .replace(/\\/g, "") // Backward slashes
+            .replace(/\//g, "\\/") // Forward slashes
+            .replace(/\"/g, '\\"'); // Quotation marks
         parsedAttributesString = parsedAttributesString.replace(
             /(IFC[A-Z]+\()(.*)(\)\,)/g,
             '"$1{PARAM})",'
@@ -176,9 +180,12 @@ function _parseStepInstanceAttributes(
     if (entityName !== "IFCPROPERTYSINGLEVALUE") {
         // Add back the GlobalId
         parsedAttributesString =
-            '"' + before.slice(1, -1) + '"' + newString.slice(1, -1);
+            '"' +
+            before.slice(1, -1) +
+            '"' +
+            parsedAttributesString.slice(1, -1);
     } else {
-        parsedAttributesString = newString.slice(1, -1);
+        parsedAttributesString = parsedAttributesString.slice(1, -1);
     }
 
     let parsedAttributes = [];
