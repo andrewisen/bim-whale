@@ -91,8 +91,8 @@ _You can use tsc or Webpack instead._
 
 1. Clone the repo
 
-    ```sh
-    git clone https://github.com/your_username_/Project-Name.git
+    ```shell
+    git clone https://github.com/andrewisen/bim-whale
     ```
 
 2. Replace the following files with your own content.
@@ -109,7 +109,7 @@ Replace `index.ts` with the content inside `example.index.ts`.
    You can download some sample files here: [https://github.com/andrewisen/bim-whale-samples](https://github.com/andrewisen/bim-whale-samples)
 5. Check if Deno is working
 
-    ```sh
+    ```shell
     deno run --allow-read checkDeno.ts
     ```
 
@@ -123,7 +123,7 @@ You can download the IFC Samples here: [https://github.com/andrewisen/bim-whale-
 
 Run the app with:
 
-```sh
+```shell
    deno run --allow-read index.ts
 ```
 
