@@ -25,9 +25,6 @@ function _mapPropertySetsToGenericEntities(this: IfcFile) {
         const relatedObjectsLenght =
             ifcRelDefinesByPropertiesAttributes[4].length;
         for (let index = 0; index < relatedObjectsLenght; index++) {
-            // const relatedObject =
-            //     ifcRelDefinesByPropertiesAttributes[4][index];
-
             const { properties = undefined } =
                 this.entities.genericEntities[
                     // Reference to related object (i.e. a generic IFC entity)
@@ -37,16 +34,6 @@ function _mapPropertySetsToGenericEntities(this: IfcFile) {
                 // Ignoring: IfcSite, IfcBuildingStorey, IfcBuilding
                 continue;
             }
-
-            // if (!(ifcPropertySetName in properties)) {
-            //     Object.assign(properties, { [ifcPropertySetName]: {} });
-            // } else {
-            //     console.log("duplicate..");
-
-            //     Object.assign(properties, {
-            //         [ifcPropertySetName]: ifcPropertySet,
-            //     });
-            // }
 
             Object.assign(properties, {
                 [ifcPropertySetName]: ifcPropertySet,
