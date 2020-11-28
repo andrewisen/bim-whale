@@ -27,7 +27,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#about-the-project">About</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -36,7 +36,12 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+     <li>
+      <a href="#getting-started">Usage</a>
+      <ul>
+        <li><a href="#prerequisites">SimpleWall Sample File</a></li>
+      </ul>
+    </li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -75,8 +80,8 @@ This repository contains the TypeScript source code.
 The following steps will guide you to set up your own development platform.
 
 A compiled _JS bundle file_ is available here:
-`https://github.bimvalen.se/dist/bundle.min.js`
-Please note that the file **only works for the demo** at this moment.
+[https://github.bimvalen.se/dist/bundle.min.js](https://github.bimvalen.se/dist/bundle.min.js)
+Please note that the JavaScript file **only works for the demo** at this moment.
 
 ### Prerequisites
 
@@ -85,14 +90,14 @@ This repository uses Deno as the runtime for TypeScript.
 -   Install Deno.
     See instruction at [https://deno.land](https://deno.land)
 
-_You can use tsc or Webpack instead._
+_You don't need to use Deno. You could use tsc or Webpack instead._
 
 ### Installation
 
 1. Clone the repo
 
     ```shell
-    git clone https://github.com/andrewisen/bim-whale
+    git clone https://github.com/andrewisen/bim-whale.git
     ```
 
 2. Replace the following files with your own content.
@@ -114,6 +119,7 @@ Replace `index.ts` with the content inside `example.index.ts`.
     ```
 
 Any errors until this point are likely due to Deno.
+Submit an issue if have any problems.
 
 <!-- USAGE EXAMPLES -->
 
@@ -138,6 +144,7 @@ The sample consist of:
 -   A door
 
 Here's a screenshot:
+
 ![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-samples/main/SimpleWall/Screenshots/Screenshot_2.png)
 
 The IFC file has a **Property Set** called `Custom_Pset`.
@@ -145,8 +152,8 @@ The property set only contains dummy data.
 
 ![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-samples/main/SimpleWall/Screenshots/Screenshot_21.png)
 
-Make sure you to update `src/config.ts` and provide a correct **filePath**.
-When we run the app, we get the following result:
+Make sure to update `src/config.ts` and provide a correct **filePath**.
+You should get the following result:
 
 ```javascript
 {
@@ -175,9 +182,12 @@ When we run the app, we get the following result:
 }
 ```
 
-In summary: We have performed a simple parsing using only walls and doors.
-Again, see the config file: `const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];`
-In the end we simply print out the **Property Set** `Custom_Pset`.
+w
+**In summary:**
+We have performed a simple parsing. We have only included walls and doors.
+Again, see the example config file: `const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];`
+
+In the end, we simply print out the **Property Set** `Custom_Pset`.
 
 **TODO**
 
@@ -227,3 +237,4 @@ Check out these projects instead!
 -   [IFC.js](https://github.com/agviegas/IFC.js)
 -   [IfcOpenShell](https://github.com/IfcOpenShell/IfcOpenShell)
 -   [xBIM](https://github.com/xBimTeam)
+-   [IFC++](https://github.com/ifcquery/ifcplusplus)
