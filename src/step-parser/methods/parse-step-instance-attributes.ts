@@ -119,28 +119,31 @@ function _parseStepInstanceAttributes(
     let parsedAttributesString: string = "";
 
     /**
-     * Specific workaround for IFC GlobalId.
+     * Specific workaround for IFC GlobalId (GUIID).
      * Example: #77331= IFCSLAB('3V$FMCDUfCoPwUaHMPfteW',#48,'Pad:Pad 1:130737',$,'Pad:Pad 1',#77294,#77329,'130737',.FLOOR.);
      *
      * Notice that the GlobalId contains a dollar sign.
      * Let's ignore the GloablId in order to make the parsinging easier.
      *
-     *
      * WIP
      */
-    let before: string = ""; // IFC GlobalId
-    let after: string = ""; // "Not IFC GlobalId"
+    let globalId: string = ""; // IFC GlobalId
     if (entityName !== "IFCPROPERTYSINGLEVALUE") {
-        before = attributeString.substr(0, attributeString.indexOf(","));
-        after = attributeString.substr(attributeString.indexOf(","));
-        parsedAttributesString = after;
+        globalId = attributeString.substr(0, attributeString.indexOf(","));
+        // The parsedAttributesString will NOT contain the GlobalID.
+        // We will add it back in later.
+        parsedAttributesString = attributeString.substr(
+            attributeString.indexOf(",")
+        );
     } else {
         parsedAttributesString = attributeString;
     }
-    parsedAttributesString = "," + parsedAttributesString + ","; // This will make the parsing a lot easier
+    // Adding commas before and after will help the parsing.
+    // You don't need to write any edge cases for the RegEx
+    parsedAttributesString = "," + parsedAttributesString + ",";
 
     /**
-     * Check if the attribute string has a "function"
+     * Check if the attribute string has a "function" (see above for example)
      */
     let hasFunction = false;
     let functionParameter:
@@ -150,10 +153,13 @@ function _parseStepInstanceAttributes(
 
     if (functionParameter) {
         hasFunction = true;
+        // N.B. Duplicate code
         functionParameter = functionParameter[2]
             .replace(/\\/g, "") // Backward slashes
             .replace(/\//g, "\\/") // Forward slashes
             .replace(/\"/g, '\\"'); // Quotation marks
+
+        // Replace the parameter with the phrase: {PARAM}
         parsedAttributesString = parsedAttributesString.replace(
             /(IFC[A-Z]+\()(.*)(\)\,)/g,
             '"$1{PARAM})",'
@@ -171,17 +177,19 @@ function _parseStepInstanceAttributes(
         .replace(/'/g, '"'); // Convert all remaining apostrophes to quotes
 
     if (hasFunction) {
+        // Add back the parsed parameter
         parsedAttributesString = parsedAttributesString.replace(
             /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
             "$1" + functionParameter + ')",'
         );
     }
 
+    // This is a quick and dirty workaround
     if (entityName !== "IFCPROPERTYSINGLEVALUE") {
         // Add back the GlobalId
         parsedAttributesString =
             '"' +
-            before.slice(1, -1) +
+            globalId.slice(1, -1) +
             '"' +
             parsedAttributesString.slice(1, -1);
     } else {
@@ -189,6 +197,8 @@ function _parseStepInstanceAttributes(
     }
 
     let parsedAttributes = [];
+
+    // TODO: Improve this
     try {
         parsedAttributes = JSON.parse("[" + parsedAttributesString + "]");
     } catch (error) {
