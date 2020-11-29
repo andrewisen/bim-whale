@@ -21,16 +21,37 @@
             <div>
                 <table class="table" id="ifcTable"></table>
             </div>
-            <div class="container py-4">
-                <div class="input-group mb-3">
-                    <input
-                        type="file"
-                        accept=".ifc"
-                        id="ifcFileInput"
-                        name="ifcFileInput"
-                        onclick="this.value=null;"
-                        class="form-control"
-                    />
+            <div id="ifc-setup" class="container py-4">
+                <div class="py-4">
+                    <form id="ifc-form" onsubmit="return false;">
+                        <label for="select-2" class="form-label"
+                            >Select IFC entities</label
+                        >
+                        <select
+                            id="select-2"
+                            class="ifc-selection"
+                            name="ifcEntites[]"
+                            multiple="multiple"
+                            style="width: 100%"
+                            required
+                        ></select>
+
+                        <div class="my-4">
+                            <label for="ifcFileInput" class="form-label"
+                                >Select an IFC file</label
+                            >
+                            <input
+                                type="file"
+                                accept=".ifc"
+                                id="ifcFileInput"
+                                class="form-control"
+                                required
+                            />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Ok, let's go
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -94,7 +115,165 @@
         />
         <script src="./assets/js/json-viewer.js"></script>
 
+        <!-- Select2 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
+            rel="stylesheet"
+        />
+        <link href="./assets/css/select2-bootstrap4.min.css" rel="stylesheet" />
+
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
         <!-- BIM Whale minified bundle -->
-        <script src="../dist/bundle.min.js"></script>
+        <script type="module" src="../dist/bundle.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                var data = [
+                    {
+                        text: "Shared Building Elements",
+                        children: [
+                            {
+                                id: "IfcWindowStyle",
+                                text: "IfcWindowStyle",
+                            },
+                            {
+                                id: "IfcBeam",
+                                text: "IfcBeam",
+                            },
+                            {
+                                id: "IfcBeamType",
+                                text: "IfcBeamType",
+                            },
+                            {
+                                id: "IfcColumn",
+                                text: "IfcColumn",
+                            },
+                            {
+                                id: "IfcColumnType",
+                                text: "IfcColumnType",
+                            },
+                            {
+                                id: "IfcCurtainWall",
+                                text: "IfcCurtainWall",
+                            },
+                            {
+                                id: "IfcCurtainWallType",
+                                text: "IfcCurtainWallType",
+                            },
+                            {
+                                id: "IfcDoor",
+                                text: "IfcDoor",
+                            },
+                            {
+                                id: "IfcDoorLiningProperties",
+                                text: "IfcDoorLiningProperties",
+                            },
+                            {
+                                id: "IfcDoorPanelProperties",
+                                text: "IfcDoorPanelProperties",
+                            },
+                            {
+                                id: "IfcDoorStyle",
+                                text: "IfcDoorStyle",
+                            },
+                            {
+                                id: "IfcMember",
+                                text: "IfcMember",
+                            },
+                            {
+                                id: "IfcMemberType",
+                                text: "IfcMemberType",
+                            },
+                            {
+                                id: "IfcPlate",
+                                text: "IfcPlate",
+                            },
+                            {
+                                id: "IfcPlateType",
+                                text: "IfcPlateType",
+                            },
+                            {
+                                id: "IfcRailing",
+                                text: "IfcRailing",
+                            },
+                            {
+                                id: "IfcRailingType",
+                                text: "IfcRailingType",
+                            },
+                            {
+                                id: "IfcRamp",
+                                text: "IfcRamp",
+                            },
+                            {
+                                id: "IfcRampFlight",
+                                text: "IfcRampFlight",
+                            },
+                            {
+                                id: "IfcRampFlightType",
+                                text: "IfcRampFlightType",
+                            },
+                            {
+                                id: "IfcRelConnectsPathElements",
+                                text: "IfcRelConnectsPathElements",
+                            },
+                            {
+                                id: "IfcRoof",
+                                text: "IfcRoof",
+                            },
+                            {
+                                id: "IfcSlab",
+                                text: "IfcSlab",
+                            },
+                            {
+                                id: "IfcSlabType",
+                                text: "IfcSlabType",
+                            },
+                            {
+                                id: "IfcStair",
+                                text: "IfcStair",
+                            },
+                            {
+                                id: "IfcStairFlight",
+                                text: "IfcStairFlight",
+                            },
+                            {
+                                id: "IfcStairFlightType",
+                                text: "IfcStairFlightType",
+                            },
+                            {
+                                id: "IfcWall",
+                                text: "IfcWall",
+                            },
+                            {
+                                id: "IfcWallStandardCase",
+                                text: "IfcWallStandardCase",
+                            },
+                            {
+                                id: "IfcWallType",
+                                text: "IfcWallType",
+                            },
+                            {
+                                id: "IfcWindow",
+                                text: "IfcWindow",
+                            },
+                            {
+                                id: "IfcWindowLiningProperties",
+                                text: "IfcWindowLiningProperties",
+                            },
+                            {
+                                id: "IfcWindowPanelProperties",
+                                text: "IfcWindowPanelProperties",
+                            },
+                        ],
+                    },
+                ];
+                $(".ifc-selection").select2({
+                    data: data,
+                    placeholder: "Select one or more IFC entities",
+                    theme: "bootstrap4",
+                });
+            });
+        </script>
     </body>
 </html>

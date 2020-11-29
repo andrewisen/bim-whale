@@ -2,35 +2,36 @@
  * WIP
  */
 
-import { config } from "./src/config/example.config.ts";
 import { IfcFile } from "./src/ifc-parser/ifc-parser.ts";
 declare const buildTable: any;
+declare const $: any;
 
-function printPropertySet(ifcFile: IfcFile, propertySet: string) {
-    for (var entitiy in ifcFile.entities.genericEntities) {
-        for (var pset in ifcFile.entities.genericEntities[entitiy].properties) {
-            if (pset === propertySet) {
-                console.log(
-                    ifcFile.entities.genericEntities[entitiy].properties[pset]
-                );
-            }
-        }
-    }
-}
-
-function handleFile(event: Event) {
-    const file = (<HTMLInputElement>event!.target).files![0];
+function handleIfcFile() {
+    const requiredEntities = [
+        "IFCPROPERTYSINGLEVALUE",
+        "IFCRELDEFINESBYPROPERTIES",
+        "IFCPROPERTYSET",
+    ];
+    let selectedEntities = $(".ifc-selection")
+        .val()
+        .map((entity: any) => {
+            return entity.toUpperCase();
+        });
+    const allEntities = [...requiredEntities, ...selectedEntities];
+    const config = {
+        requiredEntities: requiredEntities,
+        selectedEntities: selectedEntities,
+        allEntities: allEntities,
+    };
+    const file = $("#ifcFileInput").prop("files")[0];
     var fileReader = new FileReader();
-    fileReader.onload = (loadEvent: Event) => {
-        const lines: string[] = (<string>fileReader!.result).split(/\r\n|\n/);
+    fileReader.onload = (loadEvent) => {
+        const lines = (<string>fileReader!.result).split(/\r\n|\n/);
         let ifcFile = new IfcFile(lines, config);
         ifcFile.parseIfcFile();
         buildTable(Object.values(ifcFile.entities.genericEntities));
     };
     fileReader.readAsText(file);
+    return false;
 }
-
-const inputElement = document.getElementById("ifcFileInput");
-inputElement!.addEventListener("change", (event: Event) => {
-    handleFile(event);
-});
+document.getElementById("ifc-form").addEventListener("submit", handleIfcFile);
