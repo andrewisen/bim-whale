@@ -64,6 +64,7 @@ function _generateStepInstance(this: StepFile, line: string) {
         // These are usually IfcSharedBldgElements (doors, windows, walls, floors, etc.)
         [entity.instanceId]: {
             entityName: entity.entityName,
+            instanceId: entity.instanceId,
             attributes: entity.attributes,
             properties: {},
         },

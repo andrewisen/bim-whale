@@ -1,0 +1,88 @@
+:root {
+    /* Bootstrap Colors */
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --code-color: #e83e8c;
+
+    --content-scale: 1;
+}
+
+/* Force margin, dunno why margin-top doens't work */
+.json-document:before {
+}
+
+/* Root element */
+.json-document {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 1em 2em 1em;
+}
+
+/* Syntax highlighting for JSON objects */
+ul.json-dict,
+ol.json-array {
+    color: black;
+    list-style-type: none;
+    margin: 0 0 0 1px;
+    border-left: 1px dotted #ccc;
+    padding-left: 2em;
+}
+.json-string {
+    /*padding: 0 1em;*/
+    color: var(--danger);
+    /*
+    color: #0B7500;
+    */
+}
+.json-literal {
+    color: #1a01cc;
+}
+
+/* Toggle button */
+a.json-toggle {
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+}
+a.json-toggle:focus {
+    outline: none;
+}
+a.json-toggle:before {
+    font-size: 1.1em;
+    color: #0275d8;
+    content: url("../svg/child-row-close.svg");
+    transform: scale(var(--content-scale));
+    position: absolute;
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+    line-height: 1em;
+    left: -1.2em;
+}
+a.json-toggle:hover:before {
+    /*color: #aaa;*/
+}
+a.json-toggle.collapsed:hover:before {
+    content: url("../svg/child-row-open.svg");
+    transform: scale(var(--content-scale));
+}
+
+a.json-toggle.collapsed:before {
+    content: url("../svg/child-row-open-no-fill.svg");
+    transform: scale(var(--content-scale));
+}
+
+/* Collapsable placeholder links */
+a.json-placeholder {
+    color: var(--code-color);
+    /*padding: 0 1em;*/
+    text-decoration: none;
+}
+a.json-placeholder:hover {
+    text-decoration: underline;
+}

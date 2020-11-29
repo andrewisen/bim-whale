@@ -1,11 +1,10 @@
 /**
- * This is a mirror of index.ts.
- *
  * WIP
  */
 
 import { config } from "./src/config/example.config.ts";
 import { IfcFile } from "./src/ifc-parser/ifc-parser.ts";
+declare const buildTable: any;
 
 function printPropertySet(ifcFile: IfcFile, propertySet: string) {
     for (var entitiy in ifcFile.entities.genericEntities) {
@@ -26,7 +25,7 @@ function handleFile(event: Event) {
         const lines: string[] = (<string>fileReader!.result).split(/\r\n|\n/);
         let ifcFile = new IfcFile(lines, config);
         ifcFile.parseIfcFile();
-        printPropertySet(ifcFile, "Custom_Pset");
+        buildTable(Object.values(ifcFile.entities.genericEntities));
     };
     fileReader.readAsText(file);
 }

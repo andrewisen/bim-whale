@@ -6,24 +6,95 @@
         <title>BIM Whale - Example</title>
     </head>
     <body>
-        <p>
-            <!-- Example: https://www.w3schools.com/tags/att_input_type_file.asp -->
-            <label for="ifcFile">Select an IFC file:</label>
-            <input
-                type="file"
-                accept=".ifc"
-                id="ifcFileInput"
-                name="ifcFileInput"
-                onclick="this.value=null;"
-            />
-        </p>
-        <p>Psst... look in the console.</p>
-        <p>
-            Read more at:
-            <a href="https://github.com/andrewisen/bim-whale"
-                >https://github.com/andrewisen/bim-whale</a
+        <header
+            class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
+        >
+            <p class="h5 my-0 mr-md-auto fw-normal">The BIM Whale - Demo</p>
+
+            <a
+                class="btn btn-outline-primary"
+                href="https://github.com/andrewisen/bim-whale"
+                >GitHub</a
             >
-        </p>
+        </header>
+        <main class="container">
+            <div>
+                <table class="table" id="ifcTable"></table>
+            </div>
+            <div class="container py-4">
+                <div class="input-group mb-3">
+                    <input
+                        type="file"
+                        accept=".ifc"
+                        id="ifcFileInput"
+                        name="ifcFileInput"
+                        onclick="this.value=null;"
+                        class="form-control"
+                    />
+                </div>
+            </div>
+
+            <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                <div class="row">
+                    <div class="col-12 col-md">
+                        <small class="d-block mb-3 text-muted"
+                            >Created by
+                            <a href="https://andrewisen.se/" target="_blank"
+                                >André Wisén</a
+                            ></small
+                        >
+                    </div>
+                </div>
+            </footer>
+        </main>
+
+        <!-- Bootstrap v5.0.0-alpha3 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-CuOF+2SnTUfTwSZjCXf01h7uYhfOBuxIhGKPbfEJ3+FqH/s6cIFN9bGr1HmAg4fQ"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-popRpmFF9JQgExhfw5tZT4I9/CI5e2QcuUZPOVXb1m7qUmeR2b50u+YFEYe1wgzy"
+            crossorigin="anonymous"
+        ></script>
+        <!-- jQuery Slim (for Datatables) -->
+        <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+            crossorigin="anonymous"
+        ></script>
+        <!-- Datatables -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.css"
+        />
+        <script
+            type="text/javascript"
+            src="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.js"
+        ></script>
+        <script src="./assets/js/datatables.js"></script>
+
+        <!-- Child Rows (for DataTables) -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="./assets/css/child-rows.css"
+        />
+        <script src="./assets/js/child-rows.js"></script>
+
+        <!-- JSON Viewer (for DataTables) -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="./assets/css/json-viewer.css"
+        />
+        <script src="./assets/js/json-viewer.js"></script>
+
+        <!-- BIM Whale minified bundle -->
         <script src="../dist/bundle.min.js"></script>
     </body>
 </html>
