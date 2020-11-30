@@ -23,6 +23,10 @@ class StepFile {
      */
     protected selectedEntities: string[];
     /**
+     * These are the selected Property Sets that will be parsed.
+     */
+    protected selectedPropertySets: string[];
+    /**
      * These are all IFC Entities that will be parsed.
      * All other entities will be ignored.
      */
@@ -50,6 +54,7 @@ class StepFile {
         config: {
             requiredEntities: string[];
             selectedEntities: string[];
+            selectedPropertySets: string[];
             allEntities: string[];
         }
     ) {
@@ -58,6 +63,7 @@ class StepFile {
 
         this.requiredEntities = config.requiredEntities;
         this.selectedEntities = config.selectedEntities;
+        this.selectedPropertySets = config.selectedPropertySets;
         this.allEntities = config.allEntities;
 
         this.requiredEntities.forEach((entity: string) => {

@@ -22,6 +22,12 @@ function _mapPropertySetsToGenericEntities(this: IfcFile) {
             continue;
         }
 
+        if (this.selectedPropertySets.length > 0) {
+            if (!this.selectedPropertySets.includes(ifcPropertySetName)) {
+                continue;
+            }
+        }
+
         const relatedObjectsLenght =
             ifcRelDefinesByPropertiesAttributes[4].length;
         for (let index = 0; index < relatedObjectsLenght; index++) {

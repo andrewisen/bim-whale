@@ -16,6 +16,12 @@ const requiredEntities: string[] = [
 const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];
 
 /**
+ * ## Selected IFC Property Sets
+ * These are the selected Property Sets that will be parsed.
+ */
+const selectedPropertySets: string[] = ["Custom_Pset"];
+
+/**
  * ## All IFC Entities
  * These are all IFC Entities that will be parsed.
  * All other entities will be ignored.
@@ -40,6 +46,7 @@ const filePath: string = "./SimpleWall.ifc";
 const config: any = {
     requiredEntities: requiredEntities,
     selectedEntities: selectedEntities,
+    selectedPropertySets: selectedPropertySets,
     allEntities: allEntities,
     filePath: filePath,
 };
