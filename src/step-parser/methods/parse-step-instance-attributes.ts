@@ -174,6 +174,7 @@ function _parseStepInstanceAttributes(
         .replace(/(^|,)\((#\d+.*?)\)/g, "$1[$2]") // Nested attributes
         .replace(/([,\[])(#\d+)+/g, '$1"$2"') // References to other entities (e.g. #123)
         .replace(/,(\d+[.]\d*)/g, ",'$1'") // Integers (that are not escaped)
+        .replace(/(\(|\,)(\..+\.)(\)|\,)/g, "$1'$2'$3") // ".T.", ".F.", ".UNDEFINED.", etc.
         .replace(/'/g, '"'); // Convert all remaining apostrophes to quotes
 
     if (hasFunction) {
