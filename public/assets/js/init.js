@@ -14,4 +14,23 @@ $(document).ready(function () {
     if (ifcEntities) {
         $("#ifcSelection").val(ifcEntities.split(",")).trigger("change");
     }
+
+    // Init select2
+    $("#propertySetsSelection").select2({
+        placeholder: "Select which IFC Property Sets to include",
+        theme: "bootstrap4",
+        allowClear: true,
+        tags: true,
+    });
+    // Populate select2 with prevoius selection
+    var ifcPropertySets = localStorage.getItem("ifcPropertySets");
+    if (ifcPropertySets) {
+        ifcPropertySets.split(",").forEach((propertySet) => {
+            var newOption = new Option(propertySet, propertySet, true, true);
+            $("#propertySetsSelection").append(newOption).trigger("change");
+        });
+        $("#propertySetsSelection")
+            .val(ifcPropertySets.split(","))
+            .trigger("change");
+    }
 });

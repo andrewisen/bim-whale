@@ -16,22 +16,37 @@
                 <table class="table" id="ifcTable"></table>
             </div>
             <div id="ifcSetup">
-                <div class="d-flex justify-content-center py-4">
+                <div class="d-flex justify-content-center">
                     <form id="ifc-form" onsubmit="return false;">
-                        <label for="ifcSelection" class="form-label"
-                            >1. Select IFC entities</label
-                        >
-                        <select
-                            id="ifcSelection"
-                            name="ifcEntites[]"
-                            multiple="multiple"
-                            style="width: 100%"
-                            required
-                        ></select>
+                        <div class="py-2">
+                            <label for="ifcSelection" class="form-label"
+                                >1. Select IFC entities</label
+                            >
+                            <select
+                                id="ifcSelection"
+                                name="ifcEntites[]"
+                                multiple="multiple"
+                                style="width: 100%"
+                                required
+                            ></select>
+                        </div>
+                        <div class="py-2">
+                            <label
+                                for="propertySetsSelection"
+                                class="form-label"
+                                >2. Select Property Sets (optional)</label
+                            >
+                            <select
+                                id="propertySetsSelection"
+                                name="propertySets[]"
+                                multiple="multiple"
+                                style="width: 100%"
+                            ></select>
+                        </div>
 
-                        <div class="my-4">
+                        <div class="py-2">
                             <label for="ifcFileInput" class="form-label"
-                                >2. Select an IFC file</label
+                                >3. Select an IFC file</label
                             >
                             <input
                                 type="file"
@@ -41,9 +56,11 @@
                                 required
                             />
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            Ok, let's go
-                        </button>
+                        <div class="d-grid py-4">
+                            <button type="submit" class="btn btn-primary">
+                                Let's go
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

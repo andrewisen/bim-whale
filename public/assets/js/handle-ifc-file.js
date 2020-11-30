@@ -8,6 +8,15 @@ function handleIfcFile() {
             return entity.toUpperCase();
         });
 
+    // Update local storage
+    localStorage.setItem("ifcPropertySets", $("#propertySetsSelection").val());
+    // Return select2 selection(s)
+    let selectedPropertySets = $("#propertySetsSelection")
+        .val()
+        .map((entity) => {
+            return entity;
+        });
+
     // Same as "config.ts"
     const requiredEntities = [
         "IFCPROPERTYSINGLEVALUE",
@@ -20,6 +29,7 @@ function handleIfcFile() {
     const config = {
         requiredEntities: requiredEntities,
         selectedEntities: selectedEntities,
+        selectedPropertySets: selectedPropertySets,
         allEntities: allEntities,
     };
     // Get file with jQuery
