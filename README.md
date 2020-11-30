@@ -79,16 +79,16 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 A compiled _JS bundle file_ is available here:
 [https://github.bimvalen.se/dist/bundle.min.js](https://github.bimvalen.se/dist/bundle.min.js)
 
-Do not use the URL as a CDN.
+**Do not use the URL as a CDN.**
 
-1. Download the script.
-2. Add it to your project.
+1. Download the script
+2. Add it to your project
 
 ```html
 <script src="./pathToBundleFile/bundle.min.js"></script>
 ```
 
-3. Use the FileReader API and create a new `IfcFile` object.
+3. Use the FileReader API and create a new `IfcFile` object
 
 ```javascript
 // The libary is called: BIMWHALE
@@ -102,7 +102,9 @@ fileReader.onload = (loadEvent) => {
 fileReader.readAsText(file);
 ```
 
-4. See example in the `public` folder.
+4. See the example in the `public` folder. More specific: [handle-ifc-file.js](https://github.com/andrewisen/bim-whale/blob/main/public/assets/js/handle-ifc-file.js)
+
+5. Done :)
 
 The following steps will guide you to set up your own development platform.
 
@@ -205,12 +207,11 @@ You should get the following result:
 }
 ```
 
-w
 **In summary:**
 We have performed a simple parsing. We have only included walls and doors.
 Again, see the example config file: `const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];`
 
-In the end, we simply print out the **Property Set** `Custom_Pset`.
+In the end, we simply print out the property set `Custom_Pset`.
 
 **TODO**
 
