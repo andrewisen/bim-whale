@@ -66,7 +66,6 @@
                 </div>
             </footer>
         </main>
-
         <!-- Bootstrap v5.0.0-alpha3 -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css"
@@ -95,8 +94,8 @@
             type="text/javascript"
             src="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.js"
         ></script>
+        <!-- Custom implementation of DataTables -->
         <script src="./assets/js/datatables.js"></script>
-
         <!-- Child Rows (for DataTables) -->
         <link
             rel="stylesheet"
@@ -104,7 +103,6 @@
             href="./assets/css/child-rows.css"
         />
         <script src="./assets/js/child-rows.js"></script>
-
         <!-- JSON Viewer (for DataTables) -->
         <link
             rel="stylesheet"
@@ -112,176 +110,21 @@
             href="./assets/css/json-viewer.css"
         />
         <script src="./assets/js/json-viewer.js"></script>
-
         <!-- Select2 -->
         <link
             href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
             rel="stylesheet"
         />
-        <link href="./assets/css/select2-bootstrap4.min.css" rel="stylesheet" />
-
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-
+        <!-- Select2 Bootstrap 4 Theme-->
+        <link href="./assets/css/select2-bootstrap4.min.css" rel="stylesheet" />
         <!-- BIM Whale minified bundle -->
-        <script type="module" src="../dist/bundle.min.js"></script>
-
-        <script>
-            $(document).ready(function () {
-                var data = [
-                    {
-                        text: "Shared Building Elements",
-                        children: [
-                            {
-                                id: "IfcWindowStyle",
-                                text: "IfcWindowStyle",
-                            },
-                            {
-                                id: "IfcBeam",
-                                text: "IfcBeam",
-                            },
-                            {
-                                id: "IfcBeamType",
-                                text: "IfcBeamType",
-                            },
-                            {
-                                id: "IfcColumn",
-                                text: "IfcColumn",
-                            },
-                            {
-                                id: "IfcColumnType",
-                                text: "IfcColumnType",
-                            },
-                            {
-                                id: "IfcCurtainWall",
-                                text: "IfcCurtainWall",
-                            },
-                            {
-                                id: "IfcCurtainWallType",
-                                text: "IfcCurtainWallType",
-                            },
-                            {
-                                id: "IfcDoor",
-                                text: "IfcDoor",
-                            },
-                            {
-                                id: "IfcDoorLiningProperties",
-                                text: "IfcDoorLiningProperties",
-                            },
-                            {
-                                id: "IfcDoorPanelProperties",
-                                text: "IfcDoorPanelProperties",
-                            },
-                            {
-                                id: "IfcDoorStyle",
-                                text: "IfcDoorStyle",
-                            },
-                            {
-                                id: "IfcMember",
-                                text: "IfcMember",
-                            },
-                            {
-                                id: "IfcMemberType",
-                                text: "IfcMemberType",
-                            },
-                            {
-                                id: "IfcPlate",
-                                text: "IfcPlate",
-                            },
-                            {
-                                id: "IfcPlateType",
-                                text: "IfcPlateType",
-                            },
-                            {
-                                id: "IfcRailing",
-                                text: "IfcRailing",
-                            },
-                            {
-                                id: "IfcRailingType",
-                                text: "IfcRailingType",
-                            },
-                            {
-                                id: "IfcRamp",
-                                text: "IfcRamp",
-                            },
-                            {
-                                id: "IfcRampFlight",
-                                text: "IfcRampFlight",
-                            },
-                            {
-                                id: "IfcRampFlightType",
-                                text: "IfcRampFlightType",
-                            },
-                            {
-                                id: "IfcRelConnectsPathElements",
-                                text: "IfcRelConnectsPathElements",
-                            },
-                            {
-                                id: "IfcRoof",
-                                text: "IfcRoof",
-                            },
-                            {
-                                id: "IfcSlab",
-                                text: "IfcSlab",
-                            },
-                            {
-                                id: "IfcSlabType",
-                                text: "IfcSlabType",
-                            },
-                            {
-                                id: "IfcStair",
-                                text: "IfcStair",
-                            },
-                            {
-                                id: "IfcStairFlight",
-                                text: "IfcStairFlight",
-                            },
-                            {
-                                id: "IfcStairFlightType",
-                                text: "IfcStairFlightType",
-                            },
-                            {
-                                id: "IfcWall",
-                                text: "IfcWall",
-                            },
-                            {
-                                id: "IfcWallStandardCase",
-                                text: "IfcWallStandardCase",
-                            },
-                            {
-                                id: "IfcWallType",
-                                text: "IfcWallType",
-                            },
-                            {
-                                id: "IfcWindow",
-                                text: "IfcWindow",
-                            },
-                            {
-                                id: "IfcWindowLiningProperties",
-                                text: "IfcWindowLiningProperties",
-                            },
-                            {
-                                id: "IfcWindowPanelProperties",
-                                text: "IfcWindowPanelProperties",
-                            },
-                        ],
-                    },
-                ];
-                $("#ifcSelection").select2({
-                    data: data,
-                    placeholder: "Select which IFC entities to include",
-                    theme: "bootstrap4",
-                    allowClear: true,
-                    closeOnSelect: false,
-                });
-
-                var ifcEntities = localStorage.getItem("ifcEntities");
-
-                if (ifcEntities) {
-                    $("#ifcSelection")
-                        .val(ifcEntities.split(","))
-                        .trigger("change");
-                }
-            });
-        </script>
+        <script src="../dist/bundle.min.js"></script>
+        <!-- IFC2x3 TC1 Entities -->
+        <script src="./assets/js/ifc-entites.js"></script>
+        <!-- Initialization -->
+        <script src="./assets/js/init.js"></script>
+        <!-- Handle IFC file (addEventListener) -->
+        <script src="./assets/js/handle-ifc-file.js"></script>
     </body>
 </html>
