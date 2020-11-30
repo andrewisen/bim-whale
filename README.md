@@ -9,12 +9,12 @@
   <p align="center">
     A simple client-side IFC parser 
     <br />
-    <a href="http://github.bimvalen.se/docs/"><strong>Explore the docs »</strong></a>
+    <a href="http://github.bimvalen.se/public/"><strong>View the demo »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/andrewisen/bim-whale-samples">Access IFC sample files</a>
+    <a href="https://github.bimvalen.se/docs/">Explore the docs</a>
     ·
-    <a href="https://github.bimvalen.se/public/">View Demo</a>
+    <a href="https://github.com/andrewisen/bim-whale-samples">Access IFC sample files</a>
     ·
     <a href="https://github.com/andrewisen/bim-whale/issues">Report Bug</a>
     ·
@@ -76,12 +76,35 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 
 ## Getting Started
 
-This repository contains the TypeScript source code.
-The following steps will guide you to set up your own development platform.
-
 A compiled _JS bundle file_ is available here:
 [https://github.bimvalen.se/dist/bundle.min.js](https://github.bimvalen.se/dist/bundle.min.js)
-Please note that the JavaScript file **only works for the demo** at this moment.
+
+Do not use the URL as a CDN.
+
+1. Download the script.
+2. Add it to your project.
+
+```html
+<script src="./pathToBundleFile/bundle.min.js"></script>
+```
+
+3. Use the FileReader API and create a new `IfcFile` object.
+
+```javascript
+// The libary is called: BIMWHALE
+var fileReader = new FileReader();
+fileReader.onload = (loadEvent) => {
+    const lines = fileReader.result.split(/\r\n|\n/);
+    let ifcFile = new BIMWHALE.IfcFile(lines, config);
+    ifcFile.parseIfcFile();
+    buildTable(Object.values(ifcFile.entities.genericEntities)); // See: datatables.js
+};
+fileReader.readAsText(file);
+```
+
+4. See example in the `public` folder.
+
+The following steps will guide you to set up your own development platform.
 
 ### Prerequisites
 
