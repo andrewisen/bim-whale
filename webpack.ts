@@ -7,12 +7,14 @@ declare const buildTable: any;
 declare const $: any;
 
 function handleIfcFile() {
+    localStorage.setItem("ifcEntities", $("#ifcSelection").val());
+
     const requiredEntities = [
         "IFCPROPERTYSINGLEVALUE",
         "IFCRELDEFINESBYPROPERTIES",
         "IFCPROPERTYSET",
     ];
-    let selectedEntities = $(".ifc-selection")
+    let selectedEntities = $("#ifcSelection")
         .val()
         .map((entity: any) => {
             return entity.toUpperCase();

@@ -9,27 +9,24 @@
         <header
             class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
         >
-            <p class="h5 my-0 mr-md-auto fw-normal">The BIM Whale - Demo</p>
+            <p class="h5 my-0 mr-md-auto fw-normal">The BIM Whale</p>
 
-            <a
-                class="btn btn-outline-primary"
-                href="https://github.com/andrewisen/bim-whale"
-                >GitHub</a
-            >
+           
         </header>
         <main class="container">
             <div>
                 <table class="table" id="ifcTable"></table>
             </div>
-            <div id="ifc-setup" class="container py-4">
-                <div class="py-4">
+            <div
+                id="ifcSetup"  
+            >
+                <div class="d-flex justify-content-center py-4">
                     <form id="ifc-form" onsubmit="return false;">
-                        <label for="select-2" class="form-label"
-                            >Select IFC entities</label
+                        <label for="ifcSelection" class="form-label"
+                            >1. Select IFC entities</label
                         >
                         <select
-                            id="select-2"
-                            class="ifc-selection"
+                            id="ifcSelection"
                             name="ifcEntites[]"
                             multiple="multiple"
                             style="width: 100%"
@@ -38,7 +35,7 @@
 
                         <div class="my-4">
                             <label for="ifcFileInput" class="form-label"
-                                >Select an IFC file</label
+                                >2. Select an IFC file</label
                             >
                             <input
                                 type="file"
@@ -62,8 +59,10 @@
                             >Created by
                             <a href="https://andrewisen.se/" target="_blank"
                                 >André Wisén</a
-                            ></small
-                        >
+                            > - <a href="https://github.com/andrewisen/bim-whale" target="_blank"
+                            >GitHub</a
+                        ></small
+                        </small>
                     </div>
                 </div>
             </footer>
@@ -81,13 +80,13 @@
             integrity="sha384-popRpmFF9JQgExhfw5tZT4I9/CI5e2QcuUZPOVXb1m7qUmeR2b50u+YFEYe1wgzy"
             crossorigin="anonymous"
         ></script>
-        <!-- jQuery Slim (for Datatables) -->
+        <!-- jQuery Slim (for DataTables) -->
         <script
             src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
             crossorigin="anonymous"
         ></script>
-        <!-- Datatables -->
+        <!-- DataTables -->
         <link
             rel="stylesheet"
             type="text/css"
@@ -268,11 +267,21 @@
                         ],
                     },
                 ];
-                $(".ifc-selection").select2({
+                $("#ifcSelection").select2({
                     data: data,
-                    placeholder: "Select one or more IFC entities",
+                    placeholder: "Select which IFC entities to include",
                     theme: "bootstrap4",
+                    allowClear: true,
+                    closeOnSelect: false,
                 });
+
+                var ifcEntities = localStorage.getItem("ifcEntities");
+
+                if (ifcEntities) {
+                    $("#ifcSelection")
+                        .val(ifcEntities.split(","))
+                        .trigger("change");
+                }
             });
         </script>
     </body>

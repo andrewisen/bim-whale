@@ -1,5 +1,5 @@
 function buildTable(dataSet) {
-    $("#ifc-setup").hide();
+    $("#ifcSetup").hide();
 
     var ifcTable = $("#ifcTable").DataTable({
         data: dataSet,
