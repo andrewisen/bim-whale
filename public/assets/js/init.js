@@ -6,7 +6,7 @@ $(document).ready(function () {
     // Init select2
     $("#ifcSelection").select2({
         data: data,
-        placeholder: "Select which IFC entities to include",
+        placeholder: "Select which entities to include",
         theme: "bootstrap4",
         allowClear: true,
     });
@@ -18,7 +18,7 @@ $(document).ready(function () {
 
     // Init select2
     $("#propertySetsSelection").select2({
-        placeholder: "Select which IFC Property Sets to include",
+        placeholder: "Enter which property sets to include",
         theme: "bootstrap4",
         allowClear: true,
         tags: true,
