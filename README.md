@@ -74,6 +74,42 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 
 <!-- GETTING STARTED -->
 
+## FAQ
+
+**Question:** What does _The BIM Whale_ do?
+
+**Answer:** Parse so-called `User Defined IFC Property Sets` from an IFC file
+
+##
+
+**Q:** What does NOT _The BIM Whale_ do?
+
+**A:** Parse entity attributes (e.g. height of a an object), parse geometry, follow the EXPRESS standard
+
+##
+
+**Q:** What is an IFC file?
+
+**A:** Industry Foundation Classes (IFC) is a standardized, digital description of a BIM model. See [IFC](https://en.wikipedia.org/wiki/Industry_Foundation_Classes) for more information.
+
+##
+
+**Q:** What is a STEP file?
+
+**A:** A STEP-File is the format IFC uses. See [ISO 10303-21](https://en.wikipedia.org/wiki/ISO_10303-21) for more information
+
+##
+
+**Q:** Is this code "hand made"?
+
+**A:** Yes, the code is hand made. The parsing is not derived from an EXPRESS definition.
+
+##
+
+**Q:** Is the code ready for production?
+
+**A:** No, not yet. See [open issues](/issues) for more info
+
 ## Getting Started
 
 A compiled _JS bundle file_ is available here:
