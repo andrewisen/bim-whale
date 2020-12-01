@@ -6,7 +6,7 @@
     --danger-color: #dc3545;
     --code-color: #e83e8c;
 
-    --content-scale: 1;
+    --content-scale: 0.8;
 }
 
 /* Force margin, dunno why margin-top doens't work */
@@ -53,7 +53,7 @@ a.json-toggle:focus {
     outline: none;
 }
 a.json-toggle:before {
-    font-size: 1.1em;
+    font-size: 1rem;
     color: #0275d8;
     content: url("../svg/child-row-close.svg");
     transform: scale(var(--content-scale));
@@ -61,7 +61,6 @@ a.json-toggle:before {
     display: inline-block;
     width: 1em;
     text-align: center;
-    line-height: 1em;
     left: -1.2em;
 }
 a.json-toggle:hover:before {

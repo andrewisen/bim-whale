@@ -1,5 +1,6 @@
 // Initialization
 $("body").css("background", "#f8f9fa");
+$("#ifcResult").hide();
 
 $(document).ready(function () {
     // Init select2

@@ -11,11 +11,9 @@
         >
             <p class="h5 my-0 mr-md-auto fw-normal">The BIM Whale</p>
         </header>
-        <main class="container">
-            <div>
-                <table class="table" id="ifcTable"></table>
-            </div>
-            <div id="ifcSetup">
+        <main>
+            <!-- IFC Setup -->
+            <div class="container" id="ifcSetup">
                 <div class="d-flex justify-content-center">
                     <form id="ifc-form" onsubmit="return false;">
                         <div class="py-2">
@@ -64,7 +62,127 @@
                     </form>
                 </div>
             </div>
-            <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <!-- IFC Result -->
+            <div class="container-fluid" id="ifcResult">
+                <div
+                    class="accordion accordion-flush"
+                    id="accordionFlushExample"
+                >
+                    <!-- Introduction  -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingIntro">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#flush-collapseIntro"
+                                aria-expanded="false"
+                                aria-controls="flush-collapseIntro"
+                            >
+                                4. View Result
+                            </button>
+                        </h2>
+                        <div
+                            id="flush-collapseIntro"
+                            class="accordion-collapse collapse show"
+                            aria-labelledby="flush-headingIntro"
+                            data-parent="#accordionFlushExample"
+                        >
+                            <div class="accordion-body bg-white">
+                                <p>Your results are available below.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Table - Entities -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#flush-collapseOne"
+                                aria-expanded="false"
+                                aria-controls="flush-collapseOne"
+                            >
+                                <strong>Entities</strong>
+                            </button>
+                        </h2>
+                        <div
+                            id="flush-collapseOne"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOne"
+                            data-parent="#accordionFlushExample"
+                        >
+                            <div class="accordion-body bg-white">
+                                <table
+                                    class="table table-hover"
+                                    id="ifcTable"
+                                    width="100%"
+                                ></table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Table - Property Sets -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#flush-collapseTwo"
+                                aria-expanded="false"
+                                aria-controls="flush-collapseTwo"
+                            >
+                                <strong>Property Sets</strong>
+                            </button>
+                        </h2>
+                        <div
+                            id="flush-collapseTwo"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingTwo"
+                            data-parent="#accordionFlushExample"
+                        >
+                            <div class="accordion-body bg-white">
+                                <table
+                                    class="table table-hover"
+                                    id="ifcPropertySetTable"
+                                    width="100%"
+                                ></table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Table - ALL (Combined Table) -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#flush-collapseThree"
+                                aria-expanded="false"
+                                aria-controls="flush-collapseThree"
+                            >
+                                <strong>ALL</strong>
+                            </button>
+                        </h2>
+                        <div
+                            id="flush-collapseThree"
+                            class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingThree"
+                            data-parent="#accordionFlushExample"
+                        >
+                            <div class="accordion-body bg-white">
+                                <table
+                                    class="table table-hover"
+                                    id="allTable"
+                                    width="100%"
+                                ></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="container pt-4 my-md-5 pt-md-5 border-top">
                 <div class="row">
                     <div class="col-12 col-md">
                         <small class="d-block mb-3 text-muted"
@@ -101,18 +219,21 @@
             integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
             crossorigin="anonymous"
         ></script>
+
         <!-- DataTables -->
         <link
             rel="stylesheet"
             type="text/css"
-            href="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.css"
+            href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.22/b-1.6.5/b-html5-1.6.5/sb-1.0.0/sp-1.2.1/sl-1.3.1/datatables.min.css"
         />
         <script
             type="text/javascript"
-            src="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.js"
+            src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.22/b-1.6.5/b-html5-1.6.5/sb-1.0.0/sp-1.2.1/sl-1.3.1/datatables.min.js"
         ></script>
+
         <!-- Custom implementation of DataTables -->
         <script src="./assets/js/datatables.js"></script>
+        <script src="./assets/js/datatables-excel.js"></script>
         <!-- Child Rows (for DataTables) -->
         <link
             rel="stylesheet"

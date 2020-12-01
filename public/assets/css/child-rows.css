@@ -1,15 +1,18 @@
 td.details-control {
-    background-size: 100% 100% !important;
+    background-size: 50% 50% !important;
     background: url("../svg/child-row-open-no-fill.svg") no-repeat center center;
     cursor: pointer;
+    fill: none;
 }
 td.details-control:hover {
-    background-size: 100% 100% !important;
+    background-size: 50% 50% !important;
     background: url("../svg/child-row-open.svg") no-repeat center center;
     cursor: pointer;
+    fill: none;
 }
 
 tr.shown td.details-control {
-    background-size: 100% 100% !important;
+    background-size: 50% 50% !important;
     background: url("../svg/child-row-close.svg") no-repeat center center;
+    fill: none;
 }
