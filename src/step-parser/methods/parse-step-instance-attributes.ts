@@ -32,9 +32,9 @@ import { StepFile } from "../step-parser.ts";
  * My favorite RegEx tool is [https://regex101.com](https://regex101.com).
  *
  * Please note that RegEx is can be difficult to understand.
- * If you are unsure, just ignore this bit :)
+ * Just ignore this bit if you are unsure.
  *
- * Here are some noteworthy difficult lines.
+ * ### Some noteworthy difficult lines
  * _As instances:_
  * ```javascript
  * #278= IFCPROPERTYSINGLEVALUE('Structural',$,IFCBOOLEAN(.F.),$);
@@ -54,7 +54,7 @@ import { StepFile } from "../step-parser.ts";
  * 'Thermal Resistance (R)',$,IFCREAL(0.270116960643959),$
  * ```
  *
- * There are at least five different things to consider
+ * There are at least five different things to consider:
  * 1. "Function"
  * 2. Indefinite attribute
  * 3. Nested attribute
@@ -71,7 +71,7 @@ import { StepFile } from "../step-parser.ts";
  * IFCLOGICAL(.U.)
  * ```
  *
- * For the sake of simplicity, let's call and treat these as functions.
+ * For the sake of simplicity, let's call and treat these as JavaScript functions.
  * Note that each function has different ways to pass in parameters.
  * Some parameters are enclosed with apostrophe, and some are not.
  *
@@ -80,7 +80,7 @@ import { StepFile } from "../step-parser.ts";
  * `[A-Z]+\('[a-zA-z_ ]+'\)`
  *
  * Let's take the first function `IFCIDENTIFIER('Outside door')` as an example.
- * The regex will find us the name of the function...
+ * The RegEx will find us the name of the function...
  *
  * However, this is to no good use yet.
  * We need to capture both the _function name_ and the _parameters_, i.e. __IFCIDENTIFIER__ and __Outside door__
@@ -90,6 +90,9 @@ import { StepFile } from "../step-parser.ts";
  *
  * Anyways, we can substitute our string using the expression `$1$2)`.
  *
+ * __UPDATE:__ This approach has been replaced with a new one.
+ * See [Issue #4](https://github.com/andrewisen/bim-whale/issues/4) for more information.
+ *
  * ### 2. Indefinite attribute
  * Example: `#764= IFCRELDEFINESBYPROPERTIES('0Jv9wzDiT2Fx3l2pN5PrZ7',#42,$,$,(#140),#752);`
  *
@@ -97,6 +100,9 @@ import { StepFile } from "../step-parser.ts";
  * Note that a dollar sign might appear in the UIID, e.g. `2HlE6XRD5D2u$q88QiyvCI`
  *
  * One can simply assume that _indefinite attributes_ __ALWAYS__ begins with a comma (and not a character).
+ *
+ * __UPDATE:__ This approach has been replaced with a new one.
+ * See [Issue #4](https://github.com/andrewisen/bim-whale/issues/4) for more information.
  *
  * ### 3. Nested attribute
  * Example: `#810= IFCPROPERTYSET('0eCyo1mQf61RRDb8LkFhbB',#42,'Other',$,(#781,#782,#783,#784,#785));`
@@ -108,10 +114,9 @@ import { StepFile } from "../step-parser.ts";
  * Example: `#219= IFCWALLSTANDARDCASE('1F6umJ5H50aeL3A1As_wTm',#42,'Basic Wall:Bearing Wall:346660',$,'Basic Wall:Bearing Wall',#188,#215,'346660');`
  *
  * The _wall entity_ is referencing the entities __188__ and __215__.
- * These references need to be enclosed by apostrophes or quotations marks.
- * I have opted to use apostrophes and change these to quotations marks at the very end.
+ * These references need to be enclosed by  quotations marks.
  *
- * Note that references inside _nested attributes_ also need to be enclosed.
+ * Please note that references inside _nested attributes_ also need to be enclosed (see example above).
  *
  * ### 5. Integers
  * Example: `#572= IFCDOOR('1F6umJ5H50aeL3A1As_wUF',#42,'M_Single-Flush:Outside door:346843',$,'M_Single-Flush:Outside door',#938,#566,'346843',2134.,915.);`
