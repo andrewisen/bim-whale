@@ -3,28 +3,36 @@ import { StepFile } from "../step-parser.ts";
 /**
  *
  * Parse an _attribute string_ into a JavaScript object.
- * The so-called _attribute string_ is derived from {@link _generateInstance}.
+ * The so-called _attribute string_ is derived from {@link _generateStepInstance}.
  *
  * __Example:__
+ *
  * ```#572= IFCDOOR('1F6umJ5H50aeL3A1As_wUF',#42,'M_Single-Flush:Outside door:346843',$,'M_Single-Flush:Outside door',#938,#566,'346843',2134.,915.);```
  *
  * In this example, the _attribute string_ is `'1F6umJ5H50aeL3A1As_wUF',#42,'M_Single-Flush:Outside door:346843',$,'M_Single-Flush:Outside door',#938,#566,'346843',2134.,915.`.
- * The _attribute string_  must first be converted into a _JSON string_.
- * [JSON.parse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) will convert the _JSON string_ into a _JSON object_.
+ * Or, in other words: The _attribute string_ is the parameter of the "IFCDOOR function".
+ *
+ * Moving on; the _attribute string_  must first be converted into a _JSON string_.
+ * [JSON.parse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) will then convert the _JSON string_ into a _JSON object_.
  *
  * We can clearly see that the _attribute string_ __IS NOT__ compatible with JSON.
  * Firstly, apostrophes are not supported (there needs to be quotation marks).
  * Secondly, some attributes are not enclosed by quotation marks. E.g. `#938`(see example above).
  *
- * In summary, we want the following:
+ * __In summary, we want the following:__
+ *
  * ```[ "1F6umJ5H50aeL3A1As_wUF", "#42", "M_Single-Flush:Outside door:346843", "$", "M_Single-Flush:Outside door", "#938","#566","346843","2134.","915."]```
  *
  * ## RegEx
- * Regular Expression is probably the easiest way to convert the _attribute string_ into a _JSON_.
+ * Regular Expression is probably the easiest (but not the fastest) way to convert the _attribute string_ into a _JSON Object_.
  * Please note that each RegEx will impact the performance.
  *
  * I have provides a very basic set of RegEx, this will work _in most cases_.
- * Feel free to tweak this to your own liking. My favorite RegEx tool is [https://regex101.com](https://regex101.com)
+ * Feel free to tweak this to your own liking.
+ * My favorite RegEx tool is [https://regex101.com](https://regex101.com).
+ *
+ * Please note that RegEx is can be difficult to understand.
+ * If you are unsure, just ignore this bit :)
  *
  * Here are some noteworthy difficult lines.
  * _As instances:_

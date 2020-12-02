@@ -27,7 +27,7 @@
 This site is built using [TypeDoc](https://typedoc.org).
 The content is automatically generated from the TypeScript source code.
 
-## Why TypeScript?
+### Why TypeScript?
 
 I prefer TS for one simple reason:
 

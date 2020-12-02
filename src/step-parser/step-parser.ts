@@ -61,16 +61,18 @@ class StepFile {
         this.lines = lines;
         this.entities = {}; // Needs to be initialized as an empty object
 
+        // TODO: Update this ugly bit...
         this.requiredEntities = config.requiredEntities;
         this.selectedEntities = config.selectedEntities;
         this.selectedPropertySets = config.selectedPropertySets;
         this.allEntities = config.allEntities;
 
+        // Generate an empty object for each required entity
         this.requiredEntities.forEach((entity: string) => {
             Object.assign(this.entities, { [entity]: {} });
         });
 
-        // The rest are treated as a generic entities.
+        // The non-required entities (e.g. IfcWall, IfcDoor) are treated as Generic Entities
         Object.assign(this.entities, { genericEntities: {} });
     }
     /**
