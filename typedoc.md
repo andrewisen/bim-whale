@@ -12,7 +12,7 @@
     <a href="https://github.com/andrewisen/bim-whale/"><strong>GitHub repository »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/andrewisen/bim-whale-samples">Access IFC sample files</a>
+    <a href="https://github.com/andrewisen/bim-whale-ifc-samples">Access IFC sample files</a>
     ·
     <a href="https://github.bimvalen.se/public/">View Demo</a>
     ·
@@ -49,7 +49,7 @@ In other words: The class doesn't care what kind of data the file contains. It w
 
 ### Example
 
-Take a look at the example file [SimpleWall](https://github.com/andrewisen/bim-whale-samples/tree/main/SimpleWall/IFC).
+Take a look at the example file [SimpleWall](https://github.com/andrewisen/bim-whale-ifc-samples/tree/main/SimpleWall/IFC).
 Let's ignore the IFC schema and just treat the data as generic information. Here's an extract of the file:
 
 ```javascript

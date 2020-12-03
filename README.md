@@ -14,7 +14,7 @@
     <br />
     <a href="https://github.bimvalen.se/docs/">Explore the docs</a>
     ·
-    <a href="https://github.com/andrewisen/bim-whale-samples">Access IFC sample files</a>
+    <a href="https://github.com/andrewisen/bim-whale-ifc-samples">Access IFC sample files</a>
     ·
     <a href="https://github.com/andrewisen/bim-whale/issues">Report Bug</a>
     ·
@@ -172,7 +172,7 @@ The easiest approach is to copy content of the `example.NAME.ts` file.
 Replace `index.ts` with the content inside `example.index.ts`.
 
 4. Make sure you update `src/config.ts` and provide a correct **filePath**.
-   You can download some sample files here: [https://github.com/andrewisen/bim-whale-samples](https://github.com/andrewisen/bim-whale-samples)
+   You can download some sample files here: [https://github.com/andrewisen/bim-whale-ifc-samples](https://github.com/andrewisen/bim-whale-ifc-samples)
 5. Check if Deno is working
 
     ```shell
@@ -186,7 +186,7 @@ Submit an issue if have any problems.
 
 ## Usage
 
-You can download the IFC Samples here: [https://github.com/andrewisen/bim-whale-samples](https://github.com/andrewisen/bim-whale-samples)
+You can download the IFC Samples here: [https://github.com/andrewisen/bim-whale-ifc-samples](https://github.com/andrewisen/bim-whale-ifc-samples)
 
 Run the app with:
 
@@ -198,7 +198,7 @@ Or, use the demo: [https://github.bimvalen.se/public/](https://github.bimvalen.s
 
 ### SimpleWall Sample File
 
-Download the from [here](https://github.com/andrewisen/bim-whale-samples/tree/main/SimpleWall).
+Download the from [here](https://github.com/andrewisen/bim-whale-ifc-samples/tree/main/SimpleWall).
 The sample consist of:
 
 -   A wall
@@ -206,12 +206,12 @@ The sample consist of:
 
 Here's a screenshot:
 
-![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-samples/main/SimpleWall/Screenshots/Screenshot_2.png)
+![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-ifc-samples/main/SimpleWall/Screenshots/Screenshot_2.png)
 
 The IFC file has a **Property Set** called `Custom_Pset`.
 The property set only contains dummy data.
 
-![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-samples/main/SimpleWall/Screenshots/Screenshot_21.png)
+![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-ifc-samples/main/SimpleWall/Screenshots/Screenshot_21.png)
 
 Make sure to update `src/config.ts` and provide a correct **filePath**.
 You should get the following result:
