@@ -112,16 +112,14 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 
 ## Getting Started
 
-A compiled _JS bundle file_ is available here:
-[https://github.bimvalen.se/dist/bundle.min.js](https://github.bimvalen.se/dist/bundle.min.js)
+1. A compiled _JS bundle file_ is available here:
 
-**Do not use the URL as a CDN.**
+[https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/bundle.min.js](https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/bundle.min.js)
 
-1. Download the script
 2. Add it to your project
 
 ```html
-<script src="./pathToBundleFile/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/bundle.min.js"></script>
 ```
 
 3. Use the FileReader API and create a new `IfcFile` object
