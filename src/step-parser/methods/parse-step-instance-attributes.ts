@@ -220,6 +220,7 @@ function _parseStepInstanceAttributes(
         console.log("In:", attributeString);
         console.log("Out:", parsedAttributesString);
         console.log(" ");
+        parsedAttributes = ["N/A"];
     }
     return parsedAttributes;
 }
