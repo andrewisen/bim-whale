@@ -14,6 +14,8 @@
     <br />
     <a href="https://github.bimvalen.se/docs/">Explore the docs</a>
     ·
+    <a href="https://github.com/andrewisen/bim-whale-demo">Goto the demo's repository</a>
+    ·
     <a href="https://github.com/andrewisen/bim-whale-ifc-samples">Access IFC sample files</a>
     ·
     <a href="https://github.com/andrewisen/bim-whale/issues">Report Bug</a>
