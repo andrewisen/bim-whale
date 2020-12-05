@@ -14,10 +14,14 @@ import { _mapPropertySetsToGenericEntities } from "./methods/map-property-sets-t
  * In summary, this class will only handle parsing related to IFC.
  */
 class IfcFile extends StepFile {
+    /**
+     * See {@link _mapPropertySingleValuesToPropertySet}
+     */
     public mapPropertySingleValuesToPropertySet: any = _mapPropertySingleValuesToPropertySet;
-
+    /**
+     * See {@link _mapPropertySetsToGenericEntities}
+     */
     public mapPropertySetsToGenericEntities: any = _mapPropertySetsToGenericEntities;
-
     /**
      * See {@link _parseStepFile}
      */

@@ -2,8 +2,8 @@ import { IfcFile } from "../ifc-parser.ts";
 
 /**
  * Map {@link IfcPropertySet | Property Set} to {@link IfcBuildingElement | a generic enitiy} using an {@link IfcRelDefinesByProperties | objectified relationship}.
- * The method { @_mapPropertySingleValuesToPropertySet } has already created a working {@link IfcPropertySet | Property Set}.
- * Now, we need to populate each {@link IfcBuildingElement | generic enitiy} with Property Sets.
+ * The method {@link _mapPropertySingleValuesToPropertySet } has already created all `Property Set` objects.
+ * Now, we need to populate each {@link IfcBuildingElement | generic enitiy} with `Property Sets`.
  */
 function _mapPropertySetsToGenericEntities(this: IfcFile) {
     // For each objectified relationship
