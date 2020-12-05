@@ -40,12 +40,12 @@ The overall folder structure is shown below.
 bim-whale
 ├───dist
 └───src
-    ├───utils: Utilities for the documentation (this website)
-    ├───config: Configuration for Deno
+    ├───utils
+    ├───config
     ├───step-parser
-    │   └───step-parser.ts: Handle a generic STEP file
+    │   └───step-parser.ts
     └───ifc-parser
-       └───ifc-parser.ts: Handle a IFC file
+       └───ifc-parser.ts
 ```
 
 Please note that the `ifc-parser` is an extensions of the `step-parser`.
@@ -55,9 +55,10 @@ Each method is put inside it's own file to keep things more organized.
 bim-whale
 ├───dist
 └───src
-    ├───utils: Utilities for the documentation (this website)
-    ├───config: Configuration for Deno
+    ├───utils
+    ├───config
     ├───step-parser
+    │   └───step-parser.ts
     └───ifc-parser
        ├───ifc-parser.ts
        └───methods
@@ -118,6 +119,16 @@ I prefer TS for one simple reason:
 See: [TypeScript in 100 Seconds](https://www.youtube.com/watch?v=zQnBQ4tB3ZA)
 
 In my option, TS makes it much easier to work with IFC.
+
+### A word about performance
+
+-   Avoid unwanted loops
+-   Avoid nested loops
+-   Avoid using try-catch-finally
+-   Set correct variable scope
+-   Use modern ES6 (e.g. Object Destructuring, Spread Operator, template literals)
+
+**TODO**
 
 ## Where should I start?
 
