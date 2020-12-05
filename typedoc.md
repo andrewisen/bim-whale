@@ -36,7 +36,7 @@ This site only contains additional documentation.
 
 The overall folder structure is shown below.
 
-```
+```text
 bim-whale
 ├───dist
 └───src
@@ -51,7 +51,7 @@ bim-whale
 Please note that the `ifc-parser` is an extensions of the `step-parser`.
 Each method is put inside it's own file to keep things more organized.
 
-```
+```text
 bim-whale
 ├───dist
 └───src
@@ -107,7 +107,7 @@ In this particular case, a `STEP Instance` object is one of the following
 
 6. The method [parsestepinstanceattributes()](https://github.bimvalen.se/docs/globals.html#_parsestepinstanceattributes) is used to aid the `enerateStepInstance` method. The method `parsestepinstanceattribute` contains many regular expressions.
 7. The method [mapPropertySingleValuesToPropertySet](https://github.bimvalen.se/docs/classes/ifcfile.html#mappropertysinglevaluestopropertyset) maps a [IfcPropertySingleValue](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcpropertyresource/lexical/ifcpropertysinglevalue.htm) to a [IfcPropertySet](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm)
-8. The method [https://github.bimvalen.se/docs/classes/ifcfile.html#mappropertysetstogenericentities] maps a [IfcPropertySet](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm) to a [IfcBuildingElement/GenericEntity](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/FINAL/HTML/ifcproductextension/lexical/ifcbuildingelement.htm) using an [objectified relationship (IfcRelDefinesByProperties)](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcreldefinesbyproperties.htm)
+8. The method [mapPropertySetsToGenericEntities](https://github.bimvalen.se/docs/classes/ifcfile.html#mappropertysetstogenericentities) maps a [IfcPropertySet](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm) to a [IfcBuildingElement/GenericEntity](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/FINAL/HTML/ifcproductextension/lexical/ifcbuildingelement.htm) using an [objectified relationship (IfcRelDefinesByProperties)](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcreldefinesbyproperties.htm)
 
 ### Why TypeScript?
 

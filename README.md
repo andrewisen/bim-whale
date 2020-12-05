@@ -214,7 +214,7 @@ Please note that the file only contains dummy data.
 Make sure to update `src/config.ts` and provide a correct **filePath**.
 You should get the following result:
 
-```javascript
+```json
 {
   TypeMark: "IFCLABEL(_TYPE-MARK_)",
   Keynote: "IFCLABEL(_KEYNOTE_)",
