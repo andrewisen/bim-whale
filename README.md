@@ -84,9 +84,9 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 
 ##
 
-**Q:** What does NOT _The BIM Whale_ do?
+**Q:** What does _The BIM Whale_ NOT do?
 
-**A:** Parse entity attributes (e.g. height of a an object), parse geometry, follow the EXPRESS standard
+**A:** Parse entity attributes, parse geometry, follow the EXPRESS standard, etc. etc.
 
 ##
 
@@ -129,20 +129,21 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 ```javascript
 // The libary is called: BIMWHALE
 var fileReader = new FileReader();
-fileReader.onload = (loadEvent) => {
+fileReader.onload = function (e) {
     const lines = fileReader.result.split(/\r\n|\n/);
     let ifcFile = new BIMWHALE.IfcFile(lines, config);
     ifcFile.parseIfcFile();
-    buildTable(Object.values(ifcFile.entities.genericEntities)); // See: datatables.js
 };
 fileReader.readAsText(file);
 ```
 
-4. See the example in the `public` folder. More specific: [handle-ifc-file.js](https://github.com/andrewisen/bim-whale/blob/main/public/assets/js/handle-ifc-file.js)
+4. See the [example project](https://github.com/andrewisen/bim-whale-demo) for more info. More specific: [handle-ifc-file.js](https://github.com/andrewisen/bim-whale-demo/blob/main/public/assets/js/handle-ifc-file.js)
 
 5. Done :)
 
-The following steps will guide you to set up your own development platform.
+## Local Development
+
+These next steps will guide you to set up your own development platform.
 
 ### Prerequisites
 
@@ -151,7 +152,7 @@ This repository uses Deno as the runtime for TypeScript.
 -   Install Deno.
     See instruction at [https://deno.land](https://deno.land)
 
-_You don't need to use Deno. You could use tsc or Webpack instead._
+_You don't need to use Deno. You could use tsc instead._
 
 ### Installation
 
@@ -173,6 +174,7 @@ Replace `index.ts` with the content inside `example.index.ts`.
 
 4. Make sure you update `src/config.ts` and provide a correct **filePath**.
    You can download some sample files here: [https://github.com/andrewisen/bim-whale-ifc-samples](https://github.com/andrewisen/bim-whale-ifc-samples)
+
 5. Check if Deno is working
 
     ```shell
@@ -186,19 +188,15 @@ Submit an issue if have any problems.
 
 ## Usage
 
-You can download the IFC Samples here: [https://github.com/andrewisen/bim-whale-ifc-samples](https://github.com/andrewisen/bim-whale-ifc-samples)
-
-Run the app with:
+-   Run the app with:
 
 ```shell
    deno run --allow-read index.ts
 ```
 
-Or, use the demo: [https://github.bimvalen.se/public/](https://github.bimvalen.se/public/)
-
 ### SimpleWall Sample File
 
-Download the from [here](https://github.com/andrewisen/bim-whale-ifc-samples/tree/main/SimpleWall).
+Download the `SimpleWall Sample File` [here](https://github.com/andrewisen/bim-whale-ifc-samples/tree/main/SimpleWall).
 The sample consist of:
 
 -   A wall
@@ -209,7 +207,7 @@ Here's a screenshot:
 ![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-ifc-samples/main/SimpleWall/Screenshots/Screenshot_2.png)
 
 The IFC file has a **Property Set** called `Custom_Pset`.
-The property set only contains dummy data.
+Please note that the file only contains dummy data.
 
 ![Screenshot](https://raw.githubusercontent.com/andrewisen/bim-whale-ifc-samples/main/SimpleWall/Screenshots/Screenshot_21.png)
 
