@@ -14,6 +14,8 @@ jobs:
                   sudo npm install --save-dev webpack-cli typescript ts-loader
                   sudo npx webpack
                   sudo npx typedoc
+                  sudo touch docs/.ftp-deploy-sync-state.json
+                  sudo chmod 777 docs/.ftp-deploy-sync-state.json
 
             - name: Sync Files
               uses: SamKirkland/FTP-Deploy-Action@4.0.0
