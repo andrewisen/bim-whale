@@ -95,9 +95,9 @@ ifcFile.parseIfcFile();
 
 1. A `config object` is provided
 2. A new [IfcFile object](https://github.bimvalen.se/docs/classes/ifcfile.html) is created
-3. The [constructor](https://github.bimvalen.se/docs/classes/stepfile.html#constructor) handle the `config object`
-4. The method [parseStepFile()](https://github.bimvalen.se/docs/globals.html#_parsestepfile) iterates over each line and calls [generateStepInstance](https://github.bimvalen.se/docs/globals.html#_generatestepinstance)
-5. The method [generateStepInstance()](https://github.bimvalen.se/docs/globals.html#_generatestepinstance) generates a so-called `STEP Instance` object
+3. The [constructor](https://github.bimvalen.se/docs/classes/stepfile.html#constructor) handle the aforementioned `config object`
+4. [parseStepFile()](https://github.bimvalen.se/docs/globals.html#_parsestepfile) iterates over **each line** and calls [generateStepInstance()](https://github.bimvalen.se/docs/globals.html#_generatestepinstance)
+5. [generateStepInstance()](https://github.bimvalen.se/docs/globals.html#_generatestepinstance) generates a so-called `STEP Instance` object
 
 In this particular case, a `STEP Instance` object is one of the following
 
@@ -106,9 +106,9 @@ In this particular case, a `STEP Instance` object is one of the following
 -   [IfcRelDefinesByProperties](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcreldefinesbyproperties.htm)
 -   [IfcBuildingElement](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/FINAL/HTML/ifcproductextension/lexical/ifcbuildingelement.htm), which is denoted as a `genericEntity`
 
-6. The method [parsestepinstanceattributes()](https://github.bimvalen.se/docs/globals.html#_parsestepinstanceattributes) is used to aid the `enerateStepInstance` method. The method `parsestepinstanceattribute` contains many regular expressions.
-7. The method [mapPropertySingleValuesToPropertySet](https://github.bimvalen.se/docs/classes/ifcfile.html#mappropertysinglevaluestopropertyset) maps a [IfcPropertySingleValue](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcpropertyresource/lexical/ifcpropertysinglevalue.htm) to a [IfcPropertySet](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm)
-8. The method [mapPropertySetsToGenericEntities](https://github.bimvalen.se/docs/classes/ifcfile.html#mappropertysetstogenericentities) maps a [IfcPropertySet](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm) to a [IfcBuildingElement/GenericEntity](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/FINAL/HTML/ifcproductextension/lexical/ifcbuildingelement.htm) using an [objectified relationship (IfcRelDefinesByProperties)](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcreldefinesbyproperties.htm)
+6. [parsestepinstanceattributes()](https://github.bimvalen.se/docs/globals.html#_parsestepinstanceattributes) is used to aid the aforementioned `generateStepInstance()`.
+7. [mapPropertySingleValuesToPropertySet()](https://github.bimvalen.se/docs/classes/ifcfile.html#mappropertysinglevaluestopropertyset) maps a [IfcPropertySingleValue](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcpropertyresource/lexical/ifcpropertysinglevalue.htm) to a [IfcPropertySet](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm)
+8. [mapPropertySetsToGenericEntities()](https://github.bimvalen.se/docs/classes/ifcfile.html#mappropertysetstogenericentities) maps a [IfcPropertySet](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm) to a [IfcBuildingElement/GenericEntity](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/FINAL/HTML/ifcproductextension/lexical/ifcbuildingelement.htm) using an [objectified relationship (IfcRelDefinesByProperties)](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcreldefinesbyproperties.htm)
 
 ### Why TypeScript?
 
@@ -126,7 +126,7 @@ In my option, TS makes it much easier to work with IFC.
 -   Avoid nested loops
 -   Avoid using try-catch-finally
 -   Set correct variable scope
--   Use modern ES6 (e.g. Object Destructuring, Spread Operator, template literals)
+-   Use modern ES6 features (e.g. Object Destructuring, Spread Operator, template literals)
 
 **TODO**
 
