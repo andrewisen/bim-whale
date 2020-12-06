@@ -132,29 +132,38 @@ function _parseStepInstanceAttributes(
     let parsedAttributesString: string = "";
 
     /**
-     * Specific workaround for IFC GlobalId (GUIID).
+     * DIRTY WORKAROUND A
+     *
+     * Specific workaround for IFC GlobalId (GUID).
      * Example: #77331= IFCSLAB('3V$FMCDUfCoPwUaHMPfteW',#48,'Pad:Pad 1:130737',$,'Pad:Pad 1',#77294,#77329,'130737',.FLOOR.);
      *
      * Notice that the GlobalId contains a dollar sign.
-     * Let's ignore the GloablId in order to make the parsinging easier.
+     * The regEx that deals with dollar signs will take the GlobalId into consideration.
+     * Let's ignore the GloablId for now, in order to make the parsing somewhat easier.
      *
      * WIP
      */
     let globalId: string = ""; // IFC GlobalId
+
+    //// DIRTY WORKAROUND A ////
+    // This can be hard coded, we DO NOT need to reference a variable
     if (entityName !== "IFCPROPERTYSINGLEVALUE") {
+        // Let's "remove" the GlobalID
         globalId = attributeString.substr(0, attributeString.indexOf(","));
         // The parsedAttributesString will NOT contain the GlobalID.
-        // We will add it back in later.
         parsedAttributesString = attributeString.substr(
             attributeString.indexOf(",")
         );
+        // We will add back the GlobalID later
     } else {
+        // Do not perform this dirty workaround
         parsedAttributesString = attributeString;
     }
-    // Adding commas before and after will help the parsing.
-    // You don't need to write any edge cases for the RegEx
-    parsedAttributesString = "," + parsedAttributesString + ",";
 
+    //// DIRTY WORKAROUND B ////
+    // Adding commas before and after will help the parsing.
+    // We don't need to write any edge cases for the RegEx
+    parsedAttributesString = "," + parsedAttributesString + ",";
     /**
      * Check if the attribute string has a "function" (see above for example)
      */
@@ -191,7 +200,8 @@ function _parseStepInstanceAttributes(
         .replace(/'/g, '"'); // Convert all remaining apostrophes to quotes
 
     if (hasFunction) {
-        // This is a quick and dirty workaround
+        //// DIRTY WORKAROUND C ////
+        // Again, this can be hard coded - we DO NOT need to reference a variable
         if (entityName !== "IFCPROPERTYSINGLEVALUE") {
             parsedAttributesString = parsedAttributesString.replace(
                 /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
@@ -205,9 +215,9 @@ function _parseStepInstanceAttributes(
         }
     }
 
-    // This is a quick and dirty workaround
+    //// DIRTY WORKAROUND A ////
+    // Add back the GlobalId
     if (entityName !== "IFCPROPERTYSINGLEVALUE") {
-        // Add back the GlobalId
         parsedAttributesString =
             '"' +
             globalId.slice(1, -1) +
