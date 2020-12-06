@@ -191,11 +191,18 @@ function _parseStepInstanceAttributes(
         .replace(/'/g, '"'); // Convert all remaining apostrophes to quotes
 
     if (hasFunction) {
-        // Add back the parsed parameter
-        parsedAttributesString = parsedAttributesString.replace(
-            /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
-            "$1" + functionParameter + ')",'
-        );
+        // This is a quick and dirty workaround
+        if (entityName !== "IFCPROPERTYSINGLEVALUE") {
+            parsedAttributesString = parsedAttributesString.replace(
+                /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
+                "$1" + functionParameter + ')",'
+            );
+        } else {
+            parsedAttributesString = parsedAttributesString.replace(
+                /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
+                functionParameter!.slice(1, -1) + '",'
+            );
+        }
     }
 
     // This is a quick and dirty workaround
