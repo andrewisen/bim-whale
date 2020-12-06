@@ -1,0 +1,43 @@
+{
+    "name": "bim-whale",
+    "version": "0.0.3",
+    "description": "A simple & fast client-side IFC parser",
+    "main": "webpack.ts",
+    "directories": {
+        "doc": "docs"
+    },
+    "dependencies": {
+        "ts-loader": "^8.0.11",
+        "typedoc": "^0.19.2",
+        "typescript": "^4.1.2",
+        "webpack": "^5.10.0",
+        "webpack-cli": "^4.2.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "build": "webpack",
+        "docs": "typedoc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/andrewisen/bim-whale.git"
+    },
+    "keywords": [
+        "ifc",
+        "ifc2x3",
+        "bim",
+        "cad",
+        "parser",
+        "parse",
+        "revit",
+        "autocad",
+        "whale"
+    ],
+    "author": "André Wisén",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/andrewisen/bim-whale/issues"
+    },
+    "homepage": "https://github.com/andrewisen/bim-whale#readme"
+}

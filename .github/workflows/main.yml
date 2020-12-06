@@ -10,10 +10,8 @@ jobs:
             - name: Build
               run: |
                   sudo npm install --save-dev typedoc 
-                  sudo npm install --save-dev webpack 
-                  sudo npm install --save-dev webpack-cli typescript ts-loader
-                  sudo npx webpack
-                  sudo npx typedoc
+                  sudo npm build
+                  sudo npm docs
                   sudo touch docs/.ftp-deploy-sync-state.json
                   sudo chmod 777 docs/.ftp-deploy-sync-state.json
 
