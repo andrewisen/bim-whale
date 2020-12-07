@@ -28,7 +28,7 @@ This site is built using [TypeDoc](https://typedoc.org).
 The content is automatically generated from the TypeScript source code.
 
 Please note that actual source code is **NOT** included.
-This site only contains additional documentation.
+This site contains only contains additional written documentation.
 
 ## Code Architecture
 
@@ -45,7 +45,7 @@ bim-whale
     ├───step-parser
     │   └───step-parser.ts
     └───ifc-parser
-       └───ifc-parser.ts
+        └───ifc-parser.ts
 ```
 
 Please note that the `ifc-parser` is an extensions of the `step-parser`.
@@ -53,12 +53,7 @@ Each method is put inside it's own file to keep things more organized.
 
 ```text
 bim-whale
-├───dist
 └───src
-    ├───utils
-    ├───config
-    ├───step-parser
-    │   └───step-parser.ts
     └───ifc-parser
        ├───ifc-parser.ts
        └───methods
@@ -85,11 +80,7 @@ let ifcFile = new BIMWHALE.IfcFile(lines, config);
 The class `IfcFile` is an extension of the class `StepFile`.
 In other words, the `IfcFile`'s constructor is inherited from the [StepFile's constructor](https://github.bimvalen.se/docs/classes/stepfile.html#constructor).
 
--   The `IfcFile` object parse it's content
-
-```javascript
-ifcFile.parseIfcFile();
-```
+-   The `IfcFile object` parse an IFC file and return `Property Sets` for each object (IFC Entity)
 
 ### In more detail
 
@@ -133,17 +124,17 @@ In my option, TS makes it much easier to work with IFC.
 ## Where should I start?
 
 Start by looking at the [stepFile Class](https://github.bimvalen.se/docs/classes/stepfile.html).
-This is the base and deals exclusively with [ISO 10303](https://en.wikipedia.org/wiki/ISO_10303).
-To clarify: The [IFC schema](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/) is not used at this point.
+This is the base and deals with [STEP / ISO 10303](https://en.wikipedia.org/wiki/ISO_10303).
 
-In other words: The [stepFile Class](https://github.bimvalen.se/docs/classes/stepfile.html) parse a generic [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21) without using the the [IFC schema](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/).
+In other words:
 
-In layman's terms: The [class](https://github.bimvalen.se/docs/classes/stepfile.html) doesn't care what kind of data the file contains. It will parse file and treat it's content as generic data.
+-   The [stepFile Class](https://github.bimvalen.se/docs/classes/stepfile.html) handles the parsing of a [STEP file](https://en.wikipedia.org/wiki/ISO_10303-21).
+-   The [IfcFile Class](https://github.bimvalen.se/docs/classes/ifcfile.html) builds the relationship between objects (IFC Entites) according to the [IFC Schema](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/).
 
 ### Example
 
-Take a look at the example file [SimpleWall](https://github.com/andrewisen/bim-whale-ifc-samples/tree/main/SimpleWall/IFC).
-Again, let's ignore the IFC schema and just treat the data as generic information. Here's an extract of the file:
+Let's take a look at the example file [SimpleWall](https://github.com/andrewisen/bim-whale-ifc-samples/tree/main/SimpleWall/IFC).
+Here's an extract of the file:
 
 ```javascript
 #297= IFCPROPERTYSINGLEVALUE('Description',$,IFCTEXT('_DESCRIPTION_'),$);
@@ -175,13 +166,15 @@ Let's examine the **first line** in the example above:
 
 The terminology above will be used throughout this site.
 
-The method [generateStepInstance()](https://github.bimvalen.se/docs/globals.html#_generatestepinstance) is used to build an entity instance.
+The method [generateStepInstance()](https://github.bimvalen.se/docs/globals.html#_generatestepinstance) is used to build an **entity instance**.
+
+In other words: [stepFile Class](https://github.bimvalen.se/docs/classes/stepfile.html) will use [generateStepInstance()](https://github.bimvalen.se/docs/globals.html#_generatestepinstance) to generate each IFC Entity.
 
 **MORE INFO WILL COME**
 
 ## But, I don't understand
 
-No worries. The goal with the BIM Whale is to teach people how to work with IFC.
+No worries. The goal with The BIM Whale is to teach people how to work with IFC.
 However, the learning resources are not ready yet. Have some patience!
 
 ## Contact
