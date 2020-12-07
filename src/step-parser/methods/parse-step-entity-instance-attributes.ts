@@ -127,115 +127,56 @@ import { StepFile } from "../step-parser.ts";
 function _parseStepEntityInstanceAttributes(
     this: StepFile,
     attributeString: string,
-    entityName: string
+    entityName: string,
+    globalId: string = "",
+    hasFunction: boolean = false,
+    functionParameter: string | string[] | null = ""
 ) {
-    let parsedAttributesString: string = "";
+    // Used for error logging
+    const originalAttributeString = attributeString;
+
+    // A. Deconstruct the GlobalId (GUID)
+    ({ attributeString, globalId } = deconstructGlobalId(
+        originalAttributeString,
+        entityName,
+        globalId
+    ));
+    // B. RegEx edge case
+    attributeString = addCommas(attributeString);
+    // C. Deconstruct function
+    ({ attributeString, functionParameter, hasFunction } = deconstructFunction(
+        attributeString,
+        hasFunction,
+        functionParameter
+    ));
+    /**
+     * PARSE
+     */
+    attributeString = parse(attributeString);
+
+    // C. Construct function
+    attributeString = constructFunction(
+        attributeString,
+        entityName,
+        hasFunction,
+        functionParameter
+    );
+    // B. RegEx edge case
+    attributeString = removeCommas(attributeString);
+    globalId = removeCommas(globalId);
+    // A. Construct GlobalId (GUID)
+    attributeString = constructGlobalId(entityName, attributeString, globalId);
 
     /**
-     * DIRTY WORKAROUND A
-     *
-     * Specific workaround for IFC GlobalId (GUID).
-     * Example: #77331= IFCSLAB('3V$FMCDUfCoPwUaHMPfteW',#48,'Pad:Pad 1:130737',$,'Pad:Pad 1',#77294,#77329,'130737',.FLOOR.);
-     *
-     * Notice that the GlobalId contains a dollar sign.
-     * The regEx that deals with dollar signs will take the GlobalId into consideration.
-     * Let's ignore the GloablId for now, in order to make the parsing somewhat easier.
-     *
      * WIP
      */
-    let globalId: string = ""; // IFC GlobalId
-
-    //// DIRTY WORKAROUND A ////
-    // This can be hard coded, we DO NOT need to reference a variable
-    if (entityName !== "IFCPROPERTYSINGLEVALUE") {
-        // Let's "remove" the GlobalID
-        globalId = attributeString.substr(0, attributeString.indexOf(","));
-        // The parsedAttributesString will NOT contain the GlobalID.
-        parsedAttributesString = attributeString.substr(
-            attributeString.indexOf(",")
-        );
-        // We will add back the GlobalID later
-    } else {
-        // Do not perform this dirty workaround
-        parsedAttributesString = attributeString;
-    }
-
-    //// DIRTY WORKAROUND B ////
-    // Adding commas before and after will help the parsing.
-    // We don't need to write any edge cases for the RegEx
-    parsedAttributesString = "," + parsedAttributesString + ",";
-    /**
-     * Check if the attribute string has a "function" (see above for example)
-     */
-    let hasFunction = false;
-    let functionParameter:
-        | string
-        | string[]
-        | null = /(IFC[A-Z]+\()(.*)(\)\,)/g.exec(parsedAttributesString);
-
-    if (functionParameter) {
-        hasFunction = true;
-        // N.B. Duplicate code
-        functionParameter = functionParameter[2]
-            .replace(/\\/g, "") // Backward slashes
-            .replace(/\//g, "\\/") // Forward slashes
-            .replace(/\"/g, '\\"'); // Quotation marks
-
-        // Replace the parameter with the phrase: {PARAM}
-        parsedAttributesString = parsedAttributesString.replace(
-            /(IFC[A-Z]+\()(.*)(\)\,)/g,
-            '"$1{PARAM})",'
-        );
-    }
-
-    // Regular parsing
-    parsedAttributesString = parsedAttributesString
-        .replace(/\\/g, "") // Backward slashes
-        .replace(/\//g, "\\/") // Forward slashes
-        .replace(/\$/g, '"$"') // Indefinite attributes
-        .replace(/(^|,)\((#\d+.*?)\)/g, "$1[$2]") // Nested attributes
-        .replace(/([,\[])(#\d+)+/g, '$1"$2"') // References to other entities (e.g. #123)
-        .replace(/,(\d+[.]\d*)/g, ",'$1'") // Integers (that are not escaped)
-        .replace(/(\(|\,)(\..+\.)(\)|\,)/g, "$1'$2'$3") // ".T.", ".F.", ".UNDEFINED.", etc.
-        .replace(/'/g, '"'); // Convert all remaining apostrophes to quotes
-
-    if (hasFunction) {
-        //// DIRTY WORKAROUND C ////
-        // Again, this can be hard coded - we DO NOT need to reference a variable
-        if (entityName !== "IFCPROPERTYSINGLEVALUE") {
-            parsedAttributesString = parsedAttributesString.replace(
-                /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
-                "$1" + functionParameter + ')",'
-            );
-        } else {
-            parsedAttributesString = parsedAttributesString.replace(
-                /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
-                functionParameter!.replace(/^\'(.+)\'/g, "$1") + '",'
-            );
-        }
-    }
-
-    //// DIRTY WORKAROUND A ////
-    // Add back the GlobalId
-    if (entityName !== "IFCPROPERTYSINGLEVALUE") {
-        parsedAttributesString =
-            '"' +
-            globalId.slice(1, -1) +
-            '"' +
-            parsedAttributesString.slice(1, -1);
-    } else {
-        parsedAttributesString = parsedAttributesString.slice(1, -1);
-    }
-
     let parsedAttributes = [];
-
-    // TODO: Improve this
     try {
-        parsedAttributes = JSON.parse("[" + parsedAttributesString + "]");
+        parsedAttributes = JSON.parse("[" + attributeString + "]");
     } catch (error) {
         console.log("Parsing error:");
-        console.log("In:", attributeString);
-        console.log("Out:", parsedAttributesString);
+        console.log("In:", originalAttributeString);
+        console.log("Out:", attributeString);
         console.log(" ");
         parsedAttributes = ["N/A"];
     }
@@ -244,3 +185,173 @@ function _parseStepEntityInstanceAttributes(
 
 // Underscore is used to distinguish this function as a method that belongs to StepFile
 export { _parseStepEntityInstanceAttributes };
+
+/**
+ * Deconstructs the GlobalId (GUID)
+ * The function {@link constructGlobalId} will add back the GlobalId.
+ *
+ * Edge case for `IfcPropertySingleValue`
+ *
+ * Example: #77331= IFCSLAB('3V$FMCDUfCoPwUaHMPfteW',#48,'Pad:Pad 1:130737',$,'Pad:Pad 1',#77294,#77329,'130737',.FLOOR.);
+ *
+ * Notice that the GlobalId contains a dollar sign.
+ * The regEx that deals with dollar signs will take the GlobalId into consideration.
+ * Let's ignore the GloablId for now, in order to make the parsing somewhat easier.
+ *
+ * WIP
+ *
+ * @param attributeString
+ * @param entityName
+ * @param globalId
+ */
+const deconstructGlobalId = (
+    attributeString: string,
+    entityName: string,
+    globalId: string
+) => {
+    if (entityName !== "IFCPROPERTYSINGLEVALUE") {
+        globalId = attributeString.substr(0, attributeString.indexOf(","));
+        // The attributeString will NOT contain the GlobalID.
+        attributeString = attributeString.substr(attributeString.indexOf(","));
+        // We will add back the GlobalID later
+    }
+    return { attributeString, globalId };
+};
+
+/**
+ * Constructs the GlobalId(GUID) from {@link deconstructGlobalId}
+ *
+ * @param entityName
+ * @param attributeString
+ * @param globalId
+ */
+const constructGlobalId = (
+    entityName: string,
+    attributeString: string,
+    globalId: string
+) => {
+    if (entityName !== "IFCPROPERTYSINGLEVALUE") {
+        attributeString = '"' + globalId + '"' + attributeString;
+    }
+    return attributeString;
+};
+
+/**
+ * Edge case for RegEx. In normal cases, we must add an edge case for the beginning and end of the string.
+ * E.g. `GlobalId,OwnerHistory,Name,Description`
+ *
+ * Let's say that we want to parse the _description_.
+ * Notice that the string DO NOT end with a comma.
+ * In this particular case, we need to add an edge case.
+ *
+ * We do not need this edge case if we add commas before and after the string.
+ * @param attributeString
+ */
+const addCommas = (attributeString: string) => {
+    return "," + attributeString + ",";
+};
+
+/**
+ * Construct RegEx
+ * @param attributeString
+ */
+const removeCommas = (attributeString: string) => {
+    return attributeString.slice(1, -1);
+};
+
+/**
+ * Deconstruct a function inside an attribute string.
+ * The function {@link constructFunction} will add the function back.
+ *
+ * E.g. `...,IFCTEXT('Hello World'),...`
+ *
+ * The function `IFCTEXT` has the parameter `'Hello World'`.
+ * Notice that some parameters are enclosed by apostrophes.
+ *
+ * @param attributeString
+ * @param hasFunction
+ * @param functionParameter
+ */
+const deconstructFunction = (
+    attributeString: string,
+    hasFunction: boolean,
+    functionParameter: string | string[] | null
+) => {
+    /**
+     * Check if the attribute string has a "function" (see above for example)
+     */
+    functionParameter = /(IFC[A-Z]+\()(.*)(\)\,)/g.exec(attributeString);
+
+    if (functionParameter) {
+        hasFunction = true;
+        functionParameter = parseFunctionParameter(functionParameter[2]);
+        // Replace the parameter with the phrase: {PARAM}
+        attributeString = attributeString.replace(
+            /(IFC[A-Z]+\()(.*)(\)\,)/g,
+            '"$1{PARAM})",'
+        );
+    }
+    return { attributeString, functionParameter, hasFunction };
+};
+
+/**
+ * Constructs the function from {@link deconstructFunction}
+ *
+ * @param attributeString
+ * @param entityName
+ * @param hasFunction
+ * @param functionParameter
+ */
+const constructFunction = (
+    attributeString: string,
+    entityName: string,
+    hasFunction: boolean,
+    functionParameter: string | string[] | null
+) => {
+    if (hasFunction) {
+        if (entityName !== "IFCPROPERTYSINGLEVALUE") {
+            attributeString = attributeString.replace(
+                /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
+                "$1" + functionParameter + ')",'
+            );
+        } else {
+            attributeString = attributeString.replace(
+                /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
+                (<string>functionParameter).replace(/^\'(.+)\'/g, "$1") + '",'
+            );
+        }
+    }
+    return attributeString;
+};
+
+/**
+ * Parse a regular attribute string
+ *
+ * @param attributeString
+ */
+const parse = (attributeString: string) => {
+    return attributeString
+        .replace(/\\/g, "") // Backward slashes
+        .replace(/\//g, "\\/") // Forward slashes
+        .replace(/\$/g, '"$"') // Indefinite attributes
+        .replace(/(^|,)\((#\d+.*?)\)/g, "$1[$2]") // Nested attributes
+        .replace(/([,\[])(#\d+)+/g, '$1"$2"') // References to other entities (e.g. #123)
+        .replace(/,(\d+[.]\d*)/g, ",'$1'") // Integers (that are not escaped)
+        .replace(/(\(|\,)(\..+\.)(\)|\,)/g, "$1'$2'$3") // ".T.", ".F.", ".UNDEFINED.", etc.
+        .replace(/'/g, '"'); // Convert all remaining apostrophes to quotes
+};
+
+/**
+ * Parse a function parameter.
+ * The entire function parameter will be enclosed with quotes.
+ *
+ * No need to be as detailed as the {@link parse} function.
+ *
+ * @param functionParameter
+ */
+const parseFunctionParameter = (functionParameter: string) => {
+    return functionParameter
+        .replace(/\\/g, "") // Backward slashes
+        .replace(/\//g, "\\/") // Forward slashes
+        .replace(/\"/g, '\\"'); // Quotation marks
+};
