@@ -3,7 +3,7 @@ interface IEntityInstance {
     entityStartIndex?: number;
     entiyEndIndex?: number;
 
-    instanceId?: string; // Instance Name
+    instanceName?: string;
     instanceEndIndex?: number;
 
     attributes?: {

@@ -2,31 +2,26 @@ import { StepFile } from "../step-parser.ts";
 import type { IEntityInstance, IEnties } from "../interfaces/step-interface.ts";
 
 /**
- * Generate a STEP Instance object from a single line.
- * The line is assumed to contain data.
+ * Generate a __STEP Entity Instance object__, herby denoted as a `Entity Instance`.
  *
  * __Example:__
  * ```#572= IFCDOOR('1F6umJ5H50aeL3A1As_wUF',#42,'M_Single-Flush:Outside door:346843',$,'M_Single-Flush:Outside door',#938,#566,'346843',2134.,915.);```
  *
- * Each instance will have:
+ * Each `Entity Instance` will have a:
  * - Instance Name, `#572`
- * - Instance Id, `572`
  * - Entity Name, `IFCDOOR`
- * - Attributes `'1F6...',#42,'M_Single-Flush...',$,...`
+ * - Attribute(s) `'1F6...',#42,'M_Single-Flush...',$,...`
  *
- * We will henceforth only use the __Instance Id__. I.e. assume _Instance Name_ = _Instance ID_.
- *
- * Getting the _Instance Id_ and _Entity Name_ is fairly straight forward.
+ * Getting the _Instance Name_ and _Entity Name_ is fairly straight forward.
  * However, getting the attributes is a bit tricky.
- * The method {@link _parseStepInstanceAttributes} will help us with that.
+ * The method {@link _parseStepEntityInstanceAttributes} will help us with that.
  *
- * Finally, each instance is added to the property _entities_.
  */
-function _generateStepInstance(this: StepFile, line: string) {
+function _generateStepEntityInstance(this: StepFile, line: string) {
     const entity: IEntityInstance = {};
     entity.instanceEndIndex = line.indexOf("=");
     entity.entityStartIndex = line.indexOf("(");
-    entity.instanceId = line.substring(1, entity.instanceEndIndex);
+    entity.instanceName = line.substring(0, entity.instanceEndIndex);
     entity.entityName = line.substring(
         entity.instanceEndIndex + 2,
         entity.entityStartIndex
@@ -35,7 +30,7 @@ function _generateStepInstance(this: StepFile, line: string) {
         return;
     }
     entity.attributes = {
-        parsed: this.parseStepInstanceAttributes(
+        parsed: this.parseStepEntityInstanceAttributes(
             line.substring(entity.entityStartIndex + 1, line.length - 2),
             entity.entityName
         ),
@@ -47,8 +42,8 @@ function _generateStepInstance(this: StepFile, line: string) {
         // - all IfcPropertySingleValue entities are stored in IFCPROPERTYSINGLEVALUE
         // - all IfcRelDefinesByProperties entities are stored in IFCRELDEFINESBYPROPERTIES
         // - all IfcPropertySet entities are stored in IFCPROPERTYSET
-        Object.assign(this.entities[entity.entityName], {
-            [entity.instanceId]: {
+        Object.assign(this.entityInstances[entity.entityName], {
+            [entity.instanceName]: {
                 entityName: entity.entityName,
                 attributes: entity.attributes,
             },
@@ -56,15 +51,15 @@ function _generateStepInstance(this: StepFile, line: string) {
         return;
     }
 
-    Object.assign(this.entities.genericEntities, {
+    Object.assign(this.entityInstances.genericEntityInstances, {
         // We DO NOT need to distinguish the these entities from each other.
-        // They are simply referred to as: generic entities
+        // They are simply referred to as: Generic Entity Instances
         //
-        // The so-called generic entities are found on the interoperability layer.
-        // These are usually IfcSharedBldgElements (doors, windows, walls, floors, etc.)
-        [entity.instanceId]: {
+        // These generic entity instances are found on the interoperability layer within the IFC schema.
+        // Mainly IfcSharedBldgElements, e.g. doors, windows, walls, floors, etc.
+        [entity.instanceName]: {
             entityName: entity.entityName,
-            instanceId: entity.instanceId,
+            instanceName: entity.instanceName,
             attributes: entity.attributes,
             properties: {},
         },
@@ -73,4 +68,4 @@ function _generateStepInstance(this: StepFile, line: string) {
 }
 
 // Underscore is used to distinguish this function as a method that belongs to StepFile
-export { _generateStepInstance };
+export { _generateStepEntityInstance };

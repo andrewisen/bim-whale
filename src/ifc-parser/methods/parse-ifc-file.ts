@@ -13,6 +13,7 @@ function _parseIfcFile(this: IfcFile) {
     this.parseStepFile();
     this.mapPropertySingleValuesToPropertySet();
     this.mapPropertySetsToGenericEntities();
+    return this.entityInstances.genericEntityInstances;
 }
 
 // Underscore is used to distinguish this function as a method that belongs to IfcFile

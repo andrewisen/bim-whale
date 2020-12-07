@@ -16,7 +16,7 @@ function _parseStepFile(this: StepFile) {
         if (line.indexOf("=") == -1) {
             continue;
         }
-        this.generateStepInstance(line);
+        this.generateStepEntityInstance(line);
     }
 }
 

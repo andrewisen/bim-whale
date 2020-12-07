@@ -23,11 +23,11 @@ import { IfcFile } from "../ifc-parser.ts";
  *
  */
 function _mapPropertySingleValuesToPropertySet(this: IfcFile) {
-    for (let key in this.entities.IFCPROPERTYSET) {
+    for (let key in this.entityInstances.IFCPROPERTYSET) {
         const {
             attributes: { parsed: ifcPropertySetAttributes },
             properties = {},
-        } = this.entities.IFCPROPERTYSET[key];
+        } = this.entityInstances.IFCPROPERTYSET[key];
 
         // Example: The property set _Custom_Pset_ has the properties (HasProperties):
         const ifcPropertyLenght = ifcPropertySetAttributes[4].length;
@@ -37,9 +37,9 @@ function _mapPropertySingleValuesToPropertySet(this: IfcFile) {
                     parsed: undefined,
                 },
             } =
-                this.entities.IFCPROPERTYSINGLEVALUE[
+                this.entityInstances.IFCPROPERTYSINGLEVALUE[
                     // Reference to IfcPropertySingleValue entity
-                    ifcPropertySetAttributes[4][index].slice(1)
+                    ifcPropertySetAttributes[4][index]
                 ] || {};
             if (typeof ifcPropertySingleValueAttributes === "undefined") {
                 continue;
@@ -48,7 +48,7 @@ function _mapPropertySingleValuesToPropertySet(this: IfcFile) {
                 ifcPropertySingleValueAttributes[2];
         }
 
-        Object.assign(this.entities.IFCPROPERTYSET[key], {
+        Object.assign(this.entityInstances.IFCPROPERTYSET[key], {
             ifcPropertySetName: ifcPropertySetAttributes[2],
             ifcPropertySet: properties,
         });

@@ -3,7 +3,7 @@ import { StepFile } from "../step-parser.ts";
 /**
  *
  * Parse an _attribute string_ into a JavaScript object.
- * The so-called _attribute string_ is derived from {@link _generateStepInstance}.
+ * The so-called _attribute string_ is derived from {@link _generateStepEntityInstance}.
  *
  * __Example:__
  *
@@ -124,7 +124,7 @@ import { StepFile } from "../step-parser.ts";
  * The last two parameters are integers; __2134.__, __915.__.
  * Note that the zero is omitted in these cases.
  */
-function _parseStepInstanceAttributes(
+function _parseStepEntityInstanceAttributes(
     this: StepFile,
     attributeString: string,
     entityName: string
@@ -210,7 +210,7 @@ function _parseStepInstanceAttributes(
         } else {
             parsedAttributesString = parsedAttributesString.replace(
                 /(IFC[A-Z]+\()(\{PARAM\})(\)\"\,)/g,
-                functionParameter!.slice(1, -1) + '",'
+                functionParameter!.replace(/^\'(.+)\'/g, "$1") + '",'
             );
         }
     }
@@ -243,4 +243,4 @@ function _parseStepInstanceAttributes(
 }
 
 // Underscore is used to distinguish this function as a method that belongs to StepFile
-export { _parseStepInstanceAttributes };
+export { _parseStepEntityInstanceAttributes };

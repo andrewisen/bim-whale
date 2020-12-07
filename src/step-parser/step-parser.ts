@@ -1,18 +1,37 @@
 import type { IEntityInstance, IEnties } from "./interfaces/step-interface.ts";
 import { _parseStepFile } from "./methods/parse-step-file.ts";
-import { _generateStepInstance } from "./methods/generate-step-instance.ts";
-import { _parseStepInstanceAttributes } from "./methods/parse-step-instance-attributes.ts";
+import { _generateStepEntityInstance } from "./methods/generate-step-entity-instance.ts";
+import { _parseStepEntityInstanceAttributes } from "./methods/parse-step-entity-instance-attributes.ts";
 
+/**
+ * ## STEP FILE
+ *
+ * This class deals with [STEP](https://en.wikipedia.org/wiki/ISO_10303).
+ * More specific, the so-called [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21).
+ *
+ * To clarify:
+ * - [STEP](https://en.wikipedia.org/wiki/ISO_10303) refers to the ISO standard.
+ * - [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21) is the actual file.
+ *
+ * This class will therefore mainly deal with the encoding mechanism that represents data.
+ *
+ * In layman's terms:
+ * An `IFC File` is actually a so-called [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21).
+ * This class will open the `IFC File` and go trough each line of the file.
+ * The method {@link _generateStepEntityInstance  | generateStepEntityInstance } will create a so-called `step instance` from each line.
+ *
+ * The parent/super class {@link IfcFile } will take the generated `step instances` and build the relationships between objects.
+ * The relationship is expressed in the [IFC2x3 TC1 schema](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/).
+ */
 class StepFile {
     /**
-     * The content of the file as a string array.
      * Each line is stored in the {@link lines} array.
      */
     protected lines: string[];
     /**
      * Each parsed entity.
      */
-    public entities: any; //: IEnties;
+    public entityInstances: any; //: IEnties;
 
     /**
      * These entities are required to parse {@link PROPERTYSET | Property Sets}.
@@ -40,7 +59,7 @@ class StepFile {
      *
      * Example:
      * ```javascript
-     * this.entities = {
+     * this.entityInstances = {
      *      IFCPROPERTYSINGLEVALUE = {},
      *      IFCRELDEFINESBYPROPERTIES = {},
      *      IFCPROPERTYSET = {},
@@ -59,7 +78,7 @@ class StepFile {
         }
     ) {
         this.lines = lines;
-        this.entities = {}; // Needs to be initialized as an empty object
+        this.entityInstances = {}; // Needs to be initialized as an empty object
 
         // TODO: Update this ugly bit...
         this.requiredEntities = config.requiredEntities;
@@ -69,24 +88,24 @@ class StepFile {
 
         // Generate an empty object for each required entity
         this.requiredEntities.forEach((entity: string) => {
-            Object.assign(this.entities, { [entity]: {} });
+            Object.assign(this.entityInstances, { [entity]: {} });
         });
 
-        // The non-required entities (e.g. IfcWall, IfcDoor) are treated as Generic Entities
-        Object.assign(this.entities, { genericEntities: {} });
+        // The non-required entities (e.g. IfcWall, IfcDoor) are treated as Generic Entity Instances
+        Object.assign(this.entityInstances, { genericEntityInstances: {} });
     }
     /**
      * See {@link _parseStepFile}
      */
     public parseStepFile: any = _parseStepFile;
     /**
-     * See {@link _generateStepInstance}
+     * See {@link _generateStepEntityInstance }
      */
-    public generateStepInstance: any = _generateStepInstance;
+    public generateStepEntityInstance: any = _generateStepEntityInstance;
     /**
      * See {@link _parseStepInstanceAttributes}
      */
-    public parseStepInstanceAttributes: any = _parseStepInstanceAttributes;
+    public parseStepEntityInstanceAttributes: any = _parseStepEntityInstanceAttributes;
 }
 
 export { StepFile };

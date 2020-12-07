@@ -7,15 +7,15 @@ import { IfcFile } from "../ifc-parser.ts";
  */
 function _mapPropertySetsToGenericEntities(this: IfcFile) {
     // For each objectified relationship
-    for (let key in this.entities.IFCRELDEFINESBYPROPERTIES) {
+    for (let key in this.entityInstances.IFCRELDEFINESBYPROPERTIES) {
         const {
             attributes: { parsed: ifcRelDefinesByPropertiesAttributes },
-        } = this.entities.IFCRELDEFINESBYPROPERTIES[key];
+        } = this.entityInstances.IFCRELDEFINESBYPROPERTIES[key];
 
         const { ifcPropertySetName = undefined, ifcPropertySet = undefined } =
-            this.entities.IFCPROPERTYSET[
+            this.entityInstances.IFCPROPERTYSET[
                 // Reference to IfcPropertySet entity
-                ifcRelDefinesByPropertiesAttributes[5].slice(1)
+                ifcRelDefinesByPropertiesAttributes[5]
             ] || {};
 
         if (typeof ifcPropertySet === "undefined") {
@@ -27,14 +27,13 @@ function _mapPropertySetsToGenericEntities(this: IfcFile) {
                 continue;
             }
         }
-
         const relatedObjectsLenght =
             ifcRelDefinesByPropertiesAttributes[4].length;
         for (let index = 0; index < relatedObjectsLenght; index++) {
             const { properties = undefined } =
-                this.entities.genericEntities[
+                this.entityInstances.genericEntityInstances[
                     // Reference to related object (i.e. a generic IFC entity)
-                    ifcRelDefinesByPropertiesAttributes[4][index].slice(1)
+                    ifcRelDefinesByPropertiesAttributes[4][index]
                 ] || {};
             if (typeof properties === "undefined") {
                 // Ignoring: IfcSite, IfcBuildingStorey, IfcBuilding
