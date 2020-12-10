@@ -4,7 +4,7 @@
     <img src="https://bimvalen.se/assets/img/logos/logo-500x500-alt.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Welcome to the Docs / Wiki</h3>
+  <h3 align="center">Welcome to the BIMWHALE.js docs</h3>
 
   <p align="center">
     A simple client-side IFC parser 
@@ -24,11 +24,21 @@
 
 ## Introduction
 
+The primary docs for **The BIM Whale Project** can be found at:
+[https://andrewisen.gitbook.io/bim-whale/](https://andrewisen.gitbook.io/bim-whale/)
+
+The purpose of this website is to provide additional documentation.
+This site will focus on the code itself; the classes and methods used.
+
+Please note that actual source code is **NOT** included here.
 This site is built using [TypeDoc](https://typedoc.org).
 The content is automatically generated from the TypeScript source code.
 
-Please note that actual source code is **NOT** included.
-This site contains only contains additional written documentation.
+Again, to clarify:
+This documentation will go into more details.
+It will (try to) explain how the code works.
+
+If you feel overwheled by this, then head back to the [original documentations](https://andrewisen.gitbook.io/bim-whale/).
 
 ## Code Architecture
 

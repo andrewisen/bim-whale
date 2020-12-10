@@ -2,7 +2,7 @@
     "inputFiles": ["./src/"],
     "mode": "file",
     "out": "./docs",
-    "name": "BIM Whale Documentation",
+    "name": "BIMWHALE.js Documentation",
     "ignoreCompilerErrors": true,
     "hideGenerator": true,
     "readme": "typedoc.md"

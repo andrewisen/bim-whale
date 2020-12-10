@@ -4,17 +4,15 @@
     <img src="https://bimvalen.se/assets/img/logos/logo-500x500-alt.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">The BIM Whale</h3>
+  <h3 align="center">The BIM Whale Project</h3>
 
   <p align="center">
-    A simple client-side IFC parser 
+    BIMWHALE.js | A simple client-side IFC parser 
     <br />
     <a href="http://github.bimvalen.se/public/"><strong>View the demo »</strong></a>
     <br />
     <br />
-    <a href="https://github.bimvalen.se/docs/">Explore the docs</a>
-    ·
-    <a href="https://github.com/andrewisen/bim-whale-demo">Goto the demo's repository</a>
+    <a href="https://andrewisen.gitbook.io/bim-whale/">Explore docs</a>
     ·
     <a href="https://github.com/andrewisen/bim-whale-ifc-samples">Access IFC sample files</a>
     ·
@@ -56,7 +54,7 @@
 
 ## About
 
-**The BIM Whale** (Swedish: _BIM-valen_) is simple client-side IFC parser built using TypeScript.
+**The BIM Whale** (Swedish: _BIM-valen_) is a project about IFC files.
 The aim of this project is to:
 
 > I: Introduce and explain the basics of IFC schema
@@ -69,10 +67,16 @@ In more specific terms, the goal of this project is to:
 
 > B: Provide learning resources (documentation, videos, power points) to people within the AEC industry
 
-The BIM Whale is **NOT** supposed to be an all singing, all dancing parser.
+**Goal A** has been realized as **BIMWHALE.js**, i.e. this repo.
+BIMWHALE.js is a simple client-side IFC parser built using TypeScript.
+
+Please note that the BIMWHALE.js is **NOT** supposed to be an all singing, all dancing parser.
 This project is only looking to parse information that we know exists, so-called `User Defined IFC Property Sets`.
 
-Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
+Again, the focus with The BIM Whale Project is to educate people.
+The code itself and its functionality are secondary.
+
+Explore the [docs](https://andrewisen.gitbook.io/bim-whale/) for more information.
 
 <!-- GETTING STARTED -->
 
@@ -130,7 +134,7 @@ Explore the [docs/wiki](http://github.bimvalen.se/docs/) for more information.
 // The libary is called: BIMWHALE
 var fileReader = new FileReader();
 fileReader.onload = function (e) {
-    const lines = fileReader.result.split(/\r\n|\n/);
+    const lines = e.target.result.split(/\r\n|\n/);
     let ifcFile = new BIMWHALE.IfcFile(lines, config);
     ifcFile.parseIfcFile();
 };
