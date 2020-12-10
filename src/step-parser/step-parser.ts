@@ -34,7 +34,7 @@ class StepFile {
     public entityInstances: any; //: IEnties;
 
     /**
-     * These entities are required to parse {@link PROPERTYSET | Property Sets}.
+     * These entities are required to parse {@link IfcPropertySet | Property Sets}.
      */
     protected requiredEntities: string[];
     /**
