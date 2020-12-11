@@ -73,7 +73,7 @@ BIMWHALE.js is a simple client-side IFC parser built using TypeScript.
 Please note that the BIMWHALE.js is **NOT** supposed to be an all singing, all dancing parser.
 This project is only looking to parse information that we know exists, so-called `User Defined IFC Property Sets`.
 
-Again, the focus with The BIM Whale Project is to educate people.
+Again, the focus with The BIM Whale (TBW) Project is to educate people.
 The code itself and its functionality are secondary.
 
 Explore the [docs](https://andrewisen.gitbook.io/bim-whale/) for more information.
@@ -220,28 +220,28 @@ You should get the following result:
 
 ```javascript
 {
-  TypeMark: "IFCLABEL(_TYPE-MARK_)",
-  Keynote: "IFCLABEL(_KEYNOTE_)",
-  StoreyName: "IFCTEXT(Level: Level 1)",
-  TypeDescription: "IFCTEXT(_DESCRIPTION_)",
-  StatusConstruction: "IFCLABEL(New Construction)",
-  NetArea: "IFCAREAMEASURE(14.04739)",
-  Height: "IFCLENGTHMEASURE(4000.)",
-  Width: "IFCLENGTHMEASURE(200.)",
-  Length: "IFCLENGTHMEASURE(4000.)",
-  Hyperlink: "IFCTEXT(_URL_)"
+  TypeMark: "_TYPE-MARK_",
+  Keynote: "_KEYNOTE_",
+  StoreyName: "Level: Level 1",
+  TypeDescription: "_DESCRIPTION_",
+  StatusConstruction: "New Construction",
+  NetArea: "14.04739",
+  Height: "4000.",
+  Width: "200.",
+  Length: "4000.",
+  Hyperlink: "_URL_"
 }
 {
-  TypeMark: "IFCLABEL(20)",
-  Keynote: "IFCLABEL(--KEYNOTE--)",
-  StoreyName: "IFCTEXT(Level: Level 1)",
-  TypeDescription: "IFCTEXT(--DESCRIPTION--)",
-  StatusConstruction: "IFCLABEL(New Construction)",
-  NetArea: "IFCAREAMEASURE(3.18957899999998)",
-  Height: "IFCLENGTHMEASURE(2134.)",
-  Width: "IFCLENGTHMEASURE(915.)",
-  SillHeight: "IFCLENGTHMEASURE(0.)",
-  Hyperlink: "IFCTEXT(--URL--)"
+  TypeMark: "20",
+  Keynote: "--KEYNOTE--",
+  StoreyName: "Level: Level 1",
+  TypeDescription: "--DESCRIPTION--",
+  StatusConstruction: "New Construction",
+  NetArea: "3.18957899999998",
+  Height: "2134.",
+  Width: "915.",
+  SillHeight: "0.",
+  Hyperlink: "--URL--"
 }
 ```
 
