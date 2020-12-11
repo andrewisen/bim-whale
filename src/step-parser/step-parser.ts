@@ -36,11 +36,11 @@ class StepFile {
     /**
      * These entities are required to parse {@link IfcPropertySet | Property Sets}.
      */
-    protected requiredEntities: string[];
+    protected requiredEntities: { [key: string]: string };
     /**
      * These are the selected entities that will be parsed.
      */
-    protected selectedEntities: string[];
+    protected selectedEntities: { [key: string]: string };
     /**
      * These are the selected Property Sets that will be parsed.
      */
@@ -49,7 +49,7 @@ class StepFile {
      * These are all IFC Entities that will be parsed.
      * All other entities will be ignored.
      */
-    protected allEntities: string[];
+    protected allEntities: { [key: string]: string };
 
     /**
      * Builds the {@link entities} object from the config parameter.
@@ -71,23 +71,23 @@ class StepFile {
     constructor(
         lines: string[],
         config: {
-            requiredEntities: string[];
-            selectedEntities: string[];
+            requiredEntities: { [key: string]: string };
+            selectedEntities: { [key: string]: string };
             selectedPropertySets: string[];
-            allEntities: string[];
+            allEntities: { [key: string]: string };
         }
     ) {
         this.lines = lines;
         this.entityInstances = {}; // Needs to be initialized as an empty object
 
-        // TODO: Update this ugly bit...
+        // Config
         this.requiredEntities = config.requiredEntities;
         this.selectedEntities = config.selectedEntities;
         this.selectedPropertySets = config.selectedPropertySets;
         this.allEntities = config.allEntities;
 
         // Generate an empty object for each required entity
-        this.requiredEntities.forEach((entity: string) => {
+        Object.values(config.requiredEntities).forEach((entity: string) => {
             Object.assign(this.entityInstances, { [entity]: {} });
         });
 

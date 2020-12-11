@@ -4,16 +4,19 @@
  * ## Required IFC Entities
  * These entities are required to parse {@link PROPERTYSET | Property Sets}.
  */
-const requiredEntities: string[] = [
-    "IFCPROPERTYSINGLEVALUE",
-    "IFCRELDEFINESBYPROPERTIES",
-    "IFCPROPERTYSET",
-];
+const requiredEntities: { [key: string]: string } = {
+    IFCPROPERTYSINGLEVALUE: "IfcPropertySingleValue",
+    IFCRELDEFINESBYPROPERTIES: "IfcRelDefinesByProperties",
+    IFCPROPERTYSET: "IfcPropertySet",
+};
 /**
  * ## Selected IFC Entities
  * These are the selected entities that will be parsed.
  */
-const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];
+const selectedEntities: { [key: string]: string } = {
+    IFCDOOR: "IfcDoor",
+    IFCWALLSTANDARDCASE: "IfcWallStandardCase",
+};
 
 /**
  * ## Selected IFC Property Sets
@@ -27,7 +30,10 @@ const selectedPropertySets: string[] = ["Custom_Pset"];
  * All other entities will be ignored.
  *
  */
-const allEntities: string[] = [...requiredEntities, ...selectedEntities];
+const allEntities: { [key: string]: string } = {
+    ...requiredEntities,
+    ...selectedEntities,
+};
 
 /**
  * ## File Path
@@ -44,11 +50,11 @@ const filePath: string = "./SimpleWall.ifc";
  * This need to be better implemented
  */
 const config: any = {
-    requiredEntities: requiredEntities,
-    selectedEntities: selectedEntities,
-    selectedPropertySets: selectedPropertySets,
-    allEntities: allEntities,
-    filePath: filePath,
+    requiredEntities,
+    selectedEntities,
+    selectedPropertySets,
+    allEntities,
+    filePath,
 };
 
 export { config };

@@ -5,13 +5,11 @@ import { IfcFile } from "./src/ifc-parser/ifc-parser.ts";
  * ## DEV
  * Print each entity that has the corresponding property set
  */
-function printPropertySet(ifcFile: IfcFile, propertySet: string) {
-    for (var entitiy in ifcFile.entities.genericEntities) {
-        for (var pset in ifcFile.entities.genericEntities[entitiy].properties) {
+function printPropertySet(entites: any, propertySet: string) {
+    for (var entitiy in entites) {
+        for (var pset in entites[entitiy].properties) {
             if (pset === propertySet) {
-                console.log(
-                    ifcFile.entities.genericEntities[entitiy].properties[pset]
-                );
+                console.log(entites[entitiy].properties[pset]);
             }
         }
     }
@@ -34,10 +32,11 @@ async function main(path: string) {
     readFile(path).then((response) => {
         const lines: string[] = response.split(/\r\n|\n/);
         let ifcFile = new IfcFile(lines, config);
-        ifcFile.parseIfcFile();
-        printPropertySet(ifcFile, "Custom_Pset");
+        const ifcEntities = ifcFile.parseIfcFile();
+        printPropertySet(ifcEntities, "Custom_Pset");
     });
 }
 
 const { filePath } = config;
+delete config.filePath;
 main(filePath);

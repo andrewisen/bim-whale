@@ -7,13 +7,13 @@ import { IfcFile } from "../ifc-parser.ts";
  */
 function _mapPropertySetsToGenericEntities(this: IfcFile) {
     // For each objectified relationship
-    for (let key in this.entityInstances.IFCRELDEFINESBYPROPERTIES) {
+    for (let key in this.entityInstances.IfcRelDefinesByProperties) {
         const {
             attributes: { parsed: ifcRelDefinesByPropertiesAttributes },
-        } = this.entityInstances.IFCRELDEFINESBYPROPERTIES[key];
+        } = this.entityInstances.IfcRelDefinesByProperties[key];
 
         const { ifcPropertySetName = undefined, ifcPropertySet = undefined } =
-            this.entityInstances.IFCPROPERTYSET[
+            this.entityInstances.IfcPropertySet[
                 // Reference to IfcPropertySet entity
                 ifcRelDefinesByPropertiesAttributes[5]
             ] || {};
