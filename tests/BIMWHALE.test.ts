@@ -17,7 +17,7 @@ const allEntities: { [key: string]: string } = {
     ...requiredEntities,
     ...selectedEntities,
 };
-const filePath: string = "./SimpleWall.ifc";
+const filePath: string = "./SimpleWall";
 const config: any = {
     requiredEntities,
     selectedEntities,
