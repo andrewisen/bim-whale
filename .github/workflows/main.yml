@@ -10,6 +10,8 @@ jobs:
             - name: Build
               run: |
                   sudo curl -fsSL https://deno.land/x/install/install.sh | sh
+                  export DENO_INSTALL="/home/runner/.deno"
+                  export PATH="$DENO_INSTALL/bin:$PATH"
                   deno test tests/ --allow-read
                   sudo npm install
                   sudo npm run build
