@@ -2,15 +2,18 @@ on: push
 name: Deploy the BIM Whale
 jobs:
     web-deploy:
-        name: Deploy
+        name: Deploy BIMWHALE.js
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v2.3.2
             - name: Build
               run: |
-                  sudo npm install
+                  sudo curl -fsSL https://deno.land/x/install/install.sh | sh
                   deno test tests/ --allow-read
+                  sudo npm install
+                  sudo npm run build
+                  sudo npm run docs
                   sudo touch docs/.ftp-deploy-sync-state.json
                   sudo chmod 777 docs/.ftp-deploy-sync-state.json
 
