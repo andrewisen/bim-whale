@@ -3,6 +3,7 @@
 /docs
 index.ts
 *.ifc
+!tests/*.ifc
 
 # Generic
 makefile
