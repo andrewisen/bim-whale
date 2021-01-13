@@ -1,5 +1,5 @@
 import type { IEntityInstance, IEnties } from "./interfaces/step-interface.ts";
-import { _parseStepFile } from "./methods/parse-step-file.ts";
+import { _parseStepFile } from "./methods/_parse-step-file.ts";
 import { _generateStepEntityInstance } from "./methods/generate-step-entity-instance.ts";
 import { _saveStepEntityInstance } from "./methods/save-step-entity-instance.ts";
 

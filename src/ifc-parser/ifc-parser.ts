@@ -1,5 +1,5 @@
 import { StepFile } from "../step-parser/step-parser.ts";
-import { _parseIfcFile } from "./methods/parse-ifc-file.ts";
+import { _parseIfcFile } from "./methods/_parse-ifc-file.ts";
 import { _mapPropertySingleValuesToPropertySet } from "./methods/map-property-single-values-to-property-set.ts";
 import { _mapPropertySetsToGenericEntities } from "./methods/map-property-sets-to-generic-entities.ts";
 /**
