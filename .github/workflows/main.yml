@@ -17,7 +17,7 @@ jobs:
               run: |
                   sudo npm install
                   sudo npx webpack && DENO_ENV=production npx webpack
-                  sudo npx docs
+                  sudo npx typedoc
                   sudo touch docs/.ftp-deploy-sync-state.json
                   sudo chmod 777 docs/.ftp-deploy-sync-state.json
             - name: 🚀 Deploy BIMWHALE.js docs
