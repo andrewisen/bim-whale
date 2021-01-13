@@ -1,6 +1,6 @@
 {
-    "name": "bim-whale",
-    "version": "0.0.4",
+    "name": "BIMWHALE.js",
+    "version": "0.0.5",
     "description": "A simple & fast client-side IFC parser",
     "main": "webpack.ts",
     "directories": {
