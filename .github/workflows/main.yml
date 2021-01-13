@@ -2,25 +2,25 @@ on: push
 name: BIMWHALE.js GitHub Action
 jobs:
     web-deploy:
-        name: Test, Build & Deploy BIMWHALE.js
+        name: 🐳 Test, Build & Deploy BIMWHALE.js
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout BIMWHALE.js
+            - name: 📬 Checkout BIMWHALE.js
               uses: actions/checkout@v2.3.2
-            - name: Test BIMWHALE.js
+            - name: 🔍 Test BIMWHALE.js
               run: |
                   sudo curl -fsSL https://deno.land/x/install/install.sh | sh
                   export DENO_INSTALL="/home/runner/.deno"
                   export PATH="$DENO_INSTALL/bin:$PATH"
                   deno test tests/ --allow-read
-            - name: Build BIMWHALE.js
+            - name: 🔨 Build BIMWHALE.js
               run: |
                   sudo npm install
-                  sudo npm run build
-                  sudo npm run docs
+                  sudo npx webpack && DENO_ENV=production npx webpack
+                  sudo npx docs
                   sudo touch docs/.ftp-deploy-sync-state.json
                   sudo chmod 777 docs/.ftp-deploy-sync-state.json
-            - name: Deploy BIMWHALE.js docs
+            - name: 🚀 Deploy BIMWHALE.js docs
               uses: SamKirkland/FTP-Deploy-Action@4.0.0
               with:
                   server: ftpcluster.loopia.se
