@@ -1,4 +1,5 @@
 import { StepFile } from "../step-parser.ts";
+import { parseStepEntityInstanceAttributes } from "../functions/parse-step-entity-instance-attributes.ts";
 import type { IEntityInstance, IEnties } from "../interfaces/step-interface.ts";
 
 /**
@@ -18,57 +19,93 @@ import type { IEntityInstance, IEnties } from "../interfaces/step-interface.ts";
  *
  */
 function _generateStepEntityInstance(this: StepFile, line: string) {
-    const entity: IEntityInstance = {};
-    entity.instanceEndIndex = line.indexOf("=");
-    entity.entityStartIndex = line.indexOf("(");
-    entity.instanceName = line.substring(0, entity.instanceEndIndex);
-    entity.entityName = line.substring(
-        entity.instanceEndIndex + 2,
-        entity.entityStartIndex
-    );
-    if (!(entity.entityName in this.allEntities)) {
-        return;
-    }
-    entity.attributes = {
-        parsed: this.parseStepEntityInstanceAttributes(
-            line.substring(entity.entityStartIndex + 1, line.length - 2),
-            entity.entityName
-        ),
+    // Initialize STEP Entity Instance object
+    var entityInstance: IEntityInstance = {
+        // Instance
+        instanceStartIndex: 0,
+        instanceEndIndex: line.indexOf("="),
+        instanceName: "",
+        // Entity
+        entityStartIndex: line.indexOf("("),
+        entityEndIndex: -1,
+        entityName: "",
     };
-
-    if (entity.entityName in this.requiredEntities) {
-        // We need to distinguish the REQUIRED ENTITIES from each other.
-        // In other words;
-        // - all IfcPropertySingleValue entities are stored in IFCPROPERTYSINGLEVALUE
-        // - all IfcRelDefinesByProperties entities are stored in IFCRELDEFINESBYPROPERTIES
-        // - all IfcPropertySet entities are stored in IFCPROPERTYSET
-        Object.assign(
-            this.entityInstances[this.requiredEntities[entity.entityName]],
-            {
-                [entity.instanceName]: {
-                    entityName: entity.entityName,
-                    attributes: entity.attributes,
-                },
-            }
-        );
-        return;
-    }
-
-    Object.assign(this.entityInstances.genericEntityInstances, {
-        // We DO NOT need to distinguish the these entities from each other.
-        // They are simply referred to as: Generic Entity Instances
-        //
-        // These generic entity instances are found on the interoperability layer within the IFC schema.
-        // Mainly IfcSharedBldgElements, e.g. doors, windows, walls, floors, etc.
-        [entity.instanceName]: {
-            entityName: this.selectedEntities[entity.entityName],
-            instanceName: entity.instanceName,
-            attributes: entity.attributes,
-            properties: {},
-        },
+    // Instance Name, eg. #572
+    setStepInstanceName({
+        line: line,
+        entityInstance: entityInstance,
     });
-    return;
+    // Entity Name, e.g. IFCDOOR
+    setStepEntityName({
+        line: line,
+        entityInstance: entityInstance,
+    });
+    // Check if Entity Name, e.g. IFCDOOR, should be parsed
+    if (entityInstance.entityName in this.allEntities === false) return;
+    // Calls the imported function "parseStepEntityInstanceAttributes"
+    const parsedAttributes: string[] = getStepAttributes({
+        line: line,
+        entityInstance: entityInstance,
+    });
+    // Attributes, e.g. `'1F6...',#42,'M_Single-Flush...',$,...`
+    setStepAttributes({
+        line: line,
+        entityInstance: entityInstance,
+        parsedAttributes: parsedAttributes,
+    });
+    return entityInstance;
 }
-
+// Set STEP Instance Name, eg. #572
+const setStepInstanceName = (_: {
+    line: string;
+    entityInstance: IEntityInstance;
+}) => {
+    const {
+        line,
+        entityInstance: { instanceEndIndex },
+    } = _;
+    let { entityInstance } = _;
+    entityInstance.instanceName = line.substring(0, instanceEndIndex);
+};
+// Set STEP Entity Name, e.g. IFCDOOR
+const setStepEntityName = (_: {
+    line: string;
+    entityInstance: IEntityInstance;
+}) => {
+    const {
+        line,
+        entityInstance: { instanceEndIndex },
+        entityInstance: { entityStartIndex },
+    } = _;
+    let { entityInstance } = _;
+    entityInstance.entityName = line.substring(
+        instanceEndIndex + 2,
+        entityStartIndex
+    );
+};
+// Get STEP Attributes, e.g. '1F6...',#42,'M_Single-Flush...',$,...`
+const getStepAttributes = (_: {
+    line: string;
+    entityInstance: IEntityInstance;
+}) => {
+    const { line } = _;
+    let { entityInstance } = _;
+    return parseStepEntityInstanceAttributes(
+        line.substring(entityInstance.entityStartIndex + 1, line.length - 2),
+        entityInstance.entityName
+    );
+};
+// Set STEP Attributes, e.g. '1F6...',#42,'M_Single-Flush...',$,...`
+const setStepAttributes = (_: {
+    line: string;
+    entityInstance: IEntityInstance;
+    parsedAttributes: string[];
+}) => {
+    const { line, parsedAttributes } = _;
+    let { entityInstance } = _;
+    entityInstance.attributes = {
+        parsed: parsedAttributes,
+    };
+};
 // Underscore is used to distinguish this function as a method that belongs to StepFile
 export { _generateStepEntityInstance };

@@ -1,10 +1,12 @@
 interface IEntityInstance {
-    entityName?: string;
-    entityStartIndex?: number;
-    entiyEndIndex?: number;
-
-    instanceName?: string;
-    instanceEndIndex?: number;
+    // Instance, eg. #572
+    instanceName: string;
+    instanceStartIndex: number;
+    instanceEndIndex: number;
+    // Entity, e.g. IFCDOOR
+    entityName: string;
+    entityStartIndex: number;
+    entityEndIndex: number;
 
     attributes?: {
         raw?: string;

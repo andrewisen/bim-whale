@@ -1,5 +1,3 @@
-import { StepFile } from "../step-parser.ts";
-
 /**
  *
  * Parse an _attribute string_ into a JavaScript object.
@@ -124,8 +122,7 @@ import { StepFile } from "../step-parser.ts";
  * The last two parameters are integers; __2134.__, __915.__.
  * Note that the zero is omitted in these cases.
  */
-function _parseStepEntityInstanceAttributes(
-    this: StepFile,
+function parseStepEntityInstanceAttributes(
     attributeString: string,
     entityName: string,
     globalId: string = "",
@@ -182,9 +179,6 @@ function _parseStepEntityInstanceAttributes(
     }
     return parsedAttributes;
 }
-
-// Underscore is used to distinguish this function as a method that belongs to StepFile
-export { _parseStepEntityInstanceAttributes };
 
 /**
  * Deconstructs the GlobalId (GUID)
@@ -355,3 +349,6 @@ const parseFunctionParameter = (functionParameter: string) => {
         .replace(/\//g, "\\/") // Forward slashes
         .replace(/\"/g, '\\"'); // Quotation marks
 };
+
+// Underscore is used to distinguish this function as a method that belongs to StepFile
+export { parseStepEntityInstanceAttributes };

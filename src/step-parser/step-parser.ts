@@ -1,7 +1,7 @@
 import type { IEntityInstance, IEnties } from "./interfaces/step-interface.ts";
 import { _parseStepFile } from "./methods/parse-step-file.ts";
 import { _generateStepEntityInstance } from "./methods/generate-step-entity-instance.ts";
-import { _parseStepEntityInstanceAttributes } from "./methods/parse-step-entity-instance-attributes.ts";
+import { _saveStepEntityInstance } from "./methods/save-step-entity-instance.ts";
 
 /**
  * ## STEP FILE
@@ -94,6 +94,7 @@ class StepFile {
         // The non-required entities (e.g. IfcWall, IfcDoor) are treated as Generic Entity Instances
         Object.assign(this.entityInstances, { genericEntityInstances: {} });
     }
+
     /**
      * See {@link _parseStepFile}
      */
@@ -101,11 +102,11 @@ class StepFile {
     /**
      * See {@link _generateStepEntityInstance }
      */
-    public generateStepEntityInstance: any = _generateStepEntityInstance;
+    public generateStepEntityInstance = _generateStepEntityInstance;
     /**
-     * See {@link _parseStepInstanceAttributes}
+     * See {@link _saveStepEntityInstance }
      */
-    public parseStepEntityInstanceAttributes: any = _parseStepEntityInstanceAttributes;
+    public saveStepEntityInstance: any = _saveStepEntityInstance;
 }
 
 export { StepFile };
