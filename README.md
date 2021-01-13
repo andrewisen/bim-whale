@@ -54,7 +54,7 @@
 
 ## About
 
-**The BIM Whale** (Swedish: _BIM-valen_) is a project about IFC files.
+**The BIM Whale** (Swedish: _BIM-valen_) is a project about the Industry Foundation Classes (IFC) format.
 The aim of this project is to:
 
 > I: Introduce and explain the basics of IFC schema
@@ -73,7 +73,7 @@ BIMWHALE.js is a simple client-side IFC parser built using TypeScript.
 Please note that the BIMWHALE.js is **NOT** supposed to be an all singing, all dancing parser.
 This project is only looking to parse information that we know exists, so-called `User Defined IFC Property Sets`.
 
-Again, the focus with The BIM Whale (TBW) Project is to educate people.
+Again, the focus with The BIM Whale Project is to educate people.
 The code itself and its functionality are secondary.
 
 Explore the [docs](https://andrewisen.gitbook.io/bim-whale/) for more information.
@@ -141,9 +141,7 @@ fileReader.onload = function (e) {
 fileReader.readAsText(file);
 ```
 
-4. See the [example project](https://github.com/andrewisen/bim-whale-demo) for more info. More specific: [handle-ifc-file.js](https://github.com/andrewisen/bim-whale-demo/blob/main/public/assets/js/handle-ifc-file.js)
-
-5. Done :)
+4. See the docs for more information: [docs.bimvalen.se](docs.bimvalen.se)
 
 ## Local Development
 
@@ -155,8 +153,6 @@ This repository uses Deno as the runtime for TypeScript.
 
 -   Install Deno.
     See instruction at [https://deno.land](https://deno.land)
-
-_You don't need to use Deno. You could use tsc instead._
 
 ### Installation
 
@@ -246,10 +242,10 @@ You should get the following result:
 ```
 
 **In summary:**
-We have performed a simple parsing. We have only included walls and doors.
-Again, see the example config file: `const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];`
+We have performed a simple parsing.
 
-In the end, we simply print out the property set `Custom_Pset`.
+We have only included `walls` and `doors` in our config file. See:
+`const selectedEntities: string[] = ["IFCDOOR", "IFCWALLSTANDARDCASE"];`
 
 **TODO**
 
@@ -285,8 +281,7 @@ See `LICENSE` for more information.
 
 ## Contact
 
--   Primary email: [kontakt@andrewisen.se](mailto:kontakt@andrewisen.se)
--   Secondary email: [andre.wisen@gmail.com](mailto:andre.wisen@gmail.com])
+-   Email: [andre.wisen@gmail.com](mailto:andre.wisen@gmail.com])
 -   LinkedIn: [https://linkedin.com/in/andrewisen/](https://linkedin.com/in/andrewisen/)
 
 <!-- ACKNOWLEDGEMENTS -->
