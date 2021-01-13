@@ -15,12 +15,15 @@ module.exports = {
         extensions: [".tsx", ".ts", ".js"],
     },
     output: {
-        filename: "bundle.min.js",
+        filename:
+            process.env.DENO_ENV === "production"
+                ? "BIMWHALE.min.js"
+                : "BIMWHALE.js",
         path: path.resolve(__dirname, "dist"),
         library: "BIMWHALE",
     },
     optimization: {
-        minimize: true,
+        minimize: process.env.DENO_ENV === "production" ? true : false,
     },
     mode: "production",
 };
