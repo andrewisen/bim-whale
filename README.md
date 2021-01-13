@@ -120,12 +120,12 @@ Explore the [docs](https://andrewisen.gitbook.io/bim-whale/) for more informatio
 
 1. A compiled _JS bundle file_ is available here:
 
-[https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/bundle.min.js](https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/bundle.min.js)
+[https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/BIMWHALE.min.js](https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/BIMWHALE.min.js)
 
 2. Add it to your project
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/andrewisen/bim-whale/dist/BIMWHALE.min.js"></script>
 ```
 
 3. Use the FileReader API and create a new `IfcFile` object
