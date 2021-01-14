@@ -3,7 +3,7 @@ var BIMWHALE;BIMWHALE =
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 847:
+/***/ 310:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -14,92 +14,56 @@ __webpack_require__.d(__webpack_exports__, {
   "IfcFile": () => /* reexport */ IfcFile
 });
 
-;// CONCATENATED MODULE: ./src/step-parser/methods/parse-step-file.ts
+;// CONCATENATED MODULE: ./src/step-parser/methods/_parse-step-file.ts
 /**
- * Iterates over each line.
- * Only include the so-called __DATA section__.<br>
- * One can assume that each line will contain an equal sign (=).<br>
+ * The method method will:
+ * 1. Iterate over each line in the IFC file
+ * 2. Generate a so-called `step instance` from each line
  *
- *  __Example:__<br>
+ * First and foremost, there's no need to include the so-called __HEADER section__.
+ * We only want to include data (that's available in the __DATA section__.)
+ * One can simply assume that each line will contain an equal sign (=).
+ *
+ *  __Example:__
  * ```#572= IFCDOOR('...');```
- * <br>
  */
 function _parseStepFile() {
     var linesLength = this.lines.length;
     for (var index = 0; index < linesLength; index++) {
         var line = this.lines[index];
-        if (line.indexOf("=") == -1) {
+        // Only include data (from the DATA section)
+        if (line.indexOf("=") === -1)
             continue;
-        }
-        this.generateStepEntityInstance(line);
+        var entityInstance = this.generateStepEntityInstance(line);
+        if (entityInstance !== undefined)
+            this.saveStepEntityInstance(entityInstance);
     }
 }
 // Underscore is used to distinguish this function as a method that belongs to StepFile
 
 
-;// CONCATENATED MODULE: ./src/step-parser/methods/generate-step-entity-instance.ts
+;// CONCATENATED MODULE: ./src/step-parser/functions/set-step-instance-name.ts
 /**
- * Generate a __STEP Entity Instance object__, herby denoted as a `Entity Instance`.
- *
- * __Example:__
- * ```#572= IFCDOOR('1F6umJ5H50aeL3A1As_wUF',#42,'M_Single-Flush:Outside door:346843',$,'M_Single-Flush:Outside door',#938,#566,'346843',2134.,915.);```
- *
- * Each `Entity Instance` will have a:
- * - Instance Name, `#572`
- * - Entity Name, `IFCDOOR`
- * - Attribute(s) `'1F6...',#42,'M_Single-Flush...',$,...`
- *
- * Getting the _Instance Name_ and _Entity Name_ is fairly straight forward.
- * However, getting the attributes is a bit tricky.
- * The method {@link _parseStepEntityInstanceAttributes} will help us with that.
- *
+ * Set STEP Instance Name, eg. #572
+ * @param _
  */
-function _generateStepEntityInstance(line) {
-    var _a, _b;
-    var entity = {};
-    entity.instanceEndIndex = line.indexOf("=");
-    entity.entityStartIndex = line.indexOf("(");
-    entity.instanceName = line.substring(0, entity.instanceEndIndex);
-    entity.entityName = line.substring(entity.instanceEndIndex + 2, entity.entityStartIndex);
-    if (!(entity.entityName in this.allEntities)) {
-        return;
-    }
-    entity.attributes = {
-        parsed: this.parseStepEntityInstanceAttributes(line.substring(entity.entityStartIndex + 1, line.length - 2), entity.entityName),
-    };
-    if (entity.entityName in this.requiredEntities) {
-        // We need to distinguish the REQUIRED ENTITIES from each other.
-        // In other words;
-        // - all IfcPropertySingleValue entities are stored in IFCPROPERTYSINGLEVALUE
-        // - all IfcRelDefinesByProperties entities are stored in IFCRELDEFINESBYPROPERTIES
-        // - all IfcPropertySet entities are stored in IFCPROPERTYSET
-        Object.assign(this.entityInstances[this.requiredEntities[entity.entityName]], (_a = {},
-            _a[entity.instanceName] = {
-                entityName: entity.entityName,
-                attributes: entity.attributes,
-            },
-            _a));
-        return;
-    }
-    Object.assign(this.entityInstances.genericEntityInstances, (_b = {},
-        // We DO NOT need to distinguish the these entities from each other.
-        // They are simply referred to as: Generic Entity Instances
-        //
-        // These generic entity instances are found on the interoperability layer within the IFC schema.
-        // Mainly IfcSharedBldgElements, e.g. doors, windows, walls, floors, etc.
-        _b[entity.instanceName] = {
-            entityName: this.selectedEntities[entity.entityName],
-            instanceName: entity.instanceName,
-            attributes: entity.attributes,
-            properties: {},
-        },
-        _b));
-    return;
-}
-// Underscore is used to distinguish this function as a method that belongs to StepFile
+var setStepInstanceName = function (_) {
+    var line = _.line, instanceEndIndex = _.entityInstance.instanceEndIndex;
+    var entityInstance = _.entityInstance;
+    entityInstance.instanceName = line.substring(0, instanceEndIndex);
+};
 
 
-;// CONCATENATED MODULE: ./src/step-parser/methods/parse-step-entity-instance-attributes.ts
+;// CONCATENATED MODULE: ./src/step-parser/functions/set-step-entity-name.ts
+// Set STEP Entity Name, e.g. IFCDOOR
+var setStepEntityName = function (_) {
+    var line = _.line, instanceEndIndex = _.entityInstance.instanceEndIndex, entityStartIndex = _.entityInstance.entityStartIndex;
+    var entityInstance = _.entityInstance;
+    entityInstance.entityName = line.substring(instanceEndIndex + 2, entityStartIndex);
+};
+
+
+;// CONCATENATED MODULE: ./src/step-parser/functions/parse-step-entity-instance-attributes.ts
 /**
  *
  * Parse an _attribute string_ into a JavaScript object.
@@ -224,7 +188,7 @@ function _generateStepEntityInstance(line) {
  * The last two parameters are integers; __2134.__, __915.__.
  * Note that the zero is omitted in these cases.
  */
-function _parseStepEntityInstanceAttributes(attributeString, entityName, globalId, hasFunction, functionParameter) {
+function parseStepEntityInstanceAttributes(attributeString, entityName, globalId, hasFunction, functionParameter) {
     var _a, _b;
     if (globalId === void 0) { globalId = ""; }
     if (hasFunction === void 0) { hasFunction = false; }
@@ -264,8 +228,6 @@ function _parseStepEntityInstanceAttributes(attributeString, entityName, globalI
     }
     return parsedAttributes;
 }
-// Underscore is used to distinguish this function as a method that belongs to StepFile
-
 /**
  * Deconstructs the GlobalId (GUID)
  * The function {@link constructGlobalId} will add back the GlobalId.
@@ -402,6 +364,134 @@ var parseFunctionParameter = function (functionParameter) {
         .replace(/\//g, "\\/") // Forward slashes
         .replace(/\"/g, '\\"'); // Quotation marks
 };
+// Underscore is used to distinguish this function as a method that belongs to StepFile
+
+
+;// CONCATENATED MODULE: ./src/step-parser/functions/get-step-attributes.ts
+
+// Get STEP Attributes, e.g. '1F6...',#42,'M_Single-Flush...',$,...`
+var getStepAttributes = function (_) {
+    var line = _.line;
+    var entityInstance = _.entityInstance;
+    return parseStepEntityInstanceAttributes(line.substring(entityInstance.entityStartIndex + 1, line.length - 2), entityInstance.entityName);
+};
+
+
+;// CONCATENATED MODULE: ./src/step-parser/functions/set-step-attributes.ts
+// Set STEP Attributes, e.g. '1F6...',#42,'M_Single-Flush...',$,...`
+var setStepAttributes = function (_) {
+    var line = _.line, parsedAttributes = _.parsedAttributes;
+    var entityInstance = _.entityInstance;
+    entityInstance.attributes = {
+        parsed: parsedAttributes,
+    };
+};
+
+
+;// CONCATENATED MODULE: ./src/step-parser/methods/generate-step-entity-instance.ts
+// Functions
+
+
+
+
+/**
+ * Generate a __STEP Entity Instance object__, herby denoted as a `Entity Instance`.
+ *
+ * __Example:__
+ * ```#572= IFCDOOR('1F6umJ5H50aeL3A1As_wUF',#42,'M_Single-Flush:Outside door:346843',$,'M_Single-Flush:Outside door',#938,#566,'346843',2134.,915.);```
+ *
+ * Each `Entity Instance` will have a:
+ * - Instance Name, `#572`
+ * - Entity Name, `IFCDOOR`
+ * - Attribute(s) `'1F6...',#42,'M_Single-Flush...',$,...`
+ *
+ * Yes, the terminology can be a bit confusing...
+ *
+ * Anyways, getting the _Instance Name_ and _Entity Name_ is fairly straight forward.
+ * However, getting the attributes can be a bit tricky.
+ * The function {@link parseStepEntityInstanceAttributes} will help us with that.
+ */
+function _generateStepEntityInstance(line) {
+    // Initialize STEP Entity Instance object
+    var entityInstance = {
+        // Instance
+        instanceStartIndex: 0,
+        instanceEndIndex: line.indexOf("="),
+        instanceName: "",
+        // Entity
+        entityStartIndex: line.indexOf("("),
+        entityEndIndex: -1,
+        entityName: "",
+    };
+    // Instance Name, eg. #572
+    setStepInstanceName({
+        line: line,
+        entityInstance: entityInstance,
+    });
+    // Entity Name, e.g. IFCDOOR
+    setStepEntityName({
+        line: line,
+        entityInstance: entityInstance,
+    });
+    // Check if Entity Name, e.g. IFCDOOR, should be parsed
+    if (entityInstance.entityName in this.allEntities === false)
+        return;
+    // Getting the attributes can be a bit tricky. getStepAttributes() will help us
+    var parsedAttributes = getStepAttributes({
+        line: line,
+        entityInstance: entityInstance,
+    });
+    // Save parsed attributes, e.g. [['1F6...'],[#42],['M_Single-Flush...'],['$'],[...]]
+    setStepAttributes({
+        line: line,
+        entityInstance: entityInstance,
+        parsedAttributes: parsedAttributes,
+    });
+    return entityInstance;
+}
+// Underscore is used to distinguish this function as a method that belongs to StepFile
+
+
+;// CONCATENATED MODULE: ./src/step-parser/methods/save-step-entity-instance.ts
+/**
+ * TODO:
+ *
+ * @param this {@link StepFile}
+ * @param entityInstance
+ */
+function _saveStepEntityInstance(entityInstance) {
+    var _a, _b;
+    if (entityInstance.entityName in this.requiredEntities) {
+        // We need to distinguish the REQUIRED ENTITIES from each other.
+        // In other words;
+        // - all IfcPropertySingleValue entities are stored in IFCPROPERTYSINGLEVALUE
+        // - all IfcRelDefinesByProperties entities are stored in IFCRELDEFINESBYPROPERTIES
+        // - all IfcPropertySet entities are stored in IFCPROPERTYSET
+        Object.assign(this.entityInstances[this.requiredEntities[entityInstance.entityName]], (_a = {},
+            _a[entityInstance.instanceName] = {
+                entityName: entityInstance.entityName,
+                attributes: entityInstance.attributes,
+            },
+            _a));
+    }
+    else {
+        Object.assign(this.entityInstances.genericEntityInstances, (_b = {},
+            // We DO NOT need to distinguish the these entities from each other.
+            // They are simply referred to as: Generic Entity Instances
+            //
+            // These generic entity instances are found on the interoperability layer within the IFC schema.
+            // Mainly IfcSharedBldgElements, e.g. doors, windows, walls, floors, etc.
+            _b[entityInstance.instanceName] = {
+                entityName: this.selectedEntities[entityInstance.entityName],
+                instanceName: entityInstance.instanceName,
+                attributes: entityInstance.attributes,
+                properties: {},
+            },
+            _b));
+    }
+}
+// Underscore is used to distinguish this function as a method that belongs to StepFile
+
 
 ;// CONCATENATED MODULE: ./src/step-parser/step-parser.ts
 
@@ -410,22 +500,30 @@ var parseFunctionParameter = function (functionParameter) {
 /**
  * ## STEP FILE
  *
- * This class deals with [STEP](https://en.wikipedia.org/wiki/ISO_10303).
- * More specific, the so-called [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21).
+ * This class deals with [Standard for the Exchange of Product model data (STEP)](https://en.wikipedia.org/wiki/ISO_10303).
+ * More specific, this class parses a [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21).
  *
  * To clarify:
- * - [STEP](https://en.wikipedia.org/wiki/ISO_10303) refers to the ISO standard.
- * - [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21) is the actual file.
+ * - [STEP](https://en.wikipedia.org/wiki/ISO_10303) refers to the ISO 10303 standard.
+ * - [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21) is the actual file format (used in ISO 10303)
  *
- * This class will therefore mainly deal with the encoding mechanism that represents data.
+ * This class will handle the so-called "encoding mechanism that represents data".
  *
  * In layman's terms:
- * An `IFC File` is actually a so-called [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21).
- * This class will open the `IFC File` and go trough each line of the file.
- * The method {@link _generateStepEntityInstance  | generateStepEntityInstance } will create a so-called `step instance` from each line.
+ * An `IFC File` is actually a [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21) behind the scenes.
+ *
+ * This class will open the `IFC File` and treat is as a `STEP-file`(!).
+ * The method {@link _generateStepEntityInstance | generateStepEntityInstance } will create a so-called `step instance` from each line in the file.
  *
  * The parent/super class {@link IfcFile } will take the generated `step instances` and build the relationships between objects.
- * The relationship is expressed in the [IFC2x3 TC1 schema](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/).
+ * This relationship has nothing to do with STEP.
+ * No, the relationship is expressed in the [IFC2x3 TC1 schema](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/).
+ *
+ * That's why we have two different classes; StepFile & IfcFile
+ *
+ * To summarize:
+ * - `StepFile` builds the data (according to ISO 10303-21)
+ * - `IfcFile` builds the relationship (according to the IFC2x3 TC1 schema)
  */
 var StepFile = /** @class */ (function () {
     /**
@@ -450,15 +548,15 @@ var StepFile = /** @class */ (function () {
         /**
          * See {@link _parseStepFile}
          */
-        this.parseStepFile = _parseStepFile;
+        this.parseStepFile = _parseStepFile; // START HERE
         /**
          * See {@link _generateStepEntityInstance }
          */
         this.generateStepEntityInstance = _generateStepEntityInstance;
         /**
-         * See {@link _parseStepInstanceAttributes}
+         * See {@link _saveStepEntityInstance }
          */
-        this.parseStepEntityInstanceAttributes = _parseStepEntityInstanceAttributes;
+        this.saveStepEntityInstance = _saveStepEntityInstance;
         this.lines = lines;
         this.entityInstances = {}; // Needs to be initialized as an empty object
         // Config
@@ -478,7 +576,7 @@ var StepFile = /** @class */ (function () {
 }());
 
 
-;// CONCATENATED MODULE: ./src/ifc-parser/methods/parse-ifc-file.ts
+;// CONCATENATED MODULE: ./src/ifc-parser/methods/_parse-ifc-file.ts
 /**
  * Iterates over each line.
  * Only include the so-called __DATA section__.<br>
@@ -489,7 +587,7 @@ var StepFile = /** @class */ (function () {
  * <br>
  */
 function _parseIfcFile() {
-    this.parseStepFile();
+    this.parseStepFile(); // Inherited from the class StepFile
     this.mapPropertySingleValuesToPropertySet();
     this.mapPropertySetsToGenericEntities();
     return this.entityInstances.genericEntityInstances;
@@ -521,28 +619,60 @@ function _parseIfcFile() {
  *
  */
 function _mapPropertySingleValuesToPropertySet() {
-    for (var key in this.entityInstances.IfcPropertySet) {
-        var _a = this.entityInstances.IfcPropertySet[key], ifcPropertySetAttributes = _a.attributes.parsed, _b = _a.properties, properties = _b === void 0 ? {} : _b;
-        // Example: The property set _Custom_Pset_ has the properties (HasProperties):
-        var ifcPropertyLenght = ifcPropertySetAttributes[4].length;
-        for (var index = 0; index < ifcPropertyLenght; index++) {
-            var _c = (this.entityInstances.IfcPropertySingleValue[
-            // Reference to IfcPropertySingleValue entity
-            ifcPropertySetAttributes[4][index]] || {}).attributes, _d = _c === void 0 ? {
-                parsed: undefined,
-            } : _c, ifcPropertySingleValueAttributes = _d.parsed;
-            if (typeof ifcPropertySingleValueAttributes === "undefined") {
-                continue;
-            }
+    var _this_1 = this;
+    Object.values(this.entityInstances.IfcPropertySet).forEach(function (ifcPropertySet) {
+        // ENTITY IfcPropertySet; HasProperties : SET [1:?] OF IfcProperty;
+        var hasProperties = getHasPropertiesReferences(ifcPropertySet);
+        var ifcProperties = getIfcProperties(_this_1, hasProperties);
+        mapProperties(ifcPropertySet, ifcProperties);
+    });
+}
+/**
+ * TODO
+ * @param ifcPropertySet
+ */
+var getHasPropertiesReferences = function (ifcPropertySet) {
+    var ifcPropertySetAttributes = ifcPropertySet.attributes.parsed;
+    return ifcPropertySetAttributes[4];
+};
+/**
+ * TODO
+ * @param _this
+ * @param hasProperties
+ */
+var getIfcProperties = function (_this, hasProperties) {
+    var properties = {};
+    hasProperties.forEach(function (reference) {
+        var _a = (_this.entityInstances.IfcPropertySingleValue[reference] || {}).attributes, _b = _a === void 0 ? {
+            parsed: undefined,
+        } : _a, ifcPropertySingleValueAttributes = _b.parsed;
+        if (ifcPropertySingleValueAttributes !== "undefined") {
             properties[ifcPropertySingleValueAttributes[0]] =
                 ifcPropertySingleValueAttributes[2];
         }
-        Object.assign(this.entityInstances.IfcPropertySet[key], {
-            ifcPropertySetName: ifcPropertySetAttributes[2],
-            ifcPropertySet: properties,
-        });
-    }
-}
+    });
+    return properties;
+};
+/**
+ * TODO
+ * @param ifcPropertySet
+ */
+var getIfcPropertySetName = function (ifcPropertySet) {
+    var ifcPropertySetAttributes = ifcPropertySet.attributes.parsed;
+    return ifcPropertySetAttributes[2];
+};
+/**
+ * TODO
+ * @param ifcPropertySet
+ * @param ifcProperties
+ */
+var mapProperties = function (ifcPropertySet, ifcProperties) {
+    var name = getIfcPropertySetName(ifcPropertySet);
+    Object.assign(ifcPropertySet, {
+        ifcPropertySetName: name,
+        ifcPropertySet: ifcProperties,
+    });
+};
 // Underscore is used to distinguish this function as a method that belongs to IfcFile
 
 
@@ -553,36 +683,89 @@ function _mapPropertySingleValuesToPropertySet() {
  * Now, we need to populate each {@link IfcBuildingElement | generic enitiy} with `Property Sets`.
  */
 function _mapPropertySetsToGenericEntities() {
-    var _a;
-    // For each objectified relationship
-    for (var key in this.entityInstances.IfcRelDefinesByProperties) {
-        var ifcRelDefinesByPropertiesAttributes = this.entityInstances.IfcRelDefinesByProperties[key].attributes.parsed;
-        var _b = this.entityInstances.IfcPropertySet[
-        // Reference to IfcPropertySet entity
-        ifcRelDefinesByPropertiesAttributes[5]] || {}, _c = _b.ifcPropertySetName, ifcPropertySetName = _c === void 0 ? undefined : _c, _d = _b.ifcPropertySet, ifcPropertySet = _d === void 0 ? undefined : _d;
-        if (typeof ifcPropertySet === "undefined") {
-            continue;
-        }
-        if (this.selectedPropertySets.length > 0) {
-            if (!this.selectedPropertySets.includes(ifcPropertySetName)) {
-                continue;
-            }
-        }
-        var relatedObjectsLenght = ifcRelDefinesByPropertiesAttributes[4].length;
-        for (var index = 0; index < relatedObjectsLenght; index++) {
-            var _e = (this.entityInstances.genericEntityInstances[
-            // Reference to related object (i.e. a generic IFC entity)
-            ifcRelDefinesByPropertiesAttributes[4][index]] || {}).properties, properties = _e === void 0 ? undefined : _e;
-            if (typeof properties === "undefined") {
-                // Ignoring: IfcSite, IfcBuildingStorey, IfcBuilding
-                continue;
-            }
-            Object.assign(properties, (_a = {},
-                _a[ifcPropertySetName] = ifcPropertySet,
-                _a));
-        }
-    }
+    var _this_1 = this;
+    var filterPropertySets = this.selectedPropertySets.length > 0 ? true : false;
+    var selectedPropertySets = this.selectedPropertySets;
+    Object.values(this.entityInstances.IfcRelDefinesByProperties).forEach(function (ifcRelDefinesByProperties) {
+        // ENTITY IfcRelDefines; RelatedObjects : SET [1:?] OF IfcObject;
+        var relatedObjects = getRelatedObjectsReferences(ifcRelDefinesByProperties);
+        var ifcObject = getIfcObjects(_this_1, relatedObjects);
+        // Skip object if undefined or not in selectedPropertySets
+        if (skipObject(ifcObject, filterPropertySets, selectedPropertySets))
+            return;
+        // ENTITY IfcRelDefinesByProperties; RelatingPropertyDefinition : IfcPropertySetDefinition;
+        var relatingPropertyDefinition = getRelatingPropertyDefinition(ifcRelDefinesByProperties);
+        var ifcPropertySetDefinition = getIfcPropertySetDefinition(_this_1, relatingPropertyDefinition);
+        // Ignoring things like: IfcSite, IfcBuildingStorey, IfcBuilding, etc.
+        if (ifcPropertySetDefinition === undefined)
+            return;
+        mapPropertySet(ifcObject, ifcPropertySetDefinition);
+    });
 }
+/**
+ * TODO
+ * @param ifcRelDefinesByProperties
+ */
+var getRelatedObjectsReferences = function (ifcRelDefinesByProperties) {
+    var ifcRelDefinesByPropertiesAttributes = ifcRelDefinesByProperties.attributes.parsed;
+    return ifcRelDefinesByPropertiesAttributes[5];
+};
+/**
+ * TODO
+ * @param _this
+ * @param relatedObjects
+ */
+var getIfcObjects = function (_this, relatedObjects) {
+    var _a = _this.entityInstances.IfcPropertySet[relatedObjects] || {}, _b = _a.ifcPropertySetName, name = _b === void 0 ? undefined : _b, _c = _a.ifcPropertySet, ifcPropertySet = _c === void 0 ? undefined : _c;
+    if (name === undefined)
+        return;
+    return { name: name, ifcPropertySet: ifcPropertySet };
+};
+/**
+ * TODO
+ * @param ifcObject
+ * @param filterPropertySets
+ * @param selectedPropertySets
+ */
+var skipObject = function (ifcObject, filterPropertySets, selectedPropertySets) {
+    if (ifcObject === undefined)
+        return true;
+    if (filterPropertySets) {
+        if (selectedPropertySets.includes(ifcObject.name) === false)
+            return true;
+    }
+    return false;
+};
+/**
+ * TODO
+ * @param ifcRelDefinesByProperties
+ */
+var getRelatingPropertyDefinition = function (ifcRelDefinesByProperties) {
+    var ifcRelDefinesByPropertiesAttributes = ifcRelDefinesByProperties.attributes.parsed;
+    return ifcRelDefinesByPropertiesAttributes[4];
+};
+/**
+ * TODO
+ * @param _this
+ * @param ifcRelDefinesByProperties
+ */
+var getIfcPropertySetDefinition = function (_this, ifcRelDefinesByProperties) {
+    var _a = 
+    // Reference to related object (i.e. a generic IFC entity)
+    (_this.entityInstances.genericEntityInstances[ifcRelDefinesByProperties[0]] || {}).properties, ifcPropertySetDefinition = _a === void 0 ? undefined : _a;
+    return ifcPropertySetDefinition;
+};
+/**
+ * TODO
+ * @param ifcObject
+ * @param ifcPropertySetDefinition
+ */
+var mapPropertySet = function (ifcObject, ifcPropertySetDefinition) {
+    var _a;
+    Object.assign(ifcPropertySetDefinition, (_a = {},
+        _a[ifcObject.name] = ifcObject.ifcPropertySet,
+        _a));
+};
 // Underscore is used to distinguish this function as a method that belongs to IfcFile
 
 
@@ -630,7 +813,7 @@ var IfcFile = /** @class */ (function (_super) {
         /**
          * See {@link _parseStepFile}
          */
-        _this.parseIfcFile = _parseIfcFile;
+        _this.parseIfcFile = _parseIfcFile; // START HERE
         return _this;
     }
     return IfcFile;
@@ -701,6 +884,6 @@ var IfcFile = /** @class */ (function (_super) {
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(847);
+/******/ 	return __webpack_require__(310);
 /******/ })()
 ;
