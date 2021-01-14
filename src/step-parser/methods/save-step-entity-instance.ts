@@ -1,6 +1,12 @@
 import { StepFile } from "../step-parser.ts";
 import type { IEntityInstance } from "../interfaces/step-interface.ts";
 
+/**
+ * TODO:
+ * 
+ * @param this {@link StepFile}
+ * @param entityInstance 
+ */
 function _saveStepEntityInstance(
     this: StepFile,
     entityInstance: IEntityInstance
