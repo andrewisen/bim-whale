@@ -6,22 +6,30 @@ import { _saveStepEntityInstance } from "./methods/save-step-entity-instance.ts"
 /**
  * ## STEP FILE
  *
- * This class deals with [STEP](https://en.wikipedia.org/wiki/ISO_10303).
- * More specific, the so-called [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21).
+ * This class deals with [Standard for the Exchange of Product model data (STEP)](https://en.wikipedia.org/wiki/ISO_10303).
+ * More specific, this class parses a [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21).
  *
  * To clarify:
- * - [STEP](https://en.wikipedia.org/wiki/ISO_10303) refers to the ISO standard.
- * - [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21) is the actual file.
+ * - [STEP](https://en.wikipedia.org/wiki/ISO_10303) refers to the ISO 10303 standard.
+ * - [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21) is the actual file format (used in ISO 10303)
  *
- * This class will therefore mainly deal with the encoding mechanism that represents data.
+ * This class will handle the so-called "encoding mechanism that represents data".
  *
  * In layman's terms:
- * An `IFC File` is actually a so-called [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21).
- * This class will open the `IFC File` and go trough each line of the file.
- * The method {@link _generateStepEntityInstance  | generateStepEntityInstance } will create a so-called `step instance` from each line.
+ * An `IFC File` is actually a [STEP-file](https://en.wikipedia.org/wiki/ISO_10303-21) behind the scenes.
+ * 
+ * This class will open the `IFC File` and treat is as a `STEP-file`(!).  
+ * The method {@link _generateStepEntityInstance | generateStepEntityInstance } will create a so-called `step instance` from each line in the file.
  *
  * The parent/super class {@link IfcFile } will take the generated `step instances` and build the relationships between objects.
- * The relationship is expressed in the [IFC2x3 TC1 schema](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/).
+ * This relationship has nothing to do with STEP.
+ * No, the relationship is expressed in the [IFC2x3 TC1 schema](https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/).
+ * 
+ * That's why we have two different classes; StepFile & IfcFile
+ * 
+ * To summarize:
+ * - `StepFile` builds the data (according to ISO 10303-21)
+ * - `IfcFile` builds the relationship (according to the IFC2x3 TC1 schema)
  */
 class StepFile {
     /**
@@ -32,7 +40,6 @@ class StepFile {
      * Each parsed entity.
      */
     public entityInstances: any; //: IEnties;
-
     /**
      * These entities are required to parse {@link IfcPropertySet | Property Sets}.
      */
@@ -50,7 +57,6 @@ class StepFile {
      * All other entities will be ignored.
      */
     protected allEntities: { [key: string]: string };
-
     /**
      * Builds the {@link entities} object from the config parameter.
      *
@@ -94,11 +100,10 @@ class StepFile {
         // The non-required entities (e.g. IfcWall, IfcDoor) are treated as Generic Entity Instances
         Object.assign(this.entityInstances, { genericEntityInstances: {} });
     }
-
     /**
      * See {@link _parseStepFile}
      */
-    public parseStepFile: any = _parseStepFile;
+    public parseStepFile: any = _parseStepFile; // START HERE
     /**
      * See {@link _generateStepEntityInstance }
      */
