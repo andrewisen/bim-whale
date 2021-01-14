@@ -23,37 +23,79 @@ import { IfcFile } from "../ifc-parser.ts";
  *
  */
 function _mapPropertySingleValuesToPropertySet(this: IfcFile) {
-    for (let key in this.entityInstances.IfcPropertySet) {
-        const {
-            attributes: { parsed: ifcPropertySetAttributes },
-            properties = {},
-        } = this.entityInstances.IfcPropertySet[key];
+    Object.values(this.entityInstances.IfcPropertySet).forEach(
+        (ifcPropertySet: any) => {
+            // ENTITY IfcPropertySet; HasProperties : SET [1:?] OF IfcProperty;
+            const hasProperties: string[] = getHasPropertiesReferences(
+                ifcPropertySet
+            );
+            const ifcProperties: { [key: string]: string } = getIfcProperties(
+                this,
+                hasProperties
+            );
+            mapProperties(ifcPropertySet, ifcProperties);
+        }
+    );
+}
+/**
+ * TODO
+ * @param ifcPropertySet
+ */
+const getHasPropertiesReferences = (ifcPropertySet: any) => {
+    const {
+        attributes: { parsed: ifcPropertySetAttributes },
+    } = ifcPropertySet;
+    return ifcPropertySetAttributes[4];
+};
 
-        // Example: The property set _Custom_Pset_ has the properties (HasProperties):
-        const ifcPropertyLenght = ifcPropertySetAttributes[4].length;
-        for (let index = 0; index < ifcPropertyLenght; index++) {
-            const {
-                attributes: { parsed: ifcPropertySingleValueAttributes } = {
-                    parsed: undefined,
-                },
-            } =
-                this.entityInstances.IfcPropertySingleValue[
-                    // Reference to IfcPropertySingleValue entity
-                    ifcPropertySetAttributes[4][index]
-                ] || {};
-            if (typeof ifcPropertySingleValueAttributes === "undefined") {
-                continue;
-            }
+/**
+ * TODO
+ * @param _this
+ * @param hasProperties
+ */
+const getIfcProperties = (_this: IfcFile, hasProperties: string[]) => {
+    let properties: { [key: string]: string } = {};
+    hasProperties.forEach((reference) => {
+        const {
+            attributes: { parsed: ifcPropertySingleValueAttributes } = {
+                parsed: undefined,
+            },
+        } = _this.entityInstances.IfcPropertySingleValue[reference] || {};
+        if (ifcPropertySingleValueAttributes !== "undefined") {
             properties[ifcPropertySingleValueAttributes[0]] =
                 ifcPropertySingleValueAttributes[2];
         }
+    });
+    return properties;
+};
 
-        Object.assign(this.entityInstances.IfcPropertySet[key], {
-            ifcPropertySetName: ifcPropertySetAttributes[2],
-            ifcPropertySet: properties,
-        });
-    }
-}
+/**
+ * TODO
+ * @param ifcPropertySet
+ */
+const getIfcPropertySetName = (ifcPropertySet: any) => {
+    const {
+        attributes: { parsed: ifcPropertySetAttributes },
+    } = ifcPropertySet;
+
+    return ifcPropertySetAttributes[2];
+};
+
+/**
+ * TODO
+ * @param ifcPropertySet
+ * @param ifcProperties
+ */
+const mapProperties = (
+    ifcPropertySet: any,
+    ifcProperties: { [key: string]: string }
+) => {
+    const name: string = getIfcPropertySetName(ifcPropertySet);
+    Object.assign(ifcPropertySet, {
+        ifcPropertySetName: name,
+        ifcPropertySet: ifcProperties,
+    });
+};
 
 // Underscore is used to distinguish this function as a method that belongs to IfcFile
 export { _mapPropertySingleValuesToPropertySet };

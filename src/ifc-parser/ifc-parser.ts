@@ -25,7 +25,7 @@ class IfcFile extends StepFile {
     /**
      * See {@link _parseStepFile}
      */
-    public parseIfcFile: any = _parseIfcFile;
+    public parseIfcFile: any = _parseIfcFile; // START HERE
 }
 
 export { IfcFile };

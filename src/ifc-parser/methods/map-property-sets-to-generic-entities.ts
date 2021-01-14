@@ -6,46 +6,113 @@ import { IfcFile } from "../ifc-parser.ts";
  * Now, we need to populate each {@link IfcBuildingElement | generic enitiy} with `Property Sets`.
  */
 function _mapPropertySetsToGenericEntities(this: IfcFile) {
-    // For each objectified relationship
-    for (let key in this.entityInstances.IfcRelDefinesByProperties) {
-        const {
-            attributes: { parsed: ifcRelDefinesByPropertiesAttributes },
-        } = this.entityInstances.IfcRelDefinesByProperties[key];
-
-        const { ifcPropertySetName = undefined, ifcPropertySet = undefined } =
-            this.entityInstances.IfcPropertySet[
-                // Reference to IfcPropertySet entity
-                ifcRelDefinesByPropertiesAttributes[5]
-            ] || {};
-
-        if (typeof ifcPropertySet === "undefined") {
-            continue;
+    const filterPropertySets =
+        this.selectedPropertySets.length > 0 ? true : false;
+    const selectedPropertySets: string[] = this.selectedPropertySets;
+    Object.values(this.entityInstances.IfcRelDefinesByProperties).forEach(
+        (ifcRelDefinesByProperties: any) => {
+            // ENTITY IfcRelDefines; RelatedObjects : SET [1:?] OF IfcObject;
+            const relatedObjects = getRelatedObjectsReferences(
+                ifcRelDefinesByProperties
+            );
+            const ifcObject = getIfcObjects(this, relatedObjects);
+            // Skip object if undefined or not in selectedPropertySets
+            if (skipObject(ifcObject, filterPropertySets, selectedPropertySets))
+                return;
+            // ENTITY IfcRelDefinesByProperties; RelatingPropertyDefinition : IfcPropertySetDefinition;
+            const relatingPropertyDefinition = getRelatingPropertyDefinition(
+                ifcRelDefinesByProperties
+            );
+            const ifcPropertySetDefinition = getIfcPropertySetDefinition(
+                this,
+                relatingPropertyDefinition
+            );
+            // Ignoring things like: IfcSite, IfcBuildingStorey, IfcBuilding, etc.
+            if (ifcPropertySetDefinition === undefined) return;
+            mapPropertySet(ifcObject, ifcPropertySetDefinition);
         }
-
-        if (this.selectedPropertySets.length > 0) {
-            if (!this.selectedPropertySets.includes(ifcPropertySetName)) {
-                continue;
-            }
-        }
-        const relatedObjectsLenght =
-            ifcRelDefinesByPropertiesAttributes[4].length;
-        for (let index = 0; index < relatedObjectsLenght; index++) {
-            const { properties = undefined } =
-                this.entityInstances.genericEntityInstances[
-                    // Reference to related object (i.e. a generic IFC entity)
-                    ifcRelDefinesByPropertiesAttributes[4][index]
-                ] || {};
-            if (typeof properties === "undefined") {
-                // Ignoring: IfcSite, IfcBuildingStorey, IfcBuilding
-                continue;
-            }
-
-            Object.assign(properties, {
-                [ifcPropertySetName]: ifcPropertySet,
-            });
-        }
-    }
+    );
 }
 
+/**
+ * TODO
+ * @param ifcRelDefinesByProperties
+ */
+const getRelatedObjectsReferences = (ifcRelDefinesByProperties: any) => {
+    const {
+        attributes: { parsed: ifcRelDefinesByPropertiesAttributes },
+    } = ifcRelDefinesByProperties;
+    return ifcRelDefinesByPropertiesAttributes[5];
+};
+
+/**
+ * TODO
+ * @param _this
+ * @param relatedObjects
+ */
+const getIfcObjects = (_this: IfcFile, relatedObjects: any) => {
+    const { ifcPropertySetName: name = undefined, ifcPropertySet = undefined } =
+        _this.entityInstances.IfcPropertySet[relatedObjects] || {};
+    if (name === undefined) return;
+    return { name, ifcPropertySet };
+};
+
+/**
+ * TODO
+ * @param ifcObject
+ * @param filterPropertySets
+ * @param selectedPropertySets
+ */
+const skipObject = (
+    ifcObject: any,
+    filterPropertySets: any,
+    selectedPropertySets: any
+) => {
+    if (ifcObject === undefined) return true;
+    if (filterPropertySets) {
+        if (selectedPropertySets.includes(ifcObject.name) === false)
+            return true;
+    }
+    return false;
+};
+
+/**
+ * TODO
+ * @param ifcRelDefinesByProperties
+ */
+const getRelatingPropertyDefinition = (ifcRelDefinesByProperties: any) => {
+    const {
+        attributes: { parsed: ifcRelDefinesByPropertiesAttributes },
+    } = ifcRelDefinesByProperties;
+    return ifcRelDefinesByPropertiesAttributes[4];
+};
+
+/**
+ * TODO
+ * @param _this
+ * @param ifcRelDefinesByProperties
+ */
+const getIfcPropertySetDefinition = (
+    _this: IfcFile,
+    ifcRelDefinesByProperties: any
+) => {
+    const { properties: ifcPropertySetDefinition = undefined } =
+        // Reference to related object (i.e. a generic IFC entity)
+        _this.entityInstances.genericEntityInstances[
+            ifcRelDefinesByProperties[0]
+        ] || {};
+    return ifcPropertySetDefinition;
+};
+
+/**
+ * TODO
+ * @param ifcObject
+ * @param ifcPropertySetDefinition
+ */
+const mapPropertySet = (ifcObject: any, ifcPropertySetDefinition: any) => {
+    Object.assign(ifcPropertySetDefinition, {
+        [ifcObject.name]: ifcObject.ifcPropertySet,
+    });
+};
 // Underscore is used to distinguish this function as a method that belongs to IfcFile
 export { _mapPropertySetsToGenericEntities };

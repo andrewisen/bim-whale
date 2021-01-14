@@ -10,7 +10,7 @@ import { IfcFile } from "../ifc-parser.ts";
  * <br>
  */
 function _parseIfcFile(this: IfcFile) {
-    this.parseStepFile();
+    this.parseStepFile(); // Inherited from the class StepFile
     this.mapPropertySingleValuesToPropertySet();
     this.mapPropertySetsToGenericEntities();
     return this.entityInstances.genericEntityInstances;
